@@ -42,6 +42,9 @@
     <ClInclude Include="inc\SSS\Commons.hpp">
       <Filter>inc</Filter>
     </ClInclude>
+    <ClInclude Include="inc\SSS\Commons\pointers.hpp">
+      <Filter>inc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\color.cpp">
