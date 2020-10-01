@@ -25,6 +25,18 @@
     <None Include="vcpkg_scripts\local_install.ps1" />
     <None Include="vcpkg_scripts\local_remove.ps1" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="inc\SSS\Commons.hpp" />
+    <ClInclude Include="inc\SSS\Commons\color.hpp" />
+    <ClInclude Include="inc\SSS\Commons\log.hpp" />
+    <ClInclude Include="inc\SSS\Commons\time.hpp" />
+    <ClInclude Include="inc\SSS\Commons\_includes.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\color.cpp" />
+    <ClCompile Include="src\log.cpp" />
+    <ClCompile Include="src\time.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{BB4BA2CA-32FE-4E5C-8830-112AFD36FA41}</ProjectGuid>
@@ -81,25 +93,25 @@
     <LinkIncremental>true</LinkIncremental>
     <IntDir>.\obj\$(Configuration)\</IntDir>
     <OutDir>$(Configuration)\</OutDir>
-    <TargetName>sss-untitled</TargetName>
+    <TargetName>sss-commons</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <IntDir>.\obj\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>$(Platform)\$(Configuration)\</OutDir>
-    <TargetName>sss-untitled</TargetName>
+    <TargetName>sss-commons</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <IntDir>.\obj\$(Configuration)\</IntDir>
     <OutDir>$(Configuration)\</OutDir>
-    <TargetName>sss-untitled</TargetName>
+    <TargetName>sss-commons</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <IntDir>.\obj\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>$(Platform)\$(Configuration)\</OutDir>
-    <TargetName>sss-untitled</TargetName>
+    <TargetName>sss-commons</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
