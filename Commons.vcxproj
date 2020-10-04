@@ -26,6 +26,7 @@
     <None Include="vcpkg_scripts\local_remove.ps1" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="inc\SSS\Commons\env.hpp" />
     <ClInclude Include="inc\SSS\Commons.hpp" />
     <ClInclude Include="inc\SSS\Commons\color.hpp" />
     <ClInclude Include="inc\SSS\Commons\pointers.hpp" />
@@ -35,6 +36,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\color.cpp" />
+    <ClCompile Include="src\env.cpp" />
     <ClCompile Include="src\log.cpp" />
     <ClCompile Include="src\time.cpp" />
   </ItemGroup>
