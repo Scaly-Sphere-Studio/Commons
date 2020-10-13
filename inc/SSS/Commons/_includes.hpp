@@ -2,13 +2,13 @@
 
     // --- Defines ---
 
-#define SSS_BEGIN__ namespace SSS {
-#define SSS_END__ }
+#define __SSS_BEGIN namespace SSS {
+#define __SSS_END }
 
-#define INTERNAL_BEGIN__ namespace _internal {
-#define INTERNAL_END__ }
+#define __INTERNAL_BEGIN namespace _internal {
+#define __INTERNAL_END }
 
-#define NO_RETURN__ __declspec(noreturn)
+#define __NO_RETURN __declspec(noreturn)
 
     // --- Includes ---
 

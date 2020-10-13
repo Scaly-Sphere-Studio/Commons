@@ -2,7 +2,7 @@
 
 #include "SSS/Commons/_includes.hpp"
 
-SSS_BEGIN__
+__SSS_BEGIN
 
     // --- Basic functions ---
 
@@ -24,14 +24,14 @@ public:
 private:
 // --- Variables ---
 
-    long long frames_{ 0 }; // Frames counter
-    long long fps_{ 0 };    // FPS value
+    long long _frames{ 0 }; // Frames counter
+    long long _fps{ 0 };    // FPS value
 
     // Time the instance was created
-    std::chrono::system_clock::time_point const start_time_
+    std::chrono::system_clock::time_point const _start_time
         { std::chrono::system_clock::now() };
     // Last time the FPS value was calculated
-    std::chrono::system_clock::time_point stored_time_
-        { start_time_ };
+    std::chrono::system_clock::time_point _stored_time
+        { _start_time };
 };
-SSS_END__
+__SSS_END

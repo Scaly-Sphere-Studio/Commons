@@ -3,7 +3,7 @@
 #include "SSS/Commons/_includes.hpp"
 #include "SSS/Commons/time.hpp"
 
-SSS_BEGIN__
+__SSS_BEGIN
 
     // --- Macros ---
 
@@ -13,36 +13,36 @@ static constexpr bool DEBUGMODE = false;
 #else
 static constexpr bool DEBUGMODE = true;
 #endif // NDEBUG
-#define IF_DEBUGMODE__(X) if constexpr (DEBUGMODE) { X };
+#define __IF_DEBUGMODE(X) if constexpr (DEBUGMODE) { X };
 
 // String macros
-#define FUNC__ (std::string(__func__) + "()")               // -> MyFunc()
-#define CLASS__ (std::string(typeid(*this).name() + 6))     // -> MyClass
-#define CLASS_ADDR__ CLASS__ + join_args(" -> 0x", this)    // -> MyClass -> 0x0000CFF8
-#define METHOD__ (CLASS__ + "::" + FUNC__)                  // -> MyClass::MyFunc()
+#define __FUNC (std::string(__func__) + "()")               // -> MyFunc()
+#define __CLASS (std::string(typeid(*this).name() + 6))     // -> MyClass
+#define __CLASS_ADDR __CLASS + join_args(" -> 0x", this)    // -> MyClass -> 0x0000CFF8
+#define __METHOD (__CLASS + "::" + __FUNC)                  // -> MyClass::MyFunc()
 
 // Macro rethrowing exception, appended with the function's name
-#define CATCH_AND_RETHROW_FUNC_EXC__ catch (std::exception const& e) {\
-    throw_exc(get_error(FUNC__, e.what()));\
+#define __CATCH_AND_RETHROW_FUNC_EXC catch (std::exception const& e) {\
+    throw_exc(get_error(__FUNC, e.what()));\
 }
 // Macro rethrowing exception, appended with the method's name
-#define CATCH_AND_RETHROW_METHOD_EXC__ catch (std::exception const& e) {\
-    throw_exc(get_error(METHOD__, e.what()));\
+#define __CATCH_AND_RETHROW_METHOD_EXC catch (std::exception const& e) {\
+    throw_exc(get_error(__METHOD, e.what()));\
 }
 
     // --- Log macros ---
 
-#define LOG_MSG__(X) IF_DEBUGMODE__( log_msg(X); )
-#define LOG_WRN__(X) IF_DEBUGMODE__( log_err(get_error("WARNING", X)); )
-#define LOG_ERR__(X) IF_DEBUGMODE__( log_err(get_error("ERROR", X)); )
+#define __LOG_MSG(X) __IF_DEBUGMODE( log_msg(X); )
+#define __LOG_WRN(X) __IF_DEBUGMODE( log_err(get_error("WARNING", X)); )
+#define __LOG_ERR(X) __IF_DEBUGMODE( log_err(get_error("ERROR", X)); )
 
-#define LOG_FUNC_ERR__(X) LOG_ERR__(get_error(FUNC__, X));
-#define LOG_FUNC_WRN__(X) LOG_WRN__(get_error(FUNC__, X));
-#define LOG_METHOD_ERR__(X) LOG_ERR__(get_error(METHOD__, X));
-#define LOG_METHOD_WRN__(X) LOG_WRN__(get_error(METHOD__, X));
+#define __LOG_FUNC_ERR(X) __LOG_ERR(get_error(__FUNC, X));
+#define __LOG_FUNC_WRN(X) __LOG_WRN(get_error(__FUNC, X));
+#define __LOG_METHOD_ERR(X) __LOG_ERR(get_error(__METHOD, X));
+#define __LOG_METHOD_WRN(X) __LOG_WRN(get_error(__METHOD, X));
 
-#define LOG_CONSTRUCTOR__ IF_DEBUGMODE__( log_msg( CLASS_ADDR__ + " -> Constructor()"); )
-#define LOG_DESTRUCTOR__ IF_DEBUGMODE__( log_msg( CLASS_ADDR__ + " -> ~Destructor()"); )
+#define __LOG_CONSTRUCTOR __IF_DEBUGMODE( log_msg( __CLASS_ADDR + " -> Constructor()"); )
+#define __LOG_DESTRUCTOR __IF_DEBUGMODE( log_msg( __CLASS_ADDR + " -> ~Destructor()"); )
 
     // --- Error strings ---
 
@@ -102,11 +102,11 @@ void log_err(T const& arg) noexcept
 }
 
 // Throws a runtime_error exception with given arg
-NO_RETURN__ void throw_exc(std::string const& str);
+__NO_RETURN void throw_exc(std::string const& str);
 
 // Throws a runtime_error exception with given arg
 template <typename T>
-NO_RETURN__ void throw_exc(T const& arg)
+__NO_RETURN void throw_exc(T const& arg)
 {
     throw_exc(template_to_string_(arg));
 }
@@ -125,4 +125,4 @@ std::string join_args(T const& arg, T2 const& msg) noexcept
     return template_to_string_(arg) + template_to_string_(msg);
 }
 
-SSS_END__
+__SSS_END

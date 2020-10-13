@@ -1,6 +1,6 @@
 #include "SSS/Commons/color.hpp"
 
-SSS_BEGIN__
+__SSS_BEGIN
 
 // Blends colors together, based on the source's alpha
 BGRA32& operator*=(BGRA32& dst, BGRA32 const& src) noexcept
@@ -47,4 +47,4 @@ BGR24 rainbow(uint32_t value) noexcept {
     return BGR24(255, 0, static_cast<uint8_t>(1530 - value));
 }
 
-SSS_END__
+__SSS_END

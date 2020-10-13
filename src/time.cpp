@@ -1,6 +1,6 @@
 #include "SSS/Commons/time.hpp"
 
-SSS_BEGIN__
+__SSS_BEGIN
 
     // --- Basic functions ---
 
@@ -31,21 +31,21 @@ std::string UTF_Current_Time()
 // Calculates FPS value every second, and return true if the value changed.
 bool FPS_Timer::addFrame() noexcept
 {
-    ++frames_;
+    ++_frames;
 
     using namespace std::chrono;
-    seconds const sec = duration_cast<seconds>(system_clock::now() - stored_time_);
+    seconds const sec = duration_cast<seconds>(system_clock::now() - _stored_time);
 
     // Update fps every second
     if (sec >= seconds(1)) {
         // Determine fps
-        long long const new_fps = frames_ / sec.count();
+        long long const new_fps = _frames / sec.count();
         // Reset fps and increase stored time
-        frames_ = 0;
-        stored_time_ += sec;
+        _frames = 0;
+        _stored_time += sec;
         // Update old fps if needed
-        if (new_fps != fps_) {
-            fps_ = new_fps;
+        if (new_fps != _fps) {
+            _fps = new_fps;
             return true;
         }
     }
@@ -55,7 +55,7 @@ bool FPS_Timer::addFrame() noexcept
 // Returns the FPS value
 long long FPS_Timer::get() const noexcept
 {
-    return fps_;
+    return _fps;
 }
 
-SSS_END__
+__SSS_END

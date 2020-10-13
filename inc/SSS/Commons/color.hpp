@@ -2,14 +2,14 @@
 
 #include "SSS/Commons/_includes.hpp"
 
-SSS_BEGIN__
+__SSS_BEGIN
 
     // --- BGRA24 ---
 
 // Pre declare this struct which is used in the BGR24 union
-INTERNAL_BEGIN__
+__INTERNAL_BEGIN
 struct BGR24_s;
-INTERNAL_END__
+__INTERNAL_END
 
 // BGR24 union
 union BGR24 {
@@ -42,7 +42,7 @@ union BGR24 {
 
     // --- BGRA24 structure ---
 
-INTERNAL_BEGIN__
+__INTERNAL_BEGIN
 struct BGR24_s {
 // --- Constructors ---
 
@@ -60,7 +60,7 @@ struct BGR24_s {
     BGR24 plain{ 0 };    // The plain color
     BGR24::f func{ nullptr };   // The function to retrieve a plain color
 };
-INTERNAL_END__
+__INTERNAL_END
 
 // Returns a rainbow color based on the passed value.
 // Value should be as: 0 <= value <= 1530.
@@ -103,4 +103,4 @@ union BGRA32 {
 // Blends colors together, based on the source's alpha
 BGRA32& operator*=(BGRA32& dst, BGRA32 const& src) noexcept;
 
-SSS_END__
+__SSS_END

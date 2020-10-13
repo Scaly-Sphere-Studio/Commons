@@ -1,12 +1,12 @@
 #include "SSS/Commons/log.hpp"
 
-SSS_BEGIN__
+__SSS_BEGIN
 
 // Logs the given argument to the given stream
 static void log_(std::ostream& stream, std::string const& str) noexcept try
 {
     if (!str.empty()) {
-        stream << UTF_Current_Time() << ' ' << str << std::endl;
+        stream << UTF_Current_Time() << "|  " << str << std::endl;
     }
 }
 catch (...) {
@@ -30,4 +30,4 @@ void throw_exc(std::string const& str)
     throw std::runtime_error(str);
 }
 
-SSS_END__
+__SSS_END
