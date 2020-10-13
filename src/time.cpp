@@ -2,6 +2,9 @@
 
 SSS_BEGIN__
 
+    // --- Basic functions ---
+
+// Returns a formatted string displaying the current UTF time
 std::string UTF_Current_Time()
 {
     using namespace std::chrono;
@@ -20,6 +23,39 @@ std::string UTF_Current_Time()
     snprintf(buff, 64U, "%02d:%02d:%02d.%03d UTF", h, m, s, ms);
 
     return buff;
+}
+
+    // --- FPS_Timer functions ---
+
+// Adds one frame to the counter.
+// Calculates FPS value every second, and return true if the value changed.
+bool FPS_Timer::addFrame() noexcept
+{
+    ++frames_;
+
+    using namespace std::chrono;
+    seconds const sec = duration_cast<seconds>(system_clock::now() - stored_time_);
+
+    // Update fps every second
+    if (sec >= seconds(1)) {
+        // Determine fps
+        long long const new_fps = frames_ / sec.count();
+        // Reset fps and increase stored time
+        frames_ = 0;
+        stored_time_ += sec;
+        // Update old fps if needed
+        if (new_fps != fps_) {
+            fps_ = new_fps;
+            return true;
+        }
+    }
+    return false;
+}
+
+// Returns the FPS value
+long long FPS_Timer::get() const noexcept
+{
+    return fps_;
 }
 
 SSS_END__

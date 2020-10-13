@@ -21,15 +21,26 @@ static constexpr bool DEBUGMODE = true;
 #define CLASS_ADDR__ CLASS__ + join_args(" -> 0x", this)    // -> MyClass -> 0x0000CFF8
 #define METHOD__ (CLASS__ + "::" + FUNC__)                  // -> MyClass::MyFunc()
 
+// Macro rethrowing exception, appended with the function's name
+#define CATCH_AND_RETHROW_FUNC_EXC__ catch (std::exception const& e) {\
+    throw_exc(get_error(FUNC__, e.what()));\
+}
 // Macro rethrowing exception, appended with the method's name
 #define CATCH_AND_RETHROW_METHOD_EXC__ catch (std::exception const& e) {\
     throw_exc(get_error(METHOD__, e.what()));\
 }
 
-// Log macros
+    // --- Log macros ---
+
 #define LOG_MSG__(X) IF_DEBUGMODE__( log_msg(X); )
-#define LOG_ERR__(X) IF_DEBUGMODE__( log_err(X); )
+#define LOG_WRN__(X) IF_DEBUGMODE__( log_err(get_error("WARNING", X)); )
+#define LOG_ERR__(X) IF_DEBUGMODE__( log_err(get_error("ERROR", X)); )
+
+#define LOG_FUNC_ERR__(X) LOG_ERR__(get_error(FUNC__, X));
+#define LOG_FUNC_WRN__(X) LOG_WRN__(get_error(FUNC__, X));
 #define LOG_METHOD_ERR__(X) LOG_ERR__(get_error(METHOD__, X));
+#define LOG_METHOD_WRN__(X) LOG_WRN__(get_error(METHOD__, X));
+
 #define LOG_CONSTRUCTOR__ IF_DEBUGMODE__( log_msg( CLASS_ADDR__ + " -> Constructor()"); )
 #define LOG_DESTRUCTOR__ IF_DEBUGMODE__( log_msg( CLASS_ADDR__ + " -> ~Destructor()"); )
 
