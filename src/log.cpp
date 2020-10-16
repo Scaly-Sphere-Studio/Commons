@@ -19,9 +19,15 @@ void log_msg(std::string const& str) noexcept
 }
 
 // Logs the given argument to std::cerr
+void log_wrn(std::string const& str) noexcept
+{
+    log_(std::cerr, context_msg("[WRN]", str));
+}
+
+// Logs the given argument to std::cerr
 void log_err(std::string const& str) noexcept
 {
-    log_(std::cerr, str);
+    log_(std::cerr, context_msg("[ERR]", str));
 }
 
 // Throws a runtime_error exception with given arg

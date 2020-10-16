@@ -19,8 +19,8 @@ public:
     // Calculates FPS value every second, and return true if the value changed.
     bool addFrame() noexcept;
     // Returns the FPS value
-    long long get() const noexcept;
-
+    inline long long get() const noexcept { return _fps; }
+    
 private:
 // --- Variables ---
 

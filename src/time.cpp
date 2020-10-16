@@ -52,10 +52,4 @@ bool FPS_Timer::addFrame() noexcept
     return false;
 }
 
-// Returns the FPS value
-long long FPS_Timer::get() const noexcept
-{
-    return _fps;
-}
-
 __SSS_END
