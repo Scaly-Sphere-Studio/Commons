@@ -3,9 +3,9 @@
 __SSS_BEGIN
 
 // Blends colors together, based on the source's alpha
-BGRA32& operator*=(BGRA32& dst, BGRA32 const& src) noexcept
+RGBA32& operator*=(RGBA32& dst, RGBA32 const& src) noexcept
 {
-    if (dst.bgra == 0) {
+    if (dst.rgba == 0) {
         return dst = src;
     }
     float const a((float)src.bytes.a / 255.f),
@@ -28,23 +28,23 @@ BGRA32& operator*=(BGRA32& dst, BGRA32 const& src) noexcept
 
 // Returns a rainbow color based on the passed value.
 // Value should be as: 0 <= value <= 1530.
-BGR24 rainbow(uint32_t value) noexcept {
+RGB24 rainbow(uint32_t value) noexcept {
     if (value < 255) {
-        return BGR24(255, static_cast<uint8_t>(value), 0);
+        return RGB24(255, static_cast<uint8_t>(value), 0);
     }
     else if (value < 510) {
-        return BGR24(static_cast<uint8_t>(510 - value), 255, 0);
+        return RGB24(static_cast<uint8_t>(510 - value), 255, 0);
     }
     else if (value < 765) {
-        return BGR24(0, 255, static_cast<uint8_t>(value - 510));
+        return RGB24(0, 255, static_cast<uint8_t>(value - 510));
     }
     else if (value < 1020) {
-        return BGR24(0, static_cast<uint8_t>(1020 - value), 255);
+        return RGB24(0, static_cast<uint8_t>(1020 - value), 255);
     }
     else if (value < 1275) {
-        return BGR24(static_cast<uint8_t>(value - 1020), 0, 255);
+        return RGB24(static_cast<uint8_t>(value - 1020), 0, 255);
     }
-    return BGR24(255, 0, static_cast<uint8_t>(1530 - value));
+    return RGB24(255, 0, static_cast<uint8_t>(1530 - value));
 }
 
 __SSS_END
