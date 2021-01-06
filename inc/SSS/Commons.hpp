@@ -5,3 +5,4 @@
 #include "SSS/Commons/pointers.hpp"
 #include "SSS/Commons/color.hpp"
 #include "SSS/Commons/env.hpp"
+#include "SSS/Commons/enums.hpp"

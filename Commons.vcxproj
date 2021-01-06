@@ -26,6 +26,7 @@
     <None Include="vcpkg_scripts\local_remove.ps1" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="inc\SSS\Commons\enums.hpp" />
     <ClInclude Include="inc\SSS\Commons\env.hpp" />
     <ClInclude Include="inc\SSS\Commons.hpp" />
     <ClInclude Include="inc\SSS\Commons\color.hpp" />

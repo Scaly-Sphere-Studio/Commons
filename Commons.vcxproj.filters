@@ -48,6 +48,9 @@
     <ClInclude Include="inc\SSS\Commons\env.hpp">
       <Filter>inc</Filter>
     </ClInclude>
+    <ClInclude Include="inc\SSS\Commons\enums.hpp">
+      <Filter>inc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\color.cpp">
