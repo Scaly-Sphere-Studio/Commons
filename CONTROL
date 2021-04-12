@@ -1,4 +1,4 @@
 Source: sss-commons
-Version: 0.4.2
+Version: 0.5.0
 Description: Common functions, macros, etc...
 Build-Depends:
