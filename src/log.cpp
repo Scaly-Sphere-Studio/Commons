@@ -6,7 +6,11 @@ __SSS_BEGIN
 static void log_(std::ostream& stream, std::string const& str) noexcept try
 {
     if (!str.empty()) {
-        stream << UTF_Current_Time() << "|  " << str << std::endl;
+        stream
+            << std::boolalpha               // Print booleans as 'true' or 'false'
+            << UTF_Current_Time() << "|  "  // Print UTF time
+            << str                          // Print message
+            << std::endl;                    // Print line break
     }
 }
 catch (...) {
