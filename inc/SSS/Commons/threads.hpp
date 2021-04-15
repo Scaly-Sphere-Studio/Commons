@@ -45,6 +45,7 @@ public:
         // Runs user defined virtual `_function()` with given args.
     void run(_ProcessArgs... args)
     {
+        cancel();
         std::thread tmp(&ThreadBase::_intermediateFunction, this, args...);
         swap(tmp);
     };
