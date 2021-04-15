@@ -32,6 +32,7 @@
     <ClInclude Include="inc\SSS\Commons\color.hpp" />
     <ClInclude Include="inc\SSS\Commons\pointers.hpp" />
     <ClInclude Include="inc\SSS\Commons\log.hpp" />
+    <ClInclude Include="inc\SSS\Commons\threads.hpp" />
     <ClInclude Include="inc\SSS\Commons\time.hpp" />
     <ClInclude Include="inc\SSS\Commons\_includes.hpp" />
   </ItemGroup>

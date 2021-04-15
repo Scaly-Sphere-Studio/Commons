@@ -78,30 +78,24 @@ inline void log_err(T const& arg) noexcept { log_err(toString(arg)); }
 
 __SSS_END
 
-    // --- Macros ---
+    // --- Message macros ---
 
 // Func macros
-#define __FUNC (std::string(__func__) + "()")               // MyFunc()
-#define __FUNC_MSG(X) SSS::context_msg(__FUNC, X)           // MyFunc() : Lorem ispum
+#define __FUNC (std::string(__func__) + "()")       // MyFunc()
+#define __FUNC_MSG(X) SSS::context_msg(__FUNC, X)   // MyFunc() : Lorem ispum
 
-// Class macros
-#define __CLASS (std::string(typeid(*this).name() + 6))     // MyClass
-#define __THIS_ADDR SSS::toString(this)                     // 0x0000CFF8
-#define __CLASS_ADDR __CLASS + " -> 0x" + __THIS_ADDR       // MyClass -> 0x0000CFF8
-#define __CLASS_MSG(X) SSS::context_msg(__CLASS_ADDR, X)    // MyClass -> 0x0000CFF8 : Lorem ipsum
+// Object macros
+#define __THIS_NAME (std::string(typeid(*this).name() + 6)) // MyClass
+#define __THIS_ADDR std::string("0x") + SSS::toString(this) // 0x0000CFF8
+#define __THIS_OBJ __THIS_NAME + " [" + __THIS_ADDR + "]"   // MyClass [0x0000CFF8]
+#define __OBJ_MSG(X) SSS::context_msg(__THIS_OBJ, X)        // MyClass [0x0000CFF8] : Lorem ipsum
 
 // Method macros
-#define __METHOD (__CLASS + "::" + __FUNC)                  // MyClass::MyFunc()
-#define __METHOD_MSG(X) SSS::context_msg(__METHOD, X)       // MyClass::MyFunc() : Lorem ispum
-
-// Macro rethrowing exception, appended with the function's name
-#define __CATCH_AND_RETHROW_FUNC_EXC catch (std::exception const& e) {\
-    SSS::throw_exc(__FUNC_MSG(e.what()));\
-}
-// Macro rethrowing exception, appended with the method's name
-#define __CATCH_AND_RETHROW_METHOD_EXC catch (std::exception const& e) {\
-    SSS::throw_exc(__METHOD_MSG(e.what()));\
-}
+#define __METHOD (__THIS_NAME + "::" + __FUNC)          // MyClass::MyFunc()
+#define __METHOD_MSG(X) SSS::context_msg(__METHOD, X)   // MyClass::MyFunc() : Lorem ispum
+#define __OBJ_METHOD (__THIS_OBJ + "-> " + __FUNC)      // MyClass [0x0000CFF8]-> MyFunc()
+#define __OBJ_METHOD_MSG(X) \
+    SSS::context_msg(__OBJ_METHOD, X)                   // MyClass [0x0000CFF8]-> MyFunc() : Lorem Ipsum
 
     // --- Log macros ---
 
@@ -109,11 +103,45 @@ __SSS_END
 #define __LOG_WRN(X) if constexpr (SSS::DEBUGMODE) { SSS::log_wrn(X); }
 #define __LOG_ERR(X) if constexpr (SSS::DEBUGMODE) { SSS::log_err(X); }
 
+#define __LOG_FUNC_MSG(X) __LOG_MSG( __FUNC_MSG(X) )
 #define __LOG_FUNC_ERR(X) __LOG_ERR( __FUNC_MSG(X) )
 #define __LOG_FUNC_WRN(X) __LOG_WRN( __FUNC_MSG(X) )
 
+#define __LOG_OBJ_MSG(X) __LOG_MSG( __OBJ_MSG(X) )
+#define __LOG_OBJ_WRN(X) __LOG_WRN( __OBJ_MSG(X) )
+#define __LOG_OBJ_ERR(X) __LOG_ERR( __OBJ_MSG(X) )
+
+#define __LOG_METHOD_MSG(X) __LOG_MSG( __METHOD_MSG(X) )
 #define __LOG_METHOD_ERR(X) __LOG_ERR( __METHOD_MSG(X) )
 #define __LOG_METHOD_WRN(X) __LOG_WRN( __METHOD_MSG(X) )
 
-#define __LOG_CONSTRUCTOR if constexpr (SSS::DEBUGMODE) { SSS::log_msg(__CLASS_MSG("Constructor()")); }
-#define __LOG_DESTRUCTOR if constexpr (SSS::DEBUGMODE) { SSS::log_msg(__CLASS_MSG("~Destructor()")); }
+#define __LOG_OBJ_METHOD_MSG(X) __LOG_MSG( __OBJ_METHOD_MSG(X) )
+#define __LOG_OBJ_METHOD_ERR(X) __LOG_ERR( __OBJ_METHOD_MSG(X) )
+#define __LOG_OBJ_METHOD_WRN(X) __LOG_WRN( __OBJ_METHOD_MSG(X) )
+
+#define __LOG_CONSTRUCTOR __LOG_MSG( __OBJ_MSG("Constructor() ended") )
+#define __LOG_DESTRUCTOR __LOG_MSG( __OBJ_MSG("~Destructor() ended") )
+
+    // --- Exception macros ---
+
+// Throws exception with object info in message
+#define __OBJ_THROW(X) SSS::throw_exc(SSS::context_msg(__THIS_OBJ, X))
+
+// Macro rethrowing exception, appending the message with the function's name
+#define __CATCH_AND_RETHROW_FUNC_EXC catch (std::exception const& e) {\
+    SSS::throw_exc(__FUNC_MSG(e.what()));\
+}
+// Macro rethrowing exception, appending the message with the method's name
+#define __CATCH_AND_RETHROW_METHOD_EXC catch (std::exception const& e) {\
+    SSS::throw_exc(__METHOD_MSG(e.what()));\
+}
+
+// Macro catching and logging exception with the function's infos
+#define __CATCH_AND_LOG_FUNC_EXC catch (std::exception const& e) {\
+    __LOG_FUNC_ERR(e.what());\
+}
+// Macro catching and logging exception with the method's infos
+#define __CATCH_AND_LOG_FUNC_EXC catch (std::exception const& e) {\
+    __LOG_OBJ_METHOD_ERR(e.what());\
+}
+
