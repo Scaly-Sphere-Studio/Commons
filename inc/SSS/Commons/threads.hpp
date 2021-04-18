@@ -11,17 +11,17 @@ template<class... _ProcessArgs>
 class ThreadBase : public std::thread {
 public:
 
-    // --- Logging static variables ---
+// --- Logging static variables ---
+
     struct LOG {
         static bool constructor;
         static bool destructor;
         static bool run_state;
-        static bool cancel_state;
     };
 
-    // --- Constructors & Destructor ---
+// --- Constructors & Destructor ---
 
-        // Pure virtual Destructor, which is implemented outside the class declaration.
+    // Pure virtual Destructor, which is implemented outside the class declaration.
     virtual ~ThreadBase() = 0;
 
     // Base constructor
@@ -40,9 +40,9 @@ public:
     }
     __CATCH_AND_RETHROW_METHOD_EXC;
 
-    // --- New thread functions ---
+// --- New thread functions ---
 
-        // Runs user defined virtual `_function()` with given args.
+    // Runs user defined virtual `_function()` with given args.
     void run(_ProcessArgs... args)
     {
         cancel();
@@ -60,8 +60,8 @@ public:
         }
 
         // Log cancelation start
-        bool const was_running = _is_running;
-        if (was_running && LOG::cancel_state) {
+        bool const was_running = _running_state == _RunningState::running;
+        if (LOG::run_state && was_running) {
             __LOG_OBJ_MSG("canceling thread ...");
         }
 
@@ -69,40 +69,63 @@ public:
         _is_canceled = true;
         join();
         _is_canceled = false;
+        _running_state = _RunningState::handled;
 
         // Log cancelation end
-        if (was_running && LOG::cancel_state) {
+        if (LOG::run_state && was_running) {
             __LOG_OBJ_MSG("thread was successfully canceled.");
         }
     };
 
     // Returns true if the thread is running, not to be mistaken with joinable().
-    inline bool isRunning() const noexcept
+    inline bool isPending() const noexcept
     {
-        return _is_running;
+        return _running_state == _RunningState::pending;
+    }
+
+    // Set a pending thread's state as handled.
+    void setAsHandled() noexcept
+    {
+        if (_running_state != _RunningState::pending) {
+            __LOG_OBJ_WRN("Tried to set thread state as 'handled' when it wasn't 'pending'");
+            return;
+        }
+        _running_state = _RunningState::handled;
+        if (joinable()) {
+            join();
+        }
+        __LOG_OBJ_MSG("thread has been handled.");
     }
 
 protected:
-    // Booleans
-    bool _is_running{ false };  // Running state
-    bool _is_canceled{ false }; // Cancelation state
+    // Running state
+    enum class _RunningState {
+        handled,
+        running,
+        pending
+    } _running_state{ _RunningState::handled }; 
+    // Cancelation state
+    bool _is_canceled{ false };
 
-    // Calls _function and sets _is_running accordingly
+    // Calls _function and sets _running_state accordingly
     void _intermediateFunction(_ProcessArgs... args) try
     {
+        _running_state = _RunningState::running;
         if (LOG::run_state) {
             __LOG_OBJ_MSG("thread started running.");
         }
-        _is_running = true;
+
+        if (_is_canceled) return;
         _function(args...);
-        _is_running = false;
-        if (LOG::run_state) {
-            __LOG_OBJ_MSG("thread ended.");
+
+        if (LOG::run_state && !_is_canceled) {
+            __LOG_OBJ_MSG("thread ended, now pending.");
         }
+        _running_state = _RunningState::pending;
     }
     catch (std::exception const& e) {
         // Thread will no longer be running
-        _is_running = false;
+        _running_state = _RunningState::handled;
         __LOG_OBJ_ERR(context_msg("thread threw", e.what()));
     };
 
@@ -121,8 +144,6 @@ template<class... _ProcessArgs>
 bool ThreadBase<_ProcessArgs...>::LOG::destructor{ false };
 template<class... _ProcessArgs>
 bool ThreadBase<_ProcessArgs...>::LOG::run_state{ false };
-template<class... _ProcessArgs>
-bool ThreadBase<_ProcessArgs...>::LOG::cancel_state{ false };
 
 // Implement virtual destructor
 template<class... _ProcessArgs>
