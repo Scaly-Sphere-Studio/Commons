@@ -3,7 +3,7 @@
 __SSS_BEGIN
 
 // Logs the given argument to the given stream
-static void log_(std::ostream& stream, std::string const& str) noexcept try
+static void _log(std::ostream& stream, std::string const& str) noexcept try
 {
     if (!str.empty()) {
         stream
@@ -19,19 +19,19 @@ catch (...) {
 // Logs the given argument to std::cout
 void log_msg(std::string const& str) noexcept
 {
-    log_(std::cout, str);
+    _log(std::cout, str);
 }
 
 // Logs the given argument to std::cerr
 void log_wrn(std::string const& str) noexcept
 {
-    log_(std::cerr, context_msg("[WRN]", str));
+    _log(std::cerr, context_msg("[WRN]", str));
 }
 
 // Logs the given argument to std::cerr
 void log_err(std::string const& str) noexcept
 {
-    log_(std::cerr, context_msg("[ERR]", str));
+    _log(std::cerr, context_msg("[ERR]", str));
 }
 
 // Throws a runtime_error exception with given arg
