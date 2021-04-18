@@ -141,7 +141,7 @@ __SSS_END
     __LOG_FUNC_ERR(e.what());\
 }
 // Macro catching and logging exception with the method's infos
-#define __CATCH_AND_LOG_FUNC_EXC catch (std::exception const& e) {\
+#define __CATCH_AND_LOG_METHOD_EXC catch (std::exception const& e) {\
     __LOG_OBJ_METHOD_ERR(e.what());\
 }
 
