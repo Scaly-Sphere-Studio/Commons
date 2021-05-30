@@ -17,6 +17,7 @@ public:
         static bool constructor;
         static bool destructor;
         static bool run_state;
+        static bool errors;
     };
 
 // --- Constructors & Destructor ---
@@ -77,10 +78,15 @@ public:
         }
     };
 
-    // Returns true if the thread is running, not to be mistaken with joinable().
+    // Returns true if the thread is pending, meaning it just finished running.
     inline bool isPending() const noexcept
     {
         return _running_state == _RunningState::pending;
+    }
+    // Returns true if the thread is running, not to be mistaken with joinable().
+    inline bool isRunning() const noexcept
+    {
+        return _running_state == _RunningState::running;
     }
 
     // Set a pending thread's state as handled.
@@ -94,7 +100,9 @@ public:
         if (joinable()) {
             join();
         }
-        __LOG_OBJ_MSG("thread has been handled.");
+        if (LOG::run_state) {
+            __LOG_OBJ_MSG("thread has been handled.");
+        }
     }
 
 protected:
@@ -126,7 +134,9 @@ protected:
     catch (std::exception const& e) {
         // Thread will no longer be running
         _running_state = _RunningState::handled;
-        __LOG_OBJ_ERR(context_msg("thread threw", e.what()));
+        if (LOG::errors) {
+            __LOG_OBJ_ERR(context_msg("thread threw", e.what()));
+        }
     };
 
     // User defined.
@@ -144,6 +154,8 @@ template<class... _ProcessArgs>
 bool ThreadBase<_ProcessArgs...>::LOG::destructor{ false };
 template<class... _ProcessArgs>
 bool ThreadBase<_ProcessArgs...>::LOG::run_state{ false };
+template<class... _ProcessArgs>
+bool ThreadBase<_ProcessArgs...>::LOG::errors{ false };
 
 // Implement virtual destructor
 template<class... _ProcessArgs>

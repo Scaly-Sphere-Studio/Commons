@@ -34,4 +34,14 @@ private:
     std::chrono::system_clock::time_point _stored_time
         { _start_time };
 };
+
+class Chrono {
+private:
+    using clock = std::chrono::high_resolution_clock;
+    clock::time_point _start{ clock::now() };
+public:
+    std::string get() const;
+    void reset();
+};
+
 __SSS_END

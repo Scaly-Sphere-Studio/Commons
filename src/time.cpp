@@ -1,4 +1,5 @@
 #include "SSS/Commons/time.hpp"
+#include "SSS/Commons/log.hpp"
 
 __SSS_BEGIN
 
@@ -50,6 +51,17 @@ bool FPS_Timer::addFrame() noexcept
         }
     }
     return false;
+}
+
+std::string Chrono::get() const
+{
+    std::chrono::duration<double, std::milli> diff(clock::now() - _start);
+    return (toString(diff.count()) + "ms");
+}
+
+void Chrono::reset()
+{
+    _start = clock::now();
 }
 
 __SSS_END
