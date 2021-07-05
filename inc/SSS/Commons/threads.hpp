@@ -17,7 +17,6 @@ public:
         static bool constructor;
         static bool destructor;
         static bool run_state;
-        static bool errors;
     };
 
 // --- Constructors & Destructor ---
@@ -131,13 +130,14 @@ protected:
         }
         _running_state = _RunningState::pending;
     }
+#pragma warning( push )
+#pragma warning( disable : 4101 )
     catch (std::exception const& e) {
         // Thread will no longer be running
         _running_state = _RunningState::handled;
-        if (LOG::errors) {
-            __LOG_OBJ_ERR(context_msg("thread threw", e.what()));
-        }
+        __LOG_OBJ_ERR(context_msg("thread threw", e.what()));
     };
+#pragma warning( pop )
 
     // User defined.
     virtual void _function(_ProcessArgs... args) = 0;
@@ -154,8 +154,6 @@ template<class... _ProcessArgs>
 bool ThreadBase<_ProcessArgs...>::LOG::destructor{ false };
 template<class... _ProcessArgs>
 bool ThreadBase<_ProcessArgs...>::LOG::run_state{ false };
-template<class... _ProcessArgs>
-bool ThreadBase<_ProcessArgs...>::LOG::errors{ false };
 
 // Implement virtual destructor
 template<class... _ProcessArgs>
