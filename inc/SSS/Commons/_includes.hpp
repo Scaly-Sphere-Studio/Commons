@@ -19,6 +19,8 @@
 #include <iostream>
 #include <sstream>
 #include <chrono>
+#include <thread>
+#include <atomic>
 
 // CLib
 #include <stdlib.h>

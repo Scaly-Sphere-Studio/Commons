@@ -1,7 +1,5 @@
 #pragma once
 
-#include <thread>
-
 #include "_includes.hpp"
 #include "log.hpp"
 
@@ -110,9 +108,10 @@ protected:
         handled,
         running,
         pending
-    } _running_state{ _RunningState::handled }; 
+    };
+    std::atomic<_RunningState> _running_state{ _RunningState::handled };
     // Cancelation state
-    bool _is_canceled{ false };
+    std::atomic<bool> _is_canceled{ false };
 
     // Calls _function and sets _running_state accordingly
     void _intermediateFunction(_ProcessArgs... args) try
