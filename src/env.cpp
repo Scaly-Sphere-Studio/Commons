@@ -32,4 +32,33 @@ bool isReg(std::string const& path) noexcept
     struct stat s;
     return stat(path.c_str(), &s) == 0 && (s.st_mode & S_IFREG) != 0;
 }
+
+__INTERNAL_BEGIN
+
+// Includes for getPWD();
+#if defined(_WIN32)
+# include <windows.h>
+# include <libloaderapi.h>
+#elif defined(_APPLE_) && defined(_MACH_)
+#elif defined(linux) || defined(__linux)
+#endif
+
+std::string getPWD()
+{
+    std::string pwd;
+#if defined(_WIN32)
+    CHAR path[MAX_PATH];
+    GetModuleFileNameA(NULL, path, MAX_PATH);
+    pwd = std::string(path);
+    pwd = pwd.substr(0, pwd.find_last_of("\\/") + 1);
+#elif defined(_APPLE_) && defined(_MACH_)
+    __LOG_WRN("SSS::PWD can not been set yet on this OS."));
+#elif defined(linux) || defined(__linux)
+    __LOG_WRN("SSS::PWD can not been set yet on this OS."));
+#endif
+    return pwd;
+}
+
+__INTERNAL_END
+
 __SSS_END

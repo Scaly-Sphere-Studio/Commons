@@ -13,4 +13,13 @@ bool isDir(std::string const& path) noexcept;
 // Returns true if the given path leads to an existing regular file.
 bool isReg(std::string const& path) noexcept;
 
+__INTERNAL_BEGIN
+
+std::string getPWD();
+
+__INTERNAL_END
+
+// Path to the folder holding the running .exe
+static const std::string PWD = _internal::getPWD();
+
 __SSS_END

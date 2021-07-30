@@ -20,6 +20,7 @@
 #include <sstream>
 #include <chrono>
 #include <thread>
+#include <mutex>
 #include <atomic>
 
 // CLib

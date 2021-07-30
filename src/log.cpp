@@ -5,12 +5,15 @@ __SSS_BEGIN
 // Logs the given argument to the given stream
 static void _log(std::ostream& stream, std::string const& str) noexcept try
 {
+    static std::mutex mutex;
+    std::unique_lock const lock(mutex);
+
     if (!str.empty()) {
         stream
             << std::boolalpha               // Print booleans as 'true' or 'false'
             << UTF_Current_Time() << "|  "  // Print UTF time
             << str                          // Print message
-            << std::endl;                    // Print line break
+            << std::endl;                   // Print line break
     }
 }
 catch (...) {

@@ -144,4 +144,3 @@ __SSS_END
 #define __CATCH_AND_LOG_METHOD_EXC catch (std::exception const& e) {\
     __LOG_OBJ_METHOD_ERR(e.what());\
 }
-
