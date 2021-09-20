@@ -37,6 +37,13 @@ void log_err(std::string const& str) noexcept
     _log(std::cerr, context_msg("[ERR]", str));
 }
 
+std::string getErrorString(int errnum)
+{
+    char buf[1024];
+    strerror_s(buf, 1024, errno);
+    return std::string(buf);
+}
+
 // Throws a runtime_error exception with given arg
 void throw_exc(std::string const& str)
 {

@@ -32,6 +32,8 @@ namespace ERR_MSG {
 
     // --- Functions ---
 
+std::string getErrorString(int errnum);
+
 // Converts a template to a string by outputing it to a string stream
 template <typename T>
 std::string toString(T const& arg) noexcept try

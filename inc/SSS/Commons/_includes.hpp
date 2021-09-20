@@ -18,6 +18,7 @@
 #include <stdexcept>
 #include <iostream>
 #include <sstream>
+#include <fstream>
 #include <chrono>
 #include <thread>
 #include <mutex>

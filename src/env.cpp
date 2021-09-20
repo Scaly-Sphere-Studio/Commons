@@ -33,6 +33,22 @@ bool isReg(std::string const& path) noexcept
     return stat(path.c_str(), &s) == 0 && (s.st_mode & S_IFREG) != 0;
 }
 
+std::string readFile(std::string const& filepath)
+{
+    // Read the shader code from the file
+    std::string ret;
+    std::ifstream stream(filepath, std::ios::in);
+    // Throw if file could not be open
+    if (!stream.is_open()) {
+        throw_exc("Could not open file \'" + filepath + "\' : " + getErrorString(errno));
+    }
+    std::stringstream sstr;
+    sstr << stream.rdbuf();
+    ret = sstr.str();
+    stream.close();
+    return ret;
+}
+
 __INTERNAL_BEGIN
 
 // Includes for getPWD();

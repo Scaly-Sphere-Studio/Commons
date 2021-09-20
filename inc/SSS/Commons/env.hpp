@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SSS/Commons/_includes.hpp"
+#include "SSS/Commons/log.hpp"
 
 __SSS_BEGIN
 
@@ -12,6 +13,8 @@ std::string copyEnv(std::string const& varname);
 bool isDir(std::string const& path) noexcept;
 // Returns true if the given path leads to an existing regular file.
 bool isReg(std::string const& path) noexcept;
+
+std::string readFile(std::string const& filepath);
 
 __INTERNAL_BEGIN
 
