@@ -25,6 +25,7 @@
     <None Include="vcpkg_scripts\Remove.ps1" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="inc\SSS\Commons\conversions.hpp" />
     <ClInclude Include="inc\SSS\Commons\enums.hpp" />
     <ClInclude Include="inc\SSS\Commons\env.hpp" />
     <ClInclude Include="inc\SSS\Commons.hpp" />
@@ -39,6 +40,7 @@
     <ClCompile Include="src\color.cpp" />
     <ClCompile Include="src\env.cpp" />
     <ClCompile Include="src\log.cpp" />
+    <ClCompile Include="src\conversions.cpp" />
     <ClCompile Include="src\time.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
