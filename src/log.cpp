@@ -40,7 +40,7 @@ void log_err(std::string const& str) noexcept
 std::string getErrorString(int errnum)
 {
     char buf[1024];
-    strerror_s(buf, 1024, errno);
+    strerror_s(buf, 1024, errnum);
     return std::string(buf);
 }
 

@@ -9,6 +9,8 @@ __SSS_BEGIN
 // An unknown env variable will result in an empty string.
 std::string copyEnv(std::string const& varname);
 
+// Returns true if the given path exists
+bool isAccessible(std::string const& path);
 // Returns true if the given path leads to an existing directory.
 bool isDir(std::string const& path) noexcept;
 // Returns true if the given path leads to an existing regular file.

@@ -19,6 +19,12 @@ std::string copyEnv(std::string const& varname)
     return ret;
 }
 
+bool isAccessible(std::string const& path)
+{
+    struct stat s;
+    return stat(path.c_str(), &s) == 0;
+}
+
 // Returns true if the given path leads to an existing directory.
 bool isDir(std::string const& path) noexcept
 {
