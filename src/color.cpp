@@ -1,6 +1,30 @@
 #include "SSS/Commons/color.hpp"
 
-__SSS_BEGIN
+__SSS_BEGIN;
+
+// Returns a rainbow color based on the passed value.
+RGB24 rainbow(uint32_t value, uint32_t max_value) noexcept
+{
+    // Value should be as: 0 <= value <= 1530.
+    uint32_t const index = static_cast<uint32_t>(1530.f *
+        (static_cast<float>(value) / static_cast<float>(max_value)));
+    if (index < 255) {
+        return RGB24(255, static_cast<uint8_t>(index), 0);
+    }
+    else if (index < 510) {
+        return RGB24(static_cast<uint8_t>(510 - index), 255, 0);
+    }
+    else if (index < 765) {
+        return RGB24(0, 255, static_cast<uint8_t>(index - 510));
+    }
+    else if (index < 1020) {
+        return RGB24(0, static_cast<uint8_t>(1020 - index), 255);
+    }
+    else if (index < 1275) {
+        return RGB24(static_cast<uint8_t>(index - 1020), 0, 255);
+    }
+    return RGB24(255, 0, static_cast<uint8_t>(1530 - index));
+}
 
 // Blends colors together, based on the source's alpha
 RGBA32& operator*=(RGBA32& dst, RGBA32 const& src) noexcept
@@ -26,25 +50,4 @@ RGBA32& operator*=(RGBA32& dst, RGBA32 const& src) noexcept
     return dst;
 }
 
-// Returns a rainbow color based on the passed value.
-// Value should be as: 0 <= value <= 1530.
-RGB24 rainbow(uint32_t value) noexcept {
-    if (value < 255) {
-        return RGB24(255, static_cast<uint8_t>(value), 0);
-    }
-    else if (value < 510) {
-        return RGB24(static_cast<uint8_t>(510 - value), 255, 0);
-    }
-    else if (value < 765) {
-        return RGB24(0, 255, static_cast<uint8_t>(value - 510));
-    }
-    else if (value < 1020) {
-        return RGB24(0, static_cast<uint8_t>(1020 - value), 255);
-    }
-    else if (value < 1275) {
-        return RGB24(static_cast<uint8_t>(value - 1020), 0, 255);
-    }
-    return RGB24(255, 0, static_cast<uint8_t>(1530 - value));
-}
-
-__SSS_END
+__SSS_END;

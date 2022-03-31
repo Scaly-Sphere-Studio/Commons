@@ -1,30 +1,40 @@
 #pragma once
 
-#include "SSS/Commons/_includes.hpp"
-#include "SSS/Commons/log.hpp"
+#include "_includes.hpp"
+#include "log.hpp"
 
-__SSS_BEGIN
+/** @file
+ *  Environment interaction features.
+ */
 
-// Copies the corresponding env variable's content in a string.
-// An unknown env variable will result in an empty string.
-std::string copyEnv(std::string const& varname);
+__SSS_BEGIN;
 
-// Returns true if the given path exists
-bool isAccessible(std::string const& path);
-// Returns true if the given path leads to an existing directory.
-bool isDir(std::string const& path) noexcept;
-// Returns true if the given path leads to an existing regular file.
-bool isReg(std::string const& path) noexcept;
+/** Copies the corresponding environment variable's value in a string.
+ *  @return The value of the corresponding variable, or an empty string otherwise.
+ */
+std::string getEnv(std::string const& varname);
 
+/** Returns true if the given path is accessible.*/
+bool pathIsAccessible(std::string const& path) noexcept;
+/** Returns true if the given path leads to an accessible directory.*/
+bool pathIsDir(std::string const& path) noexcept;
+/** Returns true if the given path leads to an accessible regular file.*/
+bool pathIsFile(std::string const& path) noexcept;
+
+/** Copies the contents of an existing file in a string.
+ *  @throws std::runtime_error If the file couldn't be read.
+ */
 std::string readFile(std::string const& filepath);
 
-__INTERNAL_BEGIN
+/** \cond INTERNAL */
+__INTERNAL_BEGIN;
 
-std::string getPWD();
+std::string getPWD(); // Inits SSS::PWD
 
-__INTERNAL_END
+__INTERNAL_END;
+/** \endcond */
 
-// Path to the folder holding the running .exe
+/** Path to the folder holding the running .exe */
 static const std::string PWD = _internal::getPWD();
 
-__SSS_END
+__SSS_END;

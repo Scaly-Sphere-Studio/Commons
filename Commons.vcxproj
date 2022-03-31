@@ -20,13 +20,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="CONTROL" />
+    <None Include="Doxyfile" />
     <None Include="InstallScripts.ps1" />
     <None Include="vcpkg_scripts\Install.ps1" />
     <None Include="vcpkg_scripts\Remove.ps1" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\SSS\Commons\conversions.hpp" />
-    <ClInclude Include="inc\SSS\Commons\enums.hpp" />
     <ClInclude Include="inc\SSS\Commons\env.hpp" />
     <ClInclude Include="inc\SSS\Commons.hpp" />
     <ClInclude Include="inc\SSS\Commons\color.hpp" />

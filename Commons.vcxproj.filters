@@ -22,6 +22,7 @@
     <None Include="vcpkg_scripts\Remove.ps1">
       <Filter>vcpkg_scripts</Filter>
     </None>
+    <None Include="Doxyfile" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\SSS\Commons\_includes.hpp">
@@ -43,9 +44,6 @@
       <Filter>inc</Filter>
     </ClInclude>
     <ClInclude Include="inc\SSS\Commons\env.hpp">
-      <Filter>inc</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\SSS\Commons\enums.hpp">
       <Filter>inc</Filter>
     </ClInclude>
     <ClInclude Include="inc\SSS\Commons\threads.hpp">

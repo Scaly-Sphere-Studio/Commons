@@ -1,6 +1,6 @@
 #include "SSS/Commons/log.hpp"
 
-__SSS_BEGIN
+__SSS_BEGIN;
 
 // Logs the given argument to the given stream
 static void _log(std::ostream& stream, std::string const& str) noexcept try
@@ -28,13 +28,13 @@ void log_msg(std::string const& str) noexcept
 // Logs the given argument to std::cerr
 void log_wrn(std::string const& str) noexcept
 {
-    _log(std::cerr, context_msg("[WRN]", str));
+    _log(std::cerr, __CONTEXT_MSG("[WRN]", str));
 }
 
 // Logs the given argument to std::cerr
 void log_err(std::string const& str) noexcept
 {
-    _log(std::cerr, context_msg("[ERR]", str));
+    _log(std::cerr, __CONTEXT_MSG("[ERR]", str));
 }
 
 std::string getErrorString(int errnum)
@@ -50,4 +50,4 @@ void throw_exc(std::string const& str)
     throw std::runtime_error(str);
 }
 
-__SSS_END
+__SSS_END;

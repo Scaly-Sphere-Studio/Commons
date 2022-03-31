@@ -1,10 +1,20 @@
 #pragma once
 
-#include "SSS/Commons/time.hpp"
-#include "SSS/Commons/log.hpp"
-#include "SSS/Commons/pointers.hpp"
-#include "SSS/Commons/color.hpp"
-#include "SSS/Commons/env.hpp"
-#include "SSS/Commons/enums.hpp"
-#include "SSS/Commons/conversions.hpp"
-#include "SSS/Commons/threads.hpp"
+#include "Commons/color.hpp"
+#include "Commons/conversions.hpp"
+#include "Commons/env.hpp"
+#include "Commons/log.hpp"
+#include "Commons/pointers.hpp"
+#include "Commons/threads.hpp"
+#include "Commons/time.hpp"
+
+/** @mainpage Commons, a library by [Scaly Sphere Studio](https://github.com/Scaly-Sphere-Studio)
+ *  
+ *  Get a quick look around:
+ *  - SSS namespace
+ *  - log.hpp macros
+ */
+
+/** @file
+ *  Header including all other SSS/Commons headers.
+ */

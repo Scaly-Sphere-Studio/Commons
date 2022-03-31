@@ -1,10 +1,8 @@
 #include "SSS/Commons/env.hpp"
 
-__SSS_BEGIN
+__SSS_BEGIN;
 
-// Copies the corresponding env variable's content in a string.
-// An unknown env variable will result in an empty string.
-std::string copyEnv(std::string const& varname)
+std::string getEnv(std::string const& varname)
 {
     std::string ret;
     // Retrieve the var's content
@@ -19,29 +17,26 @@ std::string copyEnv(std::string const& varname)
     return ret;
 }
 
-bool isAccessible(std::string const& path)
+bool pathIsAccessible(std::string const& path) noexcept
 {
     struct stat s;
     return stat(path.c_str(), &s) == 0;
 }
 
-// Returns true if the given path leads to an existing directory.
-bool isDir(std::string const& path) noexcept
+bool pathIsDir(std::string const& path) noexcept
 {
     struct stat s;
     return stat(path.c_str(), &s) == 0 && (s.st_mode & S_IFDIR) != 0;
 }
 
-// Returns true if the given path leads to an existing regular file.
-bool isReg(std::string const& path) noexcept
+bool pathIsFile(std::string const& path) noexcept
 {
     struct stat s;
     return stat(path.c_str(), &s) == 0 && (s.st_mode & S_IFREG) != 0;
 }
 
-std::string readFile(std::string const& filepath)
+std::string readFile(std::string const& filepath) try
 {
-    // Read the shader code from the file
     std::string ret;
     std::ifstream stream(filepath, std::ios::in);
     // Throw if file could not be open
@@ -54,8 +49,9 @@ std::string readFile(std::string const& filepath)
     stream.close();
     return ret;
 }
+__CATCH_AND_RETHROW_FUNC_EXC
 
-__INTERNAL_BEGIN
+__INTERNAL_BEGIN;
 
 // Includes for getPWD();
 #if defined(_WIN32)
@@ -81,6 +77,6 @@ std::string getPWD()
     return pwd;
 }
 
-__INTERNAL_END
+__INTERNAL_END;
 
-__SSS_END
+__SSS_END;

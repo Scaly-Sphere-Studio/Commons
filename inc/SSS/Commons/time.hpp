@@ -1,29 +1,41 @@
 #pragma once
 
-#include "SSS/Commons/_includes.hpp"
+#include "_includes.hpp"
 
-__SSS_BEGIN
+/** @file
+ *  Time related functions and classes.
+ */
 
-    // --- Basic functions ---
+__SSS_BEGIN;
 
-// Returns a formatted string displaying the current UTF time
+/** Returns UTF time in a formatted string.
+ *  @return Time formated as such : <tt>hh:mm:ss.ms UTF</tt>
+ */
 std::string UTF_Current_Time();
 
-    // --- FPS_Timer ---
-
+/** Frame counter that computes Frames Per Second (FPS).
+ */
 class FPS_Timer {
 public:
-// --- Functions ---
 
-    // Adds one frame to the counter.
-    // Calculates FPS value every second, and return true if the value changed.
+    /** Adds one frame to the counter.
+     *  Computes FPS every second.
+     *  @return \c true if FPS changed, \c false otherwise.
+     *  @sa \c #get().
+     */
     bool addFrame() noexcept;
-    // Returns the FPS value
+    /** Returns current FPS based on current counter and time.
+     *  @return Computed FPS.
+     *  @sa \c #addFrame(), \c #getFormatted().
+     */
     inline long long get() const noexcept { return _fps; }
+    /** Returns current FPS formatted in a string.
+     *  @return Formatted FPS, eg: "60" for a value of 60.
+     *  @sa \c #get().
+     */
+    inline std::string getFormatted() const { return std::to_string(_fps); };
     
 private:
-// --- Variables ---
-
     long long _frames{ 0 }; // Frames counter
     long long _fps{ 0 };    // FPS value
 
@@ -35,13 +47,28 @@ private:
         { _start_time };
 };
 
-class Chrono {
+/** %Stopwatch used to benchmark features time.
+ *  Timer starts at creation, can be queried using \c #get(), and
+ *  can start over with \c #reset().
+ */
+class Stopwatch {
 private:
     using clock = std::chrono::high_resolution_clock;
     clock::time_point _start{ clock::now() };
 public:
-    std::string get() const;
+    /** Returns milliseconds since timer started.
+     *  @sa \c #getFormatted(), \c #reset().
+     */
+    long long get() const;
+    /** Returns milliseconds since timer started, formatted in a string.
+     *  @return Formated duration, eg: "630ms" for a value of 630.
+     *  @sa \c #get().
+     */
+    std::string getFormatted() const;
+    /** Resets timer.
+     *  @sa \c #get().
+     */
     void reset();
 };
 
-__SSS_END
+__SSS_END;

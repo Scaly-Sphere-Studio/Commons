@@ -1,9 +1,7 @@
 #include "SSS/Commons/time.hpp"
 #include "SSS/Commons/log.hpp"
 
-__SSS_BEGIN
-
-    // --- Basic functions ---
+__SSS_BEGIN;
 
 // Returns a formatted string displaying the current UTF time
 std::string UTF_Current_Time()
@@ -25,8 +23,6 @@ std::string UTF_Current_Time()
 
     return buff;
 }
-
-    // --- FPS_Timer functions ---
 
 // Adds one frame to the counter.
 // Calculates FPS value every second, and return true if the value changed.
@@ -53,15 +49,20 @@ bool FPS_Timer::addFrame() noexcept
     return false;
 }
 
-std::string Chrono::get() const
+long long Stopwatch::get() const
 {
     std::chrono::duration<double, std::milli> diff(clock::now() - _start);
-    return (toString(diff.count()) + "ms");
+    return static_cast<long long>(diff.count());
 }
 
-void Chrono::reset()
+std::string Stopwatch::getFormatted() const
+{
+    return std::to_string(get()) + "ms";
+}
+
+void Stopwatch::reset()
 {
     _start = clock::now();
 }
 
-__SSS_END
+__SSS_END;
