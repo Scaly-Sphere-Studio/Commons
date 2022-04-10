@@ -41,6 +41,9 @@ union RGBA32 {
         uint8_t a;      /**< Alpha (opacity) part of the color.*/
     } bytes;            /**< Holds red, green, blue and alpha parts of the color.*/
 
+    /** Typedef for pixel arrays.*/
+    using Vector = std::vector<RGBA32>;
+
     /** Empty constructor, sets color to 0.*/
     RGBA32() noexcept : rgba(0) {};
     /** Copy constructor.*/

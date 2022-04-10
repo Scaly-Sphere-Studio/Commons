@@ -17,7 +17,7 @@
 #include <sstream>
 #include <fstream>
 #include <chrono>
-#include <thread>
+#include <future>
 #include <mutex>
 #include <atomic>
 

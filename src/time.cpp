@@ -24,17 +24,46 @@ std::string UTF_Current_Time()
     return buff;
 }
 
+long long Stopwatch::getMS() const
+{
+    std::chrono::duration<double, std::milli> diff(clock::now() - _start);
+    return static_cast<long long>(diff.count());
+}
+
+std::string Stopwatch::getFormatted() const
+{
+    return std::to_string(getMS()) + "ms";
+}
+
+void Stopwatch::reset()
+{
+    _start = clock::now();
+}
+
 // Adds one frame to the counter.
 // Calculates FPS value every second, and return true if the value changed.
-bool FPS_Timer::addFrame() noexcept
+bool FrameTimer::addFrame() noexcept
 {
+    using namespace std::chrono;
+
+    // Add one frame
     ++_frames;
 
-    using namespace std::chrono;
+    // Update current longest frame
+    long long const frame_ms = _frame_watch.getMS();
+    _frame_watch.reset();
+    if (frame_ms > _current_longest_frame) {
+        _current_longest_frame = frame_ms;
+    }
+
+    // Count seconds since last update
     seconds const sec = duration_cast<seconds>(system_clock::now() - _stored_time);
 
-    // Update fps every second
+    // Update values every second
     if (sec >= seconds(1)) {
+        // Update longest frame
+        _last_longest_frame = _current_longest_frame;
+        _current_longest_frame = 0;
         // Determine fps
         long long const new_fps = _frames / sec.count();
         // Reset fps and increase stored time
@@ -43,26 +72,10 @@ bool FPS_Timer::addFrame() noexcept
         // Update old fps if needed
         if (new_fps != _fps) {
             _fps = new_fps;
-            return true;
         }
+        return true;
     }
     return false;
-}
-
-long long Stopwatch::get() const
-{
-    std::chrono::duration<double, std::milli> diff(clock::now() - _start);
-    return static_cast<long long>(diff.count());
-}
-
-std::string Stopwatch::getFormatted() const
-{
-    return std::to_string(get()) + "ms";
-}
-
-void Stopwatch::reset()
-{
-    _start = clock::now();
 }
 
 __SSS_END;

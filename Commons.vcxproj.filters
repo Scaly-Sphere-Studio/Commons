@@ -46,7 +46,7 @@
     <ClInclude Include="inc\SSS\Commons\env.hpp">
       <Filter>inc</Filter>
     </ClInclude>
-    <ClInclude Include="inc\SSS\Commons\threads.hpp">
+    <ClInclude Include="inc\SSS\Commons\async.hpp">
       <Filter>inc</Filter>
     </ClInclude>
     <ClInclude Include="inc\SSS\Commons\conversions.hpp">

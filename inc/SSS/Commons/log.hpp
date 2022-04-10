@@ -106,27 +106,43 @@ __SSS_END;
 #define __OBJ_METHOD_MSG(X) __CONTEXT_MSG(__OBJ_METHOD, X)
 
 /** Calls \c SSS::log_msg only in debug mode.*/
-#define __LOG_MSG(X) if constexpr (SSS::DEBUGMODE) { SSS::log_msg(X); }
+#define __LOG_MSG(X)    SSS::log_msg( X );
 /** Calls \c SSS::log_wrn only in debug mode.*/
-#define __LOG_WRN(X) if constexpr (SSS::DEBUGMODE) { SSS::log_wrn(X); }
+#define __LOG_WRN(X)    SSS::log_wrn( X );
 /** Calls \c SSS::log_err only in debug mode.*/
-#define __LOG_ERR(X) if constexpr (SSS::DEBUGMODE) { SSS::log_err(X); }
+#define __LOG_ERR(X)    SSS::log_err( X );
 
-#define __LOG_FUNC_MSG(X) __LOG_MSG( __FUNC_MSG(X) )
-#define __LOG_FUNC_ERR(X) __LOG_ERR( __FUNC_MSG(X) )
-#define __LOG_FUNC_WRN(X) __LOG_WRN( __FUNC_MSG(X) )
+#define __LOG_MSG(X, Y) SSS::log_msg( __CONTEXT_MSG(X, Y) );
+#define __LOG_ERR(X, Y) SSS::log_err( __CONTEXT_MSG(X, Y) );
+#define __LOG_WRN(X, Y) SSS::log_msg( __CONTEXT_MSG(X, Y) );
 
-#define __LOG_OBJ_MSG(X) __LOG_MSG( __OBJ_MSG(X) )
-#define __LOG_OBJ_WRN(X) __LOG_WRN( __OBJ_MSG(X) )
-#define __LOG_OBJ_ERR(X) __LOG_ERR( __OBJ_MSG(X) )
+#define __LOG_FUNC_MSG(X)       __LOG_MSG( __FUNC_MSG(X) )
+#define __LOG_FUNC_MSG(X, Y)    __LOG_MSG( __FUNC_MSG(X), Y )
+#define __LOG_FUNC_ERR(X)       __LOG_ERR( __FUNC_MSG(X) )
+#define __LOG_FUNC_ERR(X, Y)    __LOG_ERR( __FUNC_MSG(X), Y )
+#define __LOG_FUNC_WRN(X)       __LOG_WRN( __FUNC_MSG(X) )
+#define __LOG_FUNC_WRN(X, Y)    __LOG_WRN( __FUNC_MSG(X), Y )
 
-#define __LOG_METHOD_MSG(X) __LOG_MSG( __METHOD_MSG(X) )
-#define __LOG_METHOD_ERR(X) __LOG_ERR( __METHOD_MSG(X) )
-#define __LOG_METHOD_WRN(X) __LOG_WRN( __METHOD_MSG(X) )
+#define __LOG_OBJ_MSG(X)    __LOG_MSG( __OBJ_MSG(X) )
+#define __LOG_OBJ_MSG(X, Y) __LOG_MSG( __OBJ_MSG(X), Y )
+#define __LOG_OBJ_WRN(X)    __LOG_WRN( __OBJ_MSG(X) )
+#define __LOG_OBJ_WRN(X, Y) __LOG_WRN( __OBJ_MSG(X), Y )
+#define __LOG_OBJ_ERR(X)    __LOG_ERR( __OBJ_MSG(X) )
+#define __LOG_OBJ_ERR(X, Y) __LOG_ERR( __OBJ_MSG(X), Y )
 
-#define __LOG_OBJ_METHOD_MSG(X) __LOG_MSG( __OBJ_METHOD_MSG(X) )
-#define __LOG_OBJ_METHOD_ERR(X) __LOG_ERR( __OBJ_METHOD_MSG(X) )
-#define __LOG_OBJ_METHOD_WRN(X) __LOG_WRN( __OBJ_METHOD_MSG(X) )
+#define __LOG_METHOD_MSG(X)     __LOG_MSG( __METHOD_MSG(X) )
+#define __LOG_METHOD_MSG(X, Y)  __LOG_MSG( __METHOD_MSG(X), Y )
+#define __LOG_METHOD_ERR(X)     __LOG_ERR( __METHOD_MSG(X) )
+#define __LOG_METHOD_ERR(X, Y)  __LOG_ERR( __METHOD_MSG(X), Y )
+#define __LOG_METHOD_WRN(X)     __LOG_WRN( __METHOD_MSG(X) )
+#define __LOG_METHOD_WRN(X, Y)  __LOG_WRN( __METHOD_MSG(X), Y )
+
+#define __LOG_OBJ_METHOD_MSG(X)     __LOG_MSG( __OBJ_METHOD_MSG(X) )
+#define __LOG_OBJ_METHOD_MSG(X, Y)  __LOG_MSG( __OBJ_METHOD_MSG(X), Y )
+#define __LOG_OBJ_METHOD_ERR(X)     __LOG_ERR( __OBJ_METHOD_MSG(X) )
+#define __LOG_OBJ_METHOD_ERR(X, Y)  __LOG_ERR( __OBJ_METHOD_MSG(X), Y )
+#define __LOG_OBJ_METHOD_WRN(X)     __LOG_WRN( __OBJ_METHOD_MSG(X) )
+#define __LOG_OBJ_METHOD_WRN(X, Y)  __LOG_WRN( __OBJ_METHOD_MSG(X), Y )
 
 
 /** Logs a constructor notice using \c #__OBJ_MSG and a preset message.*/
