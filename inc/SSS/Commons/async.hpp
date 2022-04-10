@@ -179,7 +179,7 @@ private:
     catch (std::exception const& e) {
         // Async function will no longer be running
         _running_state = _RunningState::handled;
-        __LOG_OBJ_ERR(__CONTEXT_MSG("Function threw", e.what()));
+        __LOG_OBJ_CTX_ERR("Function threw", e.what());
     };
 #pragma warning( pop )
 };
