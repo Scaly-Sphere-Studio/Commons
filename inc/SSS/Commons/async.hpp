@@ -3,6 +3,12 @@
 #include "_includes.hpp"
 #include "log.hpp"
 
+#define __CATCH_ASYNC_ERROR \
+catch (std::exception const& e) { \
+    _running_state = _RunningState::handled; \
+    __LOG_OBJ_METHOD_CTX_ERR("Function threw", e.what()); \
+};
+
 /** @file
  *  Async logic & algorithms.
  */
@@ -48,11 +54,13 @@ public:
      *  @param[in, out] args The arguments to give to \c #_asyncFunction().
      *  @sa \c #isRunning(), \c #isPending().
      */
-    void run(_Args... args)
+    void run(_Args... args) noexcept try
     {
         cancel();
         _future = std::async(std::launch::async, &AsyncBase::_intermediateFunction, this, args...);
-    };
+        _running_state = _RunningState::running;
+    }
+    __CATCH_ASYNC_ERROR;
 
     /** Cancels the running async function, if any.
      *  In order for this function to work as intented, you should
@@ -61,7 +69,7 @@ public:
      *  prematurely if it returns \c true.
      *  @sa \c #run().
      */
-    void cancel()
+    void cancel() noexcept try
     {
         // Return if async function was already canceled.
         if (!_future.valid()) {
@@ -84,7 +92,8 @@ public:
         if (LOG::run_state && was_running) {
             __LOG_OBJ_MSG("Function was successfully canceled.");
         }
-    };
+    }
+    __CATCH_ASYNC_ERROR;
 
     /** Returns \c true if the async function is currently running.
      *  An async function can either be running, pending, or handled.
@@ -132,7 +141,7 @@ protected:
      *  @return \c true if \c #cancel() was called but the async function
      *  is still running, and \c false otherwise.
      */
-    bool _beingCanceled() { return _is_canceled; }
+    bool _beingCanceled() const noexcept { return _is_canceled; }
 
 private:
     // Created in run()
@@ -161,7 +170,6 @@ private:
     // Calls _asyncFunction and sets _running_state accordingly
     void _intermediateFunction(_Args... args) try
     {
-        _running_state = _RunningState::running;
         if (LOG::run_state) {
             __LOG_OBJ_MSG("Function started running.");
         }
@@ -174,14 +182,7 @@ private:
         }
         _running_state = _RunningState::pending;
     }
-#pragma warning( push )
-#pragma warning( disable : 4101 )
-    catch (std::exception const& e) {
-        // Async function will no longer be running
-        _running_state = _RunningState::handled;
-        __LOG_OBJ_CTX_ERR("Function threw", e.what());
-    };
-#pragma warning( pop )
+    __CATCH_ASYNC_ERROR;
 };
 
 // Init static members
@@ -204,3 +205,5 @@ AsyncBase<_Args...>::~AsyncBase()
 }
 
 __SSS_END;
+
+#undef __CATCH_ASYNC_ERROR

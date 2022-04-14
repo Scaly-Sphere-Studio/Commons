@@ -8,6 +8,9 @@
 
 __SSS_BEGIN;
 
+
+void sleepUntil(std::chrono::steady_clock::time_point time);
+
 /** Returns UTF time in a formatted string.
  *  @return Time formated as such : <tt>hh:mm:ss.ms UTF</tt>
  */

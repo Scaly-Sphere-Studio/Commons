@@ -80,7 +80,7 @@ inline void log_err(T const& arg) noexcept { log_err(toString(arg)); }
 __SSS_END;
 
 /** Adds ": " between the "cxt" and "msg" strings.*/
-#define __CONTEXT_MSG(cxt, msg) (SSS::toString(cxt) + ": " + SSS::toString(msg))
+#define __CONTEXT_MSG(cxt, msg) (::SSS::toString(cxt) + ": " + ::SSS::toString(msg))
 
 /** Current scope's function name.*/
 #define __FUNC (std::string(__func__) + "()")
@@ -90,7 +90,7 @@ __SSS_END;
 /** Current scope's class name.*/
 #define __THIS_NAME (std::string(typeid(*this).name() + 6))
 /** Current scope's instance address.*/
-#define __THIS_ADDR std::string("0x") + SSS::toString(this)
+#define __THIS_ADDR std::string("0x") + ::SSS::toString(this)
 /** Current scope's class name & instance address.*/
 #define __THIS_OBJ __THIS_NAME + " [" + __THIS_ADDR + "]"
 /** Prepends <tt>'#__THIS_OBJ: '</tt> to the given string.*/
@@ -106,11 +106,11 @@ __SSS_END;
 #define __OBJ_METHOD_MSG(X) __CONTEXT_MSG(__OBJ_METHOD, X)
 
 /** Calls \c SSS::log_msg only in debug mode.*/
-#define __LOG_MSG(X)    SSS::log_msg( X );
+#define __LOG_MSG(X)    ::SSS::log_msg( X );
 /** Calls \c SSS::log_wrn only in debug mode.*/
-#define __LOG_WRN(X)    SSS::log_wrn( X );
+#define __LOG_WRN(X)    ::SSS::log_wrn( X );
 /** Calls \c SSS::log_err only in debug mode.*/
-#define __LOG_ERR(X)    SSS::log_err( X );
+#define __LOG_ERR(X)    ::SSS::log_err( X );
 
 #define __LOG_CTX_MSG(X, Y) __LOG_MSG ( __CONTEXT_MSG(X, Y) );
 #define __LOG_CTX_WRN(X, Y) __LOG_ERR ( __CONTEXT_MSG(X, Y) );
@@ -151,17 +151,17 @@ __SSS_END;
 #define __LOG_DESTRUCTOR __LOG_MSG( __OBJ_MSG("~Destructor() ended") )
 
 /** Throws an exception with \c #__THIS_OBJ prepended to given message.*/
-#define __OBJ_THROW(X) SSS::throw_exc(__CONTEXT_MSG(__THIS_OBJ, X))
+#define __OBJ_THROW(X) ::SSS::throw_exc(__CONTEXT_MSG(__THIS_OBJ, X))
 
 /** Catches exceptions, prepends the function's name to error messages, and rethrows.*/
 #define __CATCH_AND_RETHROW_FUNC_EXC \
 catch (std::exception const& e) {\
-    SSS::throw_exc(__FUNC_MSG(e.what()));\
+    ::SSS::throw_exc(__FUNC_MSG(e.what()));\
 }
 /** Catches exceptions, prepends the method's name to error messages, and rethrows.*/
 #define __CATCH_AND_RETHROW_METHOD_EXC \
 catch (std::exception const& e) {\
-    SSS::throw_exc(__METHOD_MSG(e.what()));\
+    ::SSS::throw_exc(__METHOD_MSG(e.what()));\
 }
 
 /** Catches exceptions & prepends the function's name to error messages before logging them.*/
