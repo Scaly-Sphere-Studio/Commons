@@ -10,10 +10,10 @@ static void _log(std::ostream& stream, std::string const& str) noexcept try
 
     if (!str.empty()) {
         stream
-            << std::boolalpha               // Print booleans as 'true' or 'false'
-            << UTF_Current_Time() << "|  "  // Print UTF time
-            << str                          // Print message
-            << std::endl;                   // Print line break
+            << std::boolalpha       // Print booleans as 'true' or 'false'
+            << timeUTF() << "|  "   // Print UTF time
+            << str                  // Print message
+            << std::endl;           // Print line break
     }
 }
 catch (...) {

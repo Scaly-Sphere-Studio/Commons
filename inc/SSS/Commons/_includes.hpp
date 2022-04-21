@@ -1,12 +1,7 @@
 #pragma once
 
 /** @file
- *  Base header declaring macros and including resources needed by other headers.
- */
-
-/** @namespace SSS
- *  Base namespace for all of \a %SSS libraries.
- *  @ref index "Commons" features are, for the most part, nested directly into it.
+ *  Base header including resources and defining macros used by other headers.
  */
 
 // STL
@@ -51,6 +46,6 @@
 #define __INTERNAL_END }
 
 /** The following function does not return.
- *  @sa #SSS::throw_exc.
+ *  @sa SSS::throw_exc()
  */
 #define __NO_RETURN __declspec(noreturn)

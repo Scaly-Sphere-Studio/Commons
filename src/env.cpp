@@ -1,5 +1,31 @@
 #include "SSS/Commons/env.hpp"
 
+// Includes for _getPWD();
+#if defined(_WIN32)
+# include <windows.h>
+# include <libloaderapi.h>
+#elif defined(_APPLE_) && defined(_MACH_)
+#elif defined(linux) || defined(__linux)
+#endif
+
+static std::string _getPWD()
+{
+    std::string pwd;
+#if defined(_WIN32)
+    CHAR path[MAX_PATH];
+    GetModuleFileNameA(NULL, path, MAX_PATH);
+    pwd = std::string(path);
+    pwd = pwd.substr(0, pwd.find_last_of("\\/") + 1);
+#elif defined(_APPLE_) && defined(_MACH_)
+    __LOG_WRN("SSS::PWD can not been set yet on this OS."));
+#elif defined(linux) || defined(__linux)
+    __LOG_WRN("SSS::PWD can not been set yet on this OS."));
+#endif
+    return pwd;
+}
+
+std::string const SSS::PWD{ _getPWD() };
+
 __SSS_BEGIN;
 
 std::string getEnv(std::string const& varname)
@@ -49,34 +75,6 @@ std::string readFile(std::string const& filepath) try
     stream.close();
     return ret;
 }
-__CATCH_AND_RETHROW_FUNC_EXC
-
-__INTERNAL_BEGIN;
-
-// Includes for getPWD();
-#if defined(_WIN32)
-# include <windows.h>
-# include <libloaderapi.h>
-#elif defined(_APPLE_) && defined(_MACH_)
-#elif defined(linux) || defined(__linux)
-#endif
-
-std::string getPWD()
-{
-    std::string pwd;
-#if defined(_WIN32)
-    CHAR path[MAX_PATH];
-    GetModuleFileNameA(NULL, path, MAX_PATH);
-    pwd = std::string(path);
-    pwd = pwd.substr(0, pwd.find_last_of("\\/") + 1);
-#elif defined(_APPLE_) && defined(_MACH_)
-    __LOG_WRN("SSS::PWD can not been set yet on this OS."));
-#elif defined(linux) || defined(__linux)
-    __LOG_WRN("SSS::PWD can not been set yet on this OS."));
-#endif
-    return pwd;
-}
-
-__INTERNAL_END;
+__CATCH_AND_RETHROW_FUNC_EXC;
 
 __SSS_END;

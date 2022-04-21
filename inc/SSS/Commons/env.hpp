@@ -4,10 +4,13 @@
 #include "log.hpp"
 
 /** @file
- *  Environment interaction features.
+ *  Defines environment-related functions and variables.
  */
 
 __SSS_BEGIN;
+
+/** Path to the folder holding the running .exe*/
+extern const std::string PWD;
 
 /** Copies the corresponding environment variable's value in a string.
  *  @return The value of the corresponding variable, or an empty string otherwise.
@@ -25,16 +28,5 @@ bool pathIsFile(std::string const& path) noexcept;
  *  @throws std::runtime_error If the file couldn't be read.
  */
 std::string readFile(std::string const& filepath);
-
-/** \cond INTERNAL */
-__INTERNAL_BEGIN;
-
-std::string getPWD(); // Inits SSS::PWD
-
-__INTERNAL_END;
-/** \endcond */
-
-/** Path to the folder holding the running .exe */
-static const std::string PWD = _internal::getPWD();
 
 __SSS_END;

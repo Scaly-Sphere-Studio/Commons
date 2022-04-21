@@ -17,7 +17,7 @@ void sleepUntil(std::chrono::steady_clock::time_point time)
 }
 
 // Returns a formatted string displaying the current UTF time
-std::string UTF_Current_Time()
+std::string timeUTF()
 {
     using namespace std::chrono;
 
@@ -32,7 +32,7 @@ std::string UTF_Current_Time()
 
     // Format the string via printf
     char buff[64];
-    snprintf(buff, 64U, "%02d:%02d:%02d.%03d UTF", h, m, s, ms);
+    snprintf(buff, 64U, "%02d:%02d:%02d.%03dZ", h, m, s, ms);
 
     return buff;
 }
@@ -43,9 +43,17 @@ long long Stopwatch::getMS() const
     return static_cast<long long>(diff.count());
 }
 
+double Stopwatch::getPreciseMS() const
+{
+    std::chrono::duration<double, std::milli> diff(clock::now() - _start);
+    return diff.count();
+}
+
 std::string Stopwatch::getFormatted() const
 {
-    return std::to_string(getMS()) + "ms";
+    char buff[64];
+    sprintf_s(buff, "%.2fms", getPreciseMS());
+    return buff;
 }
 
 void Stopwatch::reset()

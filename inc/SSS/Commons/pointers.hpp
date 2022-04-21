@@ -3,19 +3,19 @@
 #include "_includes.hpp"
 
 /** @file
- *  Holds pointer related features.
+ *  Defines smart pointers related classes and functions.
  */
 
 __SSS_BEGIN;
 
-/** Implementation of \c std::unique_ptr for C style pointers.
+/** Implementation of \c \b std::unique_ptr for C style pointers.
  * 
  *  This template class allows for C style pointers to be handled safely
  *  inside a \c std::unique_ptr.
  * 
- *  @param[in] "<typename> _Ty" The type to which the pointer points to, eg: \c int
+ *  @param[in] _Ty The type to which the pointer points to, eg: \c int
  *  for \c int* pointers.
- *  @param[in] "<typename> _Dx" The type of the related clean-up function (destructor),
+ *  @param[in] _Dx The type of the related clean-up function (destructor),
  *  eg: <tt> void(*)(void*)</tt> for C's \c free.
  *  @param[in] func The clean-up function, eg: \c free.
  * 

@@ -8,13 +8,21 @@
 #include "Commons/async.hpp"
 #include "Commons/time.hpp"
 
-/** @mainpage Commons, a library by [Scaly Sphere Studio](https://github.com/Scaly-Sphere-Studio)
- *  
- *  Get a quick look around:
- *  - SSS namespace
- *  - log.hpp macros
+/** @file
+ *  Header of the
+ *  [SSS/Commons](https://github.com/Scaly-Sphere-Studio/Commons)
+ *  library, includes all \c SSS/Commons/ headers.
  */
 
-/** @file
- *  Header including all other SSS/Commons headers.
+/** @dir SSS
+ *  The main \b %SSS header directory.
+ */
+
+/** @dir SSS/Commons
+ *  Holds all \b %SSS/Commons headers.
+ */
+
+/** @namespace SSS
+ *  Base namespace for all of \b %SSS libraries.
+ *  \b SSS/Commons features are, for the most part, nested directly into it.
  */

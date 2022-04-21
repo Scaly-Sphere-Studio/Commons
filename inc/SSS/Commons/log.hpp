@@ -5,7 +5,7 @@
 #include "conversions.hpp"
 
 /** @file
- *  Console log & related macros, functions, constants.
+ *  Defines log functions, constants, and numerous macros.
  */
 
 __SSS_BEGIN;
@@ -13,36 +13,15 @@ __SSS_BEGIN;
 /** States the configuration (Release / Debug).
  *  \c true = Debug, \c false = Release.
  */
-static constexpr bool DEBUGMODE
+extern constexpr bool DEBUGMODE
+/** \cond SKIP*/
 #ifdef NDEBUG
-  = false;
+  = false
 #else
-  = true;
+  = true
 #endif // NDEBUG
-
-/** Holds multiple string constants used in error messages.*/
-namespace ERR_MSG {
-    static const std::string DUPLICATE_NAME
-        = "Duplicate name/path. Names & paths should be unique.";
-    static const std::string NOTHING_FOUND
-        = "Nothing was found for given argument(s).";
-    static const std::string INVALID_ARGUMENT
-        = "Invalid argument(s).";
-    static const std::string OUT_OF_BOUND
-        = "Invalid argument(s): Out of bound";
-};
-
-/** Returns an error message based on an error number
- * @param[in] errnum The error number to get the error message from.
- * @return The error message generated from the error number.
- */
-std::string getErrorString(int errnum);
-
-/** Throws an \c std::runtime_error exception with given message.
- *  @param[in] str The error message to be given to the
- *  \c std::runtime_error constructor
- */
-__NO_RETURN void throw_exc(std::string const& str);
+/** \endcond*/
+;
 
 /** Writes the given string to \c std::cout
  *  @param[in] str The string to write to \c std::cout
@@ -76,6 +55,18 @@ void log_err(std::string const& str) noexcept;
  */
 template <typename T>
 inline void log_err(T const& arg) noexcept { log_err(toString(arg)); }
+
+/** Returns an error message based on given error number
+ * @param[in] errnum The error number to generate the error message from.
+ * @return The error message generated from the error number.
+ */
+std::string getErrorString(int errnum);
+
+/** Throws a \c std::runtime_error exception with given message.
+ *  @param[in] str The error message to be given to the
+ *  \c std::runtime_error constructor
+ */
+__NO_RETURN void throw_exc(std::string const& str);
 
 __SSS_END;
 

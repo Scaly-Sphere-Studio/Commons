@@ -3,28 +3,30 @@
 #include "_includes.hpp"
 #include "log.hpp"
 
-#define __CATCH_ASYNC_ERROR \
+/** @file
+ *  Defines SSS::AsyncBase class.
+ */
+
+/** Used internally in SSS::AsyncBase.*/
+#define __CATCH_ASYNCBASE_ERROR \
 catch (std::exception const& e) { \
     _running_state = _RunningState::handled; \
     __LOG_OBJ_METHOD_CTX_ERR("Function threw", e.what()); \
 };
 
-/** @file
- *  Async logic & algorithms.
- */
 __SSS_BEGIN;
 
-/** Enhanced \c std::async class.
+/** Enhanced \c \b std::async class.
  *  This class aspires to render async usage easier, mainly by
- *  getting more control over the function's state with \c #isRunning()
- *  and \c #isPending().
- *  @param[in] ..._Args All types of arguments which will be given to
- *  the \c #run() function.
+ *  getting more control over the function's state with
+ *  isRunning() and isPending().
+ *  @param[in] ..._Args All types of arguments which will be
+ *  given to the run() function.
  */
 template<class... _Args>
 class AsyncBase {
 public:
-    /** \cond INTERNAL*/
+    /** \cond REWORK*/
     struct LOG {
         static bool constructor;
         static bool destructor;
@@ -33,7 +35,7 @@ public:
     /** \endcond*/
 
     /** Empty constructor.
-     *  Lets you call \c #run() whenever you want.
+     *  Lets you call run() whenever you want.
      */
     AsyncBase() noexcept
     {
@@ -43,16 +45,17 @@ public:
     };
 
     /** Destructor, cancels any running async function.
-     *  Calls \c #cancel() and does not return until the async function
-     *  has stopped running.
+     *  Calls cancel() and does not return until the async
+     *  function has stopped running.
      */
     virtual ~AsyncBase() = 0;
 
-    /** Runs user defined \c #_asyncFunction() with given arguments.
-     *  Ensures that no async function overlaps by calling \c #cancel() beforehand.\n
+    /** Runs user defined _asyncFunction() with given arguments.
+     *  Ensures that no async function overlaps by calling
+     *  cancel() beforehand.\n
      *  Automatically updates the function's state.
-     *  @param[in, out] args The arguments to give to \c #_asyncFunction().
-     *  @sa \c #isRunning(), \c #isPending().
+     *  @param[in] args The arguments to give to _asyncFunction()
+     *  @sa isRunning(), isPending()
      */
     void run(_Args... args) noexcept try
     {
@@ -60,14 +63,14 @@ public:
         _future = std::async(std::launch::async, &AsyncBase::_intermediateFunction, this, args...);
         _running_state = _RunningState::running;
     }
-    __CATCH_ASYNC_ERROR;
+    __CATCH_ASYNCBASE_ERROR;
 
     /** Cancels the running async function, if any.
      *  In order for this function to work as intented, you should
-     *  call \c #_beingCanceled() as often as possible in your
-     *  implementation of \c #_asyncFunction(), and return
+     *  call _beingCanceled() as often as possible in your
+     *  implementation of _asyncFunction(), and return
      *  prematurely if it returns \c true.
-     *  @sa \c #run().
+     *  @sa run()
      */
     void cancel() noexcept try
     {
@@ -93,20 +96,20 @@ public:
             __LOG_OBJ_MSG("Function was successfully canceled.");
         }
     }
-    __CATCH_ASYNC_ERROR;
+    __CATCH_ASYNCBASE_ERROR;
 
     /** Returns \c true if the async function is currently running.
      *  An async function can either be running, pending, or handled.
-     *  @sa \c #isPending().
+     *  @sa isPending()
      */
     inline bool isRunning() const noexcept
     {
         return _running_state == _RunningState::running;
     }
     /** Returns \c true if the async function has finished running and
-     *  is waiting to be \c #setAsHandled().
+     *  is waiting to be setAsHandled().
      *  An async function can either be running, pending, or handled.
-     *  @sa \c #isRunning().
+     *  @sa isRunning()
      */
     inline bool isPending() const noexcept
     {
@@ -114,7 +117,7 @@ public:
     }
     /** Sets a pending async function's state as handled.
      *  An async function can either be running, pending, or handled.
-     *  @sa \c #isRunning(), \c #isPending().
+     *  @sa isRunning(), isPending()
      */
     void setAsHandled() noexcept
     {
@@ -132,13 +135,13 @@ public:
     }
 
 protected:
-    /** To be called from your implementation of \c #_asyncFunction()
-     *  as often as possible.
-     *  In order for \c #cancel() to work as intended, you should
+    /** To be called from your own implementation of
+     *  _asyncFunction() as often as possible.
+     *  In order for cancel() to work as intended, you should
      *  call this function as often as possible in your
-     *  implementation of \c #_asyncFunction(), and return
+     *  implementation of _asyncFunction(), and return
      *  prematurely if it returns \c true.
-     *  @return \c true if \c #cancel() was called but the async function
+     *  @return \c true if cancel() was called but the async function
      *  is still running, and \c false otherwise.
      */
     bool _beingCanceled() const noexcept { return _is_canceled; }
@@ -157,12 +160,12 @@ private:
     };
     std::atomic<_RunningState> _running_state{ _RunningState::handled };
 
-    /** Pure virtual private function called from \c #run().
-     *  Implement your own async logic in this function.\n
-     *  In order for \c #cancel() to work as intended, you should
-     *  call \c #_beingCanceled() as often as possible, and return
+    /** Pure virtual private function called from run():
+     *  implement your own async logic in this function.
+     *  In order for cancel() to work as intended, you should
+     *  call _beingCanceled() as often as possible, and return
      *  prematurely if it returns \c true.
-     *  @param[in,out] args The argument(s) of type \c _Args
+     *  @param[in] args The argument(s) of type \c _Args
      *  defined in your class declaration.
      */
     virtual void _asyncFunction(_Args... args) = 0;
@@ -182,9 +185,10 @@ private:
         }
         _running_state = _RunningState::pending;
     }
-    __CATCH_ASYNC_ERROR;
+    __CATCH_ASYNCBASE_ERROR;
 };
 
+/** \cond REWORK*/
 // Init static members
 template<class... _Args>
 bool AsyncBase<_Args...>::LOG::constructor{ false };
@@ -192,6 +196,7 @@ template<class... _Args>
 bool AsyncBase<_Args...>::LOG::destructor{ false };
 template<class... _Args>
 bool AsyncBase<_Args...>::LOG::run_state{ false };
+/** \endcond*/
 
 // Implement virtual destructor
 template<class... _Args>
@@ -205,5 +210,3 @@ AsyncBase<_Args...>::~AsyncBase()
 }
 
 __SSS_END;
-
-#undef __CATCH_ASYNC_ERROR
