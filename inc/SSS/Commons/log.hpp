@@ -74,7 +74,7 @@ SSS_END;
 #define CONTEXT_MSG(cxt, msg) (::SSS::toString(cxt) + ": " + ::SSS::toString(msg))
 
 /** Current scope's function name.*/
-#define FUNC (std::string(func) + "()")
+#define FUNC (std::string(__func__) + "()")
 /** Prepends <tt>'#FUNC: '</tt> to the given string.*/
 #define FUNC_MSG(X) CONTEXT_MSG(FUNC, X)
 
@@ -103,37 +103,37 @@ SSS_END;
 /** Calls \c SSS::log_err only in debug mode.*/
 #define LOG_ERR(X)    ::SSS::log_err( X );
 
-#define LOG_CTX_MSG(X, Y) LOG_MSG ( CONTEXT_MSG(X, Y) );
-#define LOG_CTX_WRN(X, Y) LOG_ERR ( CONTEXT_MSG(X, Y) );
-#define LOG_CTX_ERR(X, Y) LOG_WRN ( CONTEXT_MSG(X, Y) );
+#define LOG_CTX_MSG(X, Y)   LOG_MSG ( CONTEXT_MSG(X, Y) );
+#define LOG_CTX_WRN(X, Y)   LOG_ERR ( CONTEXT_MSG(X, Y) );
+#define LOG_CTX_ERR(X, Y)   LOG_WRN ( CONTEXT_MSG(X, Y) );
 
-#define LOG_FUNC_MSG(X)           LOG_MSG       ( FUNC_MSG(X) )
-#define LOG_FUNC_WRN(X)           LOG_WRN       ( FUNC_MSG(X) )
-#define LOG_FUNC_ERR(X)           LOG_ERR       ( FUNC_MSG(X) )
-#define LOG_FUNC_CTX_MSG(X, Y)    LOG_CTX_MSG   ( FUNC_MSG(X), Y )
-#define LOG_FUNC_CTX_WRN(X, Y)    LOG_CTX_WRN   ( FUNC_MSG(X), Y )
-#define LOG_FUNC_CTX_ERR(X, Y)    LOG_CTX_ERR   ( FUNC_MSG(X), Y )
+#define LOG_FUNC_MSG(X)         LOG_MSG     ( FUNC_MSG(X) )
+#define LOG_FUNC_WRN(X)         LOG_WRN     ( FUNC_MSG(X) )
+#define LOG_FUNC_ERR(X)         LOG_ERR     ( FUNC_MSG(X) )
+#define LOG_FUNC_CTX_MSG(X, Y)  LOG_CTX_MSG ( FUNC_MSG(X), Y )
+#define LOG_FUNC_CTX_WRN(X, Y)  LOG_CTX_WRN ( FUNC_MSG(X), Y )
+#define LOG_FUNC_CTX_ERR(X, Y)  LOG_CTX_ERR ( FUNC_MSG(X), Y )
 
-#define LOG_OBJ_MSG(X)        LOG_MSG       ( OBJ_MSG(X) )
-#define LOG_OBJ_WRN(X)        LOG_WRN       ( OBJ_MSG(X) )
-#define LOG_OBJ_ERR(X)        LOG_ERR       ( OBJ_MSG(X) )
-#define LOG_OBJ_CTX_MSG(X, Y) LOG_CTX_MSG   ( OBJ_MSG(X), Y )
-#define LOG_OBJ_CTX_WRN(X, Y) LOG_CTX_WRN   ( OBJ_MSG(X), Y )
-#define LOG_OBJ_CTX_ERR(X, Y) LOG_CTX_ERR   ( OBJ_MSG(X), Y )
+#define LOG_OBJ_MSG(X)          LOG_MSG     ( OBJ_MSG(X) )
+#define LOG_OBJ_WRN(X)          LOG_WRN     ( OBJ_MSG(X) )
+#define LOG_OBJ_ERR(X)          LOG_ERR     ( OBJ_MSG(X) )
+#define LOG_OBJ_CTX_MSG(X, Y)   LOG_CTX_MSG ( OBJ_MSG(X), Y )
+#define LOG_OBJ_CTX_WRN(X, Y)   LOG_CTX_WRN ( OBJ_MSG(X), Y )
+#define LOG_OBJ_CTX_ERR(X, Y)   LOG_CTX_ERR ( OBJ_MSG(X), Y )
 
-#define LOG_METHOD_MSG(X)         LOG_MSG       ( METHOD_MSG(X) )
-#define LOG_METHOD_WRN(X)         LOG_WRN       ( METHOD_MSG(X) )
-#define LOG_METHOD_ERR(X)         LOG_ERR       ( METHOD_MSG(X) )
-#define LOG_METHOD_CTX_MSG(X, Y)  LOG_CTX_MSG   ( METHOD_MSG(X), Y )
-#define LOG_METHOD_CTX_WRN(X, Y)  LOG_CTX_WRN   ( METHOD_MSG(X), Y )
-#define LOG_METHOD_CTX_ERR(X, Y)  LOG_CTX_ERR   ( METHOD_MSG(X), Y )
+#define LOG_METHOD_MSG(X)           LOG_MSG     ( METHOD_MSG(X) )
+#define LOG_METHOD_WRN(X)           LOG_WRN     ( METHOD_MSG(X) )
+#define LOG_METHOD_ERR(X)           LOG_ERR     ( METHOD_MSG(X) )
+#define LOG_METHOD_CTX_MSG(X, Y)    LOG_CTX_MSG ( METHOD_MSG(X), Y )
+#define LOG_METHOD_CTX_WRN(X, Y)    LOG_CTX_WRN ( METHOD_MSG(X), Y )
+#define LOG_METHOD_CTX_ERR(X, Y)    LOG_CTX_ERR ( METHOD_MSG(X), Y )
 
-#define LOG_OBJ_METHOD_MSG(X)         LOG_MSG       ( OBJ_METHOD_MSG(X) )
-#define LOG_OBJ_METHOD_WRN(X)         LOG_WRN       ( OBJ_METHOD_MSG(X) )
-#define LOG_OBJ_METHOD_ERR(X)         LOG_ERR       ( OBJ_METHOD_MSG(X) )
-#define LOG_OBJ_METHOD_CTX_MSG(X, Y)  LOG_CTX_MSG   ( OBJ_METHOD_MSG(X), Y )
-#define LOG_OBJ_METHOD_CTX_WRN(X, Y)  LOG_CTX_WRN   ( OBJ_METHOD_MSG(X), Y )
-#define LOG_OBJ_METHOD_CTX_ERR(X, Y)  LOG_CTX_ERR   ( OBJ_METHOD_MSG(X), Y )
+#define LOG_OBJ_METHOD_MSG(X)           LOG_MSG     ( OBJ_METHOD_MSG(X) )
+#define LOG_OBJ_METHOD_WRN(X)           LOG_WRN     ( OBJ_METHOD_MSG(X) )
+#define LOG_OBJ_METHOD_ERR(X)           LOG_ERR     ( OBJ_METHOD_MSG(X) )
+#define LOG_OBJ_METHOD_CTX_MSG(X, Y)    LOG_CTX_MSG ( OBJ_METHOD_MSG(X), Y )
+#define LOG_OBJ_METHOD_CTX_WRN(X, Y)    LOG_CTX_WRN ( OBJ_METHOD_MSG(X), Y )
+#define LOG_OBJ_METHOD_CTX_ERR(X, Y)    LOG_CTX_ERR ( OBJ_METHOD_MSG(X), Y )
 
 
 /** Logs a constructor notice using \c #OBJ_MSG and a preset message.*/

@@ -48,4 +48,4 @@
 /** The following function does not return.
  *  @sa SSS::throw_exc()
  */
-#define NO_RETURN declspec(noreturn)
+#define NO_RETURN __declspec(noreturn)
