@@ -5,7 +5,7 @@
 # include <windows.h>
 # include <libloaderapi.h>
 #elif defined(_APPLE_) && defined(_MACH_)
-#elif defined(linux) || defined(__linux)
+#elif defined(linux) || defined(linux)
 #endif
 
 static std::string _getPWD()
@@ -17,16 +17,16 @@ static std::string _getPWD()
     pwd = std::string(path);
     pwd = pwd.substr(0, pwd.find_last_of("\\/") + 1);
 #elif defined(_APPLE_) && defined(_MACH_)
-    __LOG_WRN("SSS::PWD can not been set yet on this OS."));
-#elif defined(linux) || defined(__linux)
-    __LOG_WRN("SSS::PWD can not been set yet on this OS."));
+    LOG_WRN("SSS::PWD can not been set yet on this OS."));
+#elif defined(linux) || defined(linux)
+    LOG_WRN("SSS::PWD can not been set yet on this OS."));
 #endif
     return pwd;
 }
 
 std::string const SSS::PWD{ _getPWD() };
 
-__SSS_BEGIN;
+SSS_BEGIN;
 
 std::string getEnv(std::string const& varname)
 {
@@ -75,6 +75,6 @@ std::string readFile(std::string const& filepath) try
     stream.close();
     return ret;
 }
-__CATCH_AND_RETHROW_FUNC_EXC;
+CATCH_AND_RETHROW_FUNC_EXC;
 
-__SSS_END;
+SSS_END;

@@ -8,13 +8,13 @@
  */
 
 /** Used internally in SSS::AsyncBase.*/
-#define __CATCH_ASYNCBASE_ERROR \
+#define CATCH_ASYNCBASE_ERROR \
 catch (std::exception const& e) { \
     _running_state = _RunningState::handled; \
-    __LOG_OBJ_METHOD_CTX_ERR("Function threw", e.what()); \
+    LOG_OBJ_METHOD_CTX_ERR("Function threw", e.what()); \
 };
 
-__SSS_BEGIN;
+SSS_BEGIN;
 
 /** Enhanced \c \b std::async class.
  *  This class aspires to render async usage easier, mainly by
@@ -40,7 +40,7 @@ public:
     AsyncBase() noexcept
     {
         if (LOG::constructor) {
-            __LOG_CONSTRUCTOR;
+            LOG_CONSTRUCTOR;
         }
     };
 
@@ -63,7 +63,7 @@ public:
         _future = std::async(std::launch::async, &AsyncBase::_intermediateFunction, this, args...);
         _running_state = _RunningState::running;
     }
-    __CATCH_ASYNCBASE_ERROR;
+    CATCH_ASYNCBASE_ERROR;
 
     /** Cancels the running async function, if any.
      *  In order for this function to work as intented, you should
@@ -82,7 +82,7 @@ public:
         // Log cancelation start
         bool const was_running = _running_state == _RunningState::running;
         if (LOG::run_state && was_running) {
-            __LOG_OBJ_MSG("Canceling function ...");
+            LOG_OBJ_MSG("Canceling function ...");
         }
 
         // Cancel async function
@@ -93,10 +93,10 @@ public:
 
         // Log cancelation end
         if (LOG::run_state && was_running) {
-            __LOG_OBJ_MSG("Function was successfully canceled.");
+            LOG_OBJ_MSG("Function was successfully canceled.");
         }
     }
-    __CATCH_ASYNCBASE_ERROR;
+    CATCH_ASYNCBASE_ERROR;
 
     /** Returns \c true if the async function is currently running.
      *  An async function can either be running, pending, or handled.
@@ -122,7 +122,7 @@ public:
     void setAsHandled() noexcept
     {
         if (_running_state != _RunningState::pending) {
-            __LOG_OBJ_WRN("Tried to set function state as 'handled' when it wasn't 'pending'");
+            LOG_OBJ_WRN("Tried to set function state as 'handled' when it wasn't 'pending'");
             return;
         }
         _running_state = _RunningState::handled;
@@ -130,7 +130,7 @@ public:
             _future.wait();
         }
         if (LOG::run_state) {
-            __LOG_OBJ_MSG("Function has been handled.");
+            LOG_OBJ_MSG("Function has been handled.");
         }
     }
 
@@ -174,18 +174,18 @@ private:
     void _intermediateFunction(_Args... args) try
     {
         if (LOG::run_state) {
-            __LOG_OBJ_MSG("Function started running.");
+            LOG_OBJ_MSG("Function started running.");
         }
 
         if (_is_canceled) return;
         _asyncFunction(args...);
 
         if (LOG::run_state && !_is_canceled) {
-            __LOG_OBJ_MSG("Function ended, now pending.");
+            LOG_OBJ_MSG("Function ended, now pending.");
         }
         _running_state = _RunningState::pending;
     }
-    __CATCH_ASYNCBASE_ERROR;
+    CATCH_ASYNCBASE_ERROR;
 };
 
 /** \cond REWORK*/
@@ -205,8 +205,8 @@ AsyncBase<_Args...>::~AsyncBase()
     cancel();
 
     if (LOG::destructor) {
-        __LOG_DESTRUCTOR;
+        LOG_DESTRUCTOR;
     }
 }
 
-__SSS_END;
+SSS_END;

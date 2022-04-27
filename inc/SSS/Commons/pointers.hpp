@@ -6,7 +6,7 @@
  *  Defines smart pointers related classes and functions.
  */
 
-__SSS_BEGIN;
+SSS_BEGIN;
 
 /** Implementation of \c \b std::unique_ptr for C style pointers.
  * 
@@ -52,4 +52,4 @@ void cleanWeakPtrVector(std::vector<std::weak_ptr<T>>& vector) {
     );
 };
 
-__SSS_END;
+SSS_END;

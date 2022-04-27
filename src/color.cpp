@@ -1,6 +1,6 @@
 #include "SSS/Commons/color.hpp"
 
-__SSS_BEGIN;
+SSS_BEGIN;
 
 // Returns a rainbow color based on the passed value.
 RGB24 rainbow(uint32_t value, uint32_t max_value) noexcept
@@ -50,4 +50,4 @@ RGBA32& operator*=(RGBA32& dst, RGBA32 const& src) noexcept
     return dst;
 }
 
-__SSS_END;
+SSS_END;

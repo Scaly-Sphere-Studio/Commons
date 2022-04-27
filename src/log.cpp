@@ -1,6 +1,6 @@
 #include "SSS/Commons/log.hpp"
 
-__SSS_BEGIN;
+SSS_BEGIN;
 
 // Logs the given argument to the given stream
 static void _log(std::ostream& stream, std::string const& str) noexcept try
@@ -10,7 +10,6 @@ static void _log(std::ostream& stream, std::string const& str) noexcept try
 
     if (!str.empty()) {
         stream
-            << std::boolalpha       // Print booleans as 'true' or 'false'
             << timeUTF() << "|  "   // Print UTF time
             << str                  // Print message
             << std::endl;           // Print line break
@@ -28,13 +27,13 @@ void log_msg(std::string const& str) noexcept
 // Logs the given argument to std::cerr
 void log_wrn(std::string const& str) noexcept
 {
-    _log(std::cerr, __CONTEXT_MSG("[WRN]", str));
+    _log(std::cerr, CONTEXT_MSG("[WRN]", str));
 }
 
 // Logs the given argument to std::cerr
 void log_err(std::string const& str) noexcept
 {
-    _log(std::cerr, __CONTEXT_MSG("[ERR]", str));
+    _log(std::cerr, CONTEXT_MSG("[ERR]", str));
 }
 
 std::string getErrorString(int errnum)
@@ -50,4 +49,4 @@ void throw_exc(std::string const& str)
     throw std::runtime_error(str);
 }
 
-__SSS_END;
+SSS_END;

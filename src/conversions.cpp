@@ -1,7 +1,7 @@
 #include "SSS/Commons/conversions.hpp"
 #include <codecvt>
 
-__SSS_BEGIN;
+SSS_BEGIN;
 
 #pragma warning(push)
 #pragma warning(disable:4996)
@@ -26,4 +26,4 @@ std::string str32ToStr(std::u32string const& str)
 
 #pragma warning(pop)
 
-__SSS_END;
+SSS_END;

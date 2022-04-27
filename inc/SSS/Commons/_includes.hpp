@@ -25,27 +25,27 @@
 
 /** Declares the SSS namespace.
  *  Further code will be nested in the SSS namespace.\n
- *  Should be used in pair with with #__SSS_END.
+ *  Should be used in pair with with #SSS_END.
  */
-#define __SSS_BEGIN namespace SSS {
+#define SSS_BEGIN namespace SSS {
 /** Closes the SSS namespace declaration.
  *  Further code will no longer be nested in the SSS namespace.\n
- *  Should be used in pair with with #__SSS_BEGIN.
+ *  Should be used in pair with with #SSS_BEGIN.
  */
-#define __SSS_END }
+#define SSS_END }
 
 /** Declares an \c _internal namespace.
  *  Further code will be nested in an \c _internal namespace.\n
- *  Should be used in pair with with #__INTERNAL_END.
+ *  Should be used in pair with with #INTERNAL_END.
  */
-#define __INTERNAL_BEGIN namespace _internal {
+#define INTERNAL_BEGIN namespace _internal {
 /** Closes an \c _internal namespace declaration.
  *  Further code will no longer be nested in an \c _internal namespace.\n
- *  Should be used in pair with with #__INTERNAL_BEGIN.
+ *  Should be used in pair with with #INTERNAL_BEGIN.
  */
-#define __INTERNAL_END }
+#define INTERNAL_END }
 
 /** The following function does not return.
  *  @sa SSS::throw_exc()
  */
-#define __NO_RETURN __declspec(noreturn)
+#define NO_RETURN declspec(noreturn)

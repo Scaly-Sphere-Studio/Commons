@@ -6,7 +6,7 @@
  *  Defines color unions and functions.
  */
 
-__SSS_BEGIN;
+SSS_BEGIN;
 
 /** \c 24 bits (Red, Green, Blue) color union.
  *  This format is mostly used for color parameters.
@@ -66,4 +66,4 @@ RGB24 rainbow(uint32_t value, uint32_t max_value) noexcept;
 /** Blends colors together based on the source's alpha.*/
 RGBA32& operator*=(RGBA32& dst, RGBA32 const& src) noexcept;
 
-__SSS_END;
+SSS_END;

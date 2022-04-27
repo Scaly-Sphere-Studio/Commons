@@ -6,7 +6,7 @@
  *  Defines time-related functions and classes.
  */
 
-__SSS_BEGIN;
+SSS_BEGIN;
 
 /** Sleeps precisely until given time point.
  *  This is achieved by regaining CPU control \c 3ms sooner
@@ -93,4 +93,4 @@ private:
     Stopwatch _frame_watch;
 };
 
-__SSS_END;
+SSS_END;

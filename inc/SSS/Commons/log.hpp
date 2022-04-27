@@ -8,7 +8,7 @@
  *  Defines log functions, constants, and numerous macros.
  */
 
-__SSS_BEGIN;
+SSS_BEGIN;
 
 /** States the configuration (Release / Debug).
  *  \c true = Debug, \c false = Release.
@@ -66,102 +66,102 @@ std::string getErrorString(int errnum);
  *  @param[in] str The error message to be given to the
  *  \c std::runtime_error constructor
  */
-__NO_RETURN void throw_exc(std::string const& str);
+NO_RETURN void throw_exc(std::string const& str);
 
-__SSS_END;
+SSS_END;
 
 /** Adds ": " between the "cxt" and "msg" strings.*/
-#define __CONTEXT_MSG(cxt, msg) (::SSS::toString(cxt) + ": " + ::SSS::toString(msg))
+#define CONTEXT_MSG(cxt, msg) (::SSS::toString(cxt) + ": " + ::SSS::toString(msg))
 
 /** Current scope's function name.*/
-#define __FUNC (std::string(__func__) + "()")
-/** Prepends <tt>'#__FUNC: '</tt> to the given string.*/
-#define __FUNC_MSG(X) __CONTEXT_MSG(__FUNC, X)
+#define FUNC (std::string(func) + "()")
+/** Prepends <tt>'#FUNC: '</tt> to the given string.*/
+#define FUNC_MSG(X) CONTEXT_MSG(FUNC, X)
 
 /** Current scope's class name.*/
-#define __THIS_NAME (std::string(typeid(*this).name() + 6))
+#define THIS_NAME (std::string(typeid(*this).name() + 6))
 /** Current scope's instance address.*/
-#define __THIS_ADDR std::string("0x") + ::SSS::toString(this)
+#define THIS_ADDR std::string("0x") + ::SSS::toString(this)
 /** Current scope's class name & instance address.*/
-#define __THIS_OBJ __THIS_NAME + " [" + __THIS_ADDR + "]"
-/** Prepends <tt>'#__THIS_OBJ: '</tt> to the given string.*/
-#define __OBJ_MSG(X) __CONTEXT_MSG(__THIS_OBJ, X)
+#define THIS_OBJ THIS_NAME + " [" + THIS_ADDR + "]"
+/** Prepends <tt>'#THIS_OBJ: '</tt> to the given string.*/
+#define OBJ_MSG(X) CONTEXT_MSG(THIS_OBJ, X)
 
 /** Current scope's method's name.*/
-#define __METHOD (__THIS_NAME + "::" + __FUNC)
-/** Prepends <tt>'#__METHOD: '</tt> to the given string.*/
-#define __METHOD_MSG(X) __CONTEXT_MSG(__METHOD, X)
+#define METHOD (THIS_NAME + "::" + FUNC)
+/** Prepends <tt>'#METHOD: '</tt> to the given string.*/
+#define METHOD_MSG(X) CONTEXT_MSG(METHOD, X)
 /** Current scope's instance address & method's name.*/
-#define __OBJ_METHOD (__THIS_OBJ + "-> " + __FUNC)
-/** Prepends <tt>'#__OBJ_METHOD: '</tt> to the given string.*/
-#define __OBJ_METHOD_MSG(X) __CONTEXT_MSG(__OBJ_METHOD, X)
+#define OBJ_METHOD (THIS_OBJ + "-> " + FUNC)
+/** Prepends <tt>'#OBJ_METHOD: '</tt> to the given string.*/
+#define OBJ_METHOD_MSG(X) CONTEXT_MSG(OBJ_METHOD, X)
 
 /** Calls \c SSS::log_msg only in debug mode.*/
-#define __LOG_MSG(X)    ::SSS::log_msg( X );
+#define LOG_MSG(X)    ::SSS::log_msg( X );
 /** Calls \c SSS::log_wrn only in debug mode.*/
-#define __LOG_WRN(X)    ::SSS::log_wrn( X );
+#define LOG_WRN(X)    ::SSS::log_wrn( X );
 /** Calls \c SSS::log_err only in debug mode.*/
-#define __LOG_ERR(X)    ::SSS::log_err( X );
+#define LOG_ERR(X)    ::SSS::log_err( X );
 
-#define __LOG_CTX_MSG(X, Y) __LOG_MSG ( __CONTEXT_MSG(X, Y) );
-#define __LOG_CTX_WRN(X, Y) __LOG_ERR ( __CONTEXT_MSG(X, Y) );
-#define __LOG_CTX_ERR(X, Y) __LOG_WRN ( __CONTEXT_MSG(X, Y) );
+#define LOG_CTX_MSG(X, Y) LOG_MSG ( CONTEXT_MSG(X, Y) );
+#define LOG_CTX_WRN(X, Y) LOG_ERR ( CONTEXT_MSG(X, Y) );
+#define LOG_CTX_ERR(X, Y) LOG_WRN ( CONTEXT_MSG(X, Y) );
 
-#define __LOG_FUNC_MSG(X)           __LOG_MSG       ( __FUNC_MSG(X) )
-#define __LOG_FUNC_WRN(X)           __LOG_WRN       ( __FUNC_MSG(X) )
-#define __LOG_FUNC_ERR(X)           __LOG_ERR       ( __FUNC_MSG(X) )
-#define __LOG_FUNC_CTX_MSG(X, Y)    __LOG_CTX_MSG   ( __FUNC_MSG(X), Y )
-#define __LOG_FUNC_CTX_WRN(X, Y)    __LOG_CTX_WRN   ( __FUNC_MSG(X), Y )
-#define __LOG_FUNC_CTX_ERR(X, Y)    __LOG_CTX_ERR   ( __FUNC_MSG(X), Y )
+#define LOG_FUNC_MSG(X)           LOG_MSG       ( FUNC_MSG(X) )
+#define LOG_FUNC_WRN(X)           LOG_WRN       ( FUNC_MSG(X) )
+#define LOG_FUNC_ERR(X)           LOG_ERR       ( FUNC_MSG(X) )
+#define LOG_FUNC_CTX_MSG(X, Y)    LOG_CTX_MSG   ( FUNC_MSG(X), Y )
+#define LOG_FUNC_CTX_WRN(X, Y)    LOG_CTX_WRN   ( FUNC_MSG(X), Y )
+#define LOG_FUNC_CTX_ERR(X, Y)    LOG_CTX_ERR   ( FUNC_MSG(X), Y )
 
-#define __LOG_OBJ_MSG(X)        __LOG_MSG       ( __OBJ_MSG(X) )
-#define __LOG_OBJ_WRN(X)        __LOG_WRN       ( __OBJ_MSG(X) )
-#define __LOG_OBJ_ERR(X)        __LOG_ERR       ( __OBJ_MSG(X) )
-#define __LOG_OBJ_CTX_MSG(X, Y) __LOG_CTX_MSG   ( __OBJ_MSG(X), Y )
-#define __LOG_OBJ_CTX_WRN(X, Y) __LOG_CTX_WRN   ( __OBJ_MSG(X), Y )
-#define __LOG_OBJ_CTX_ERR(X, Y) __LOG_CTX_ERR   ( __OBJ_MSG(X), Y )
+#define LOG_OBJ_MSG(X)        LOG_MSG       ( OBJ_MSG(X) )
+#define LOG_OBJ_WRN(X)        LOG_WRN       ( OBJ_MSG(X) )
+#define LOG_OBJ_ERR(X)        LOG_ERR       ( OBJ_MSG(X) )
+#define LOG_OBJ_CTX_MSG(X, Y) LOG_CTX_MSG   ( OBJ_MSG(X), Y )
+#define LOG_OBJ_CTX_WRN(X, Y) LOG_CTX_WRN   ( OBJ_MSG(X), Y )
+#define LOG_OBJ_CTX_ERR(X, Y) LOG_CTX_ERR   ( OBJ_MSG(X), Y )
 
-#define __LOG_METHOD_MSG(X)         __LOG_MSG       ( __METHOD_MSG(X) )
-#define __LOG_METHOD_WRN(X)         __LOG_WRN       ( __METHOD_MSG(X) )
-#define __LOG_METHOD_ERR(X)         __LOG_ERR       ( __METHOD_MSG(X) )
-#define __LOG_METHOD_CTX_MSG(X, Y)  __LOG_CTX_MSG   ( __METHOD_MSG(X), Y )
-#define __LOG_METHOD_CTX_WRN(X, Y)  __LOG_CTX_WRN   ( __METHOD_MSG(X), Y )
-#define __LOG_METHOD_CTX_ERR(X, Y)  __LOG_CTX_ERR   ( __METHOD_MSG(X), Y )
+#define LOG_METHOD_MSG(X)         LOG_MSG       ( METHOD_MSG(X) )
+#define LOG_METHOD_WRN(X)         LOG_WRN       ( METHOD_MSG(X) )
+#define LOG_METHOD_ERR(X)         LOG_ERR       ( METHOD_MSG(X) )
+#define LOG_METHOD_CTX_MSG(X, Y)  LOG_CTX_MSG   ( METHOD_MSG(X), Y )
+#define LOG_METHOD_CTX_WRN(X, Y)  LOG_CTX_WRN   ( METHOD_MSG(X), Y )
+#define LOG_METHOD_CTX_ERR(X, Y)  LOG_CTX_ERR   ( METHOD_MSG(X), Y )
 
-#define __LOG_OBJ_METHOD_MSG(X)         __LOG_MSG       ( __OBJ_METHOD_MSG(X) )
-#define __LOG_OBJ_METHOD_WRN(X)         __LOG_WRN       ( __OBJ_METHOD_MSG(X) )
-#define __LOG_OBJ_METHOD_ERR(X)         __LOG_ERR       ( __OBJ_METHOD_MSG(X) )
-#define __LOG_OBJ_METHOD_CTX_MSG(X, Y)  __LOG_CTX_MSG   ( __OBJ_METHOD_MSG(X), Y )
-#define __LOG_OBJ_METHOD_CTX_WRN(X, Y)  __LOG_CTX_WRN   ( __OBJ_METHOD_MSG(X), Y )
-#define __LOG_OBJ_METHOD_CTX_ERR(X, Y)  __LOG_CTX_ERR   ( __OBJ_METHOD_MSG(X), Y )
+#define LOG_OBJ_METHOD_MSG(X)         LOG_MSG       ( OBJ_METHOD_MSG(X) )
+#define LOG_OBJ_METHOD_WRN(X)         LOG_WRN       ( OBJ_METHOD_MSG(X) )
+#define LOG_OBJ_METHOD_ERR(X)         LOG_ERR       ( OBJ_METHOD_MSG(X) )
+#define LOG_OBJ_METHOD_CTX_MSG(X, Y)  LOG_CTX_MSG   ( OBJ_METHOD_MSG(X), Y )
+#define LOG_OBJ_METHOD_CTX_WRN(X, Y)  LOG_CTX_WRN   ( OBJ_METHOD_MSG(X), Y )
+#define LOG_OBJ_METHOD_CTX_ERR(X, Y)  LOG_CTX_ERR   ( OBJ_METHOD_MSG(X), Y )
 
 
-/** Logs a constructor notice using \c #__OBJ_MSG and a preset message.*/
-#define __LOG_CONSTRUCTOR __LOG_MSG( __OBJ_MSG("Constructor() ended") )
-/** Logs a destructor notice using \c #__OBJ_MSG and a preset message.*/
-#define __LOG_DESTRUCTOR __LOG_MSG( __OBJ_MSG("~Destructor() ended") )
+/** Logs a constructor notice using \c #OBJ_MSG and a preset message.*/
+#define LOG_CONSTRUCTOR LOG_MSG( OBJ_MSG("Constructor() ended") )
+/** Logs a destructor notice using \c #OBJ_MSG and a preset message.*/
+#define LOG_DESTRUCTOR LOG_MSG( OBJ_MSG("~Destructor() ended") )
 
-/** Throws an exception with \c #__THIS_OBJ prepended to given message.*/
-#define __OBJ_THROW(X) ::SSS::throw_exc(__CONTEXT_MSG(__THIS_OBJ, X))
+/** Throws an exception with \c #THIS_OBJ prepended to given message.*/
+#define OBJ_THROW(X) ::SSS::throw_exc(CONTEXT_MSG(THIS_OBJ, X))
 
 /** Catches exceptions, prepends the function's name to error messages, and rethrows.*/
-#define __CATCH_AND_RETHROW_FUNC_EXC \
+#define CATCH_AND_RETHROW_FUNC_EXC \
 catch (std::exception const& e) {\
-    ::SSS::throw_exc(__FUNC_MSG(e.what()));\
+    ::SSS::throw_exc(FUNC_MSG(e.what()));\
 }
 /** Catches exceptions, prepends the method's name to error messages, and rethrows.*/
-#define __CATCH_AND_RETHROW_METHOD_EXC \
+#define CATCH_AND_RETHROW_METHOD_EXC \
 catch (std::exception const& e) {\
-    ::SSS::throw_exc(__METHOD_MSG(e.what()));\
+    ::SSS::throw_exc(METHOD_MSG(e.what()));\
 }
 
 /** Catches exceptions & prepends the function's name to error messages before logging them.*/
-#define __CATCH_AND_LOG_FUNC_EXC \
+#define CATCH_AND_LOG_FUNC_EXC \
 catch (std::exception const& e) {\
-    __LOG_FUNC_ERR(e.what());\
+    LOG_FUNC_ERR(e.what());\
 }
 /** Catches exceptions & prepends the method's name to error messages before logging them.*/
-#define __CATCH_AND_LOG_METHOD_EXC \
+#define CATCH_AND_LOG_METHOD_EXC \
 catch (std::exception const& e) {\
-    __LOG_OBJ_METHOD_ERR(e.what());\
+    LOG_OBJ_METHOD_ERR(e.what());\
 }

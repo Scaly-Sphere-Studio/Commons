@@ -6,7 +6,7 @@
  *  Defines multiple conversion functions.
  */
 
-__SSS_BEGIN;
+SSS_BEGIN;
 
 /** Converts given data of type \c T to string if possible.
  *  Given data of type \c T will be fed to an \c std::ostringstream.\n
@@ -20,7 +20,7 @@ template <typename T>
 std::string toString(T const& arg) noexcept try
 {
     std::ostringstream strstream;
-    strstream << arg;
+    strstream << std::boolalpha << arg;
     return strstream.str();
 }
 catch (...) {
@@ -42,4 +42,4 @@ std::u32string strToStr32(std::string const& str);
  */
 std::string str32ToStr(std::u32string const& str);
 
-__SSS_END;
+SSS_END;

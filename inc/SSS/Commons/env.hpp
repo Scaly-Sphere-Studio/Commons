@@ -7,7 +7,7 @@
  *  Defines environment-related functions and variables.
  */
 
-__SSS_BEGIN;
+SSS_BEGIN;
 
 /** Path to the folder holding the running .exe*/
 extern const std::string PWD;
@@ -29,4 +29,4 @@ bool pathIsFile(std::string const& path) noexcept;
  */
 std::string readFile(std::string const& filepath);
 
-__SSS_END;
+SSS_END;

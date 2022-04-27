@@ -3,7 +3,7 @@
 #include <Windows.h>
 #include <timeapi.h>
 
-__SSS_BEGIN;
+SSS_BEGIN;
 
 void sleepUntil(std::chrono::steady_clock::time_point time)
 {
@@ -32,7 +32,7 @@ std::string timeUTF()
 
     // Format the string via printf
     char buff[64];
-    snprintf(buff, 64U, "%02d:%02d:%02d.%03dZ", h, m, s, ms);
+    sprintf_s(buff, "%02d:%02d:%02d.%03d", h, m, s, ms);
 
     return buff;
 }
@@ -99,4 +99,4 @@ bool FrameTimer::addFrame() noexcept
     return false;
 }
 
-__SSS_END;
+SSS_END;
