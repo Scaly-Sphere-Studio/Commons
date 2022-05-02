@@ -17,17 +17,26 @@ catch (std::exception const& e) { \
 SSS_BEGIN;
 
 namespace Log {
+    /** Logging properties for SSS::AsyncBase instances.*/
     struct Async : public LogBase<Async> {
+        /** \cond HIDDEN*/
         using LOG_STRUCT_BASICS(Log, Async);
+        /** \endcond*/
+        /** Logs both constructor and destructor.*/
         bool life_state = false;
+        /** Logs when the functions starts, ends, and is handled.*/
         bool run_state = false;
     };
 }
 
 /** Enhanced \c \b std::async class.
+ * 
  *  This class aspires to render async usage easier, mainly by
  *  getting more control over the function's state with
  *  isRunning() and isPending().
+ * 
+ *  Set the logging properties of derived classes via SSS::Log::Async.
+ * 
  *  @param[in] ..._Args All types of arguments which will be
  *  given to the run() function.
  */

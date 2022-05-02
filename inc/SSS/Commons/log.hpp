@@ -5,7 +5,7 @@
 #include "conversions.hpp"
 
 /** @file
- *  Defines log functions, constants, and numerous macros.
+ *  Defines log functions, constants, template class, and numerous macros.
  */
 
 SSS_BEGIN;
@@ -55,37 +55,101 @@ std::string getErrorString(int errnum);
  */
 NO_RETURN void throw_exc(std::string const& str);
 
-/** Base class to be inherited in log structures.
- *  @sa \c using LOG_STRUCT_BASICS()
+/** Singleton template class to be inherited by log structures.
+ *  %Log structures are intended to be nested in the Log (or
+ *  subsequent) namespace and access its data with the
+ *  declaration: <tt>using #LOG_STRUCT_BASICS()</tt>.
+ *  @param[in] T The derived struct itself.
+ *  @usage
+ *  @code
+ *  namespace SSS::Log {
+ *      struct Example : SSS::LogBase<Example> {
+ *          using LOG_STRUCT_BASICS(Log, Example);
+ *          bool foo = false;
+ *          bool bar = false;
+ *      }
+ *  }
+ *  @endcode
  */
 template<typename T>
 class LogBase {
 protected:
+    /** \cond INTERNAL*/
     // Hide constructor & destructor
     LogBase() = default;
     ~LogBase() = default;
-    // Shared declarations between children, but not the same data
+    // Share declarations between derived classes without sharing actual data 
     bool _silence = false;
     bool _louden = false;
+    /** \endcond*/
 public:
-    // Singleton method
+    /** Returns the singleton instance (lazy instantiation pattern).*/
     static T& get() {
         static T instance;
         return instance;
     };
-    // Set
+    /** Sets the silenced mode state to \c true or \c false.
+     *  In silenced mode, all subsequent log flags act as if
+     *  they were set to \c false without actually changing
+     *  their value.
+     */
     static void silence(bool state) { get()._silence = state; };
+    /** Sets the loudened mode state to \c true or \c false.
+     *  In loudened mode, all subsequent log flags act as if
+     *  they were set to \c true without actually changing
+     *  their value.
+     */
     static void louden(bool state) { get()._louden = state; };
-    // Get
+    /** Returns \c true if silenced mode is active in any parent
+     *  namespace or in this structure, and \c false otherwise.
+     */
     static bool isSilenced() { return get()._silence; };
+    /** Returns \c true if loudened mode is active in any parent
+     *  namespace or in this structure, and \c false otherwise.
+     */
     static bool isLoudened() { return get()._louden; };
-
+    /** Returns \c false if silenced mode is active, \c true if
+     *  loudened mode is active, and the given flag otherwise.
+     */
     static bool query(bool flag) { return !isSilenced() && (isLoudened() || flag); };
 };
 
+/** Base namespace for all subsequent log namespaces and structures.
+ *  Holds an internal LogBase instance and handles to its functions,
+ *  as if #LOG_NAMESPACE_BASICS was used without specifying a namespace.
+ * 
+ *  Subsequent namespaces should be declared as such:
+ *  @code
+ *  namespace SSS::Log::Example {
+ *      LOG_NAMESPACE_BASICS(SSS::Log);
+ *      [...]
+ *  }
+ *  @endcode
+ */
+namespace Log {
+    INTERNAL_BEGIN;
+    struct Base : public LogBase<Base> {
+        friend LogBase<Base>;
+    private:
+        Base() = default;
+        ~Base() = default;
+    };
+    INTERNAL_END;
+    /** Handle to the internal instance's LogBase::louden() function.*/
+    inline void louden(bool state) { _internal::Base::louden(state); };
+    /** Handle to the internal instance's LogBase::silence() function.*/
+    inline void silence(bool state) { _internal::Base::silence(state); };
+    /** Handle to the internal instance's LogBase::isLoudened() function.*/
+    inline bool isLoudened() { return _internal::Base::isLoudened(); };
+    /** Handle to the internal instance's LogBase::isSilenced() function.*/
+    inline bool isSilenced() { return _internal::Base::isSilenced(); };
+}
+
+SSS_END;
+
 #define LOG_STRUCT_BASICS(Namespace, Struct)\
-    ::SSS::LogBase<Struct>::LogBase;\
-    friend ::SSS::LogBase<Struct>;\
+    SSS::LogBase<Struct>::LogBase;\
+    friend SSS::LogBase<Struct>;\
 private:\
     Struct() = default;\
     ~Struct() = default;\
@@ -96,7 +160,7 @@ public:\
 
 #define LOG_NAMESPACE_BASICS(Namespace)\
 INTERNAL_BEGIN;\
-struct Base : public ::SSS::LogBase<Base> {\
+struct Base : public SSS::LogBase<Base> {\
     using LOG_STRUCT_BASICS(Namespace, Base);\
 };\
 INTERNAL_END;\
@@ -107,26 +171,8 @@ inline bool isSilenced() { return Namespace::isSilenced()\
 inline bool isLoudened() { return Namespace::isLoudened()\
     || _internal::Base::isLoudened(); };
 
-/** */
-namespace Log {
-    INTERNAL_BEGIN;
-    struct Base : public LogBase<Base> {
-        friend LogBase<Base>;
-    private:
-        Base() = default;
-        ~Base() = default;
-    };
-    INTERNAL_END;
-    inline void louden(bool state) { _internal::Base::louden(state); };
-    inline void silence(bool state) { _internal::Base::silence(state); };
-    inline bool isLoudened() { return _internal::Base::isLoudened(); };
-    inline bool isSilenced() { return _internal::Base::isSilenced(); };
-}
-
-SSS_END;
-
 /** Adds ": " between the "cxt" and "msg" strings.*/
-#define CONTEXT_MSG(cxt, msg) (::SSS::toString(cxt) + ": " + ::SSS::toString(msg))
+#define CONTEXT_MSG(cxt, msg) (SSS::toString(cxt) + ": " + SSS::toString(msg))
 
 /** Current scope's function name.*/
 #define FUNC (std::string(__func__) + "()")
@@ -136,7 +182,7 @@ SSS_END;
 /** Current scope's class name.*/
 #define THIS_NAME (std::string(typeid(*this).name() + 6))
 /** Current scope's instance address.*/
-#define THIS_ADDR std::string("0x") + ::SSS::toString(this)
+#define THIS_ADDR std::string("0x") + SSS::toString(this)
 /** Current scope's class name & instance address.*/
 #define THIS_OBJ THIS_NAME + " [" + THIS_ADDR + "]"
 /** Prepends <tt>'#THIS_OBJ: '</tt> to the given string.*/
@@ -152,11 +198,11 @@ SSS_END;
 #define OBJ_METHOD_MSG(X) CONTEXT_MSG(OBJ_METHOD, X)
 
 /** Calls \c SSS::log_msg only in debug mode.*/
-#define LOG_MSG(X)    ::SSS::log_msg( X );
+#define LOG_MSG(X)    SSS::log_msg( X );
 /** Calls \c SSS::log_wrn only in debug mode.*/
-#define LOG_WRN(X)    ::SSS::log_wrn( X );
+#define LOG_WRN(X)    SSS::log_wrn( X );
 /** Calls \c SSS::log_err only in debug mode.*/
-#define LOG_ERR(X)    ::SSS::log_err( X );
+#define LOG_ERR(X)    SSS::log_err( X );
 
 #define LOG_CTX_MSG(X, Y)   LOG_MSG ( CONTEXT_MSG(X, Y) );
 #define LOG_CTX_WRN(X, Y)   LOG_ERR ( CONTEXT_MSG(X, Y) );
@@ -197,17 +243,17 @@ SSS_END;
 #define LOG_DESTRUCTOR LOG_MSG( OBJ_MSG("~Destructor() ended") )
 
 /** Throws an exception with \c #THIS_OBJ prepended to given message.*/
-#define OBJ_THROW(X) ::SSS::throw_exc(CONTEXT_MSG(THIS_OBJ, X))
+#define OBJ_THROW(X) SSS::throw_exc(CONTEXT_MSG(THIS_OBJ, X))
 
 /** Catches exceptions, prepends the function's name to error messages, and rethrows.*/
 #define CATCH_AND_RETHROW_FUNC_EXC \
 catch (std::exception const& e) {\
-    ::SSS::throw_exc(FUNC_MSG(e.what()));\
+    SSS::throw_exc(FUNC_MSG(e.what()));\
 }
 /** Catches exceptions, prepends the method's name to error messages, and rethrows.*/
 #define CATCH_AND_RETHROW_METHOD_EXC \
 catch (std::exception const& e) {\
-    ::SSS::throw_exc(METHOD_MSG(e.what()));\
+    SSS::throw_exc(METHOD_MSG(e.what()));\
 }
 
 /** Catches exceptions & prepends the function's name to error messages before logging them.*/
