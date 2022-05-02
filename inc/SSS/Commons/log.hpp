@@ -147,6 +147,13 @@ namespace Log {
 
 SSS_END;
 
+/** To be included in SSS::LogBase derived classes.
+ *  Hides constructor and destructor to enforce singleton pattern.\n
+ *  Declares parent class as friend to allow constructor to be called.\n
+ *  Re-defines namespace dependent functions.
+ *  @param Namespace The namespace the struct is being nested into.
+ *  @param Struct The struct name itself.
+ */
 #define LOG_STRUCT_BASICS(Namespace, Struct)\
     SSS::LogBase<Struct>::LogBase;\
     friend SSS::LogBase<Struct>;\
@@ -158,6 +165,10 @@ public:\
     static bool isLoudened() { return Namespace::isLoudened() || get()._louden; };\
     static bool query(bool flag) { return !isSilenced() && (isLoudened() || flag); };
 
+/** To be included in any subsequent SSS::Log namespace.
+ *  Defines internal SSS::LogBase instance and handles to its functions.
+ *  @param Namespace The namespace from which this one is being nested into.
+ */
 #define LOG_NAMESPACE_BASICS(Namespace)\
 INTERNAL_BEGIN;\
 struct Base : public SSS::LogBase<Base> {\
@@ -166,10 +177,8 @@ struct Base : public SSS::LogBase<Base> {\
 INTERNAL_END;\
 inline void silence(bool state) { _internal::Base::silence(state); };\
 inline void louden(bool state) { _internal::Base::louden(state); };\
-inline bool isSilenced() { return Namespace::isSilenced()\
-    || _internal::Base::isSilenced(); };\
-inline bool isLoudened() { return Namespace::isLoudened()\
-    || _internal::Base::isLoudened(); };
+inline bool isSilenced() { return _internal::Base::isSilenced(); };\
+inline bool isLoudened() { return _internal::Base::isLoudened(); };
 
 /** Adds ": " between the "cxt" and "msg" strings.*/
 #define CONTEXT_MSG(cxt, msg) (SSS::toString(cxt) + ": " + SSS::toString(msg))
