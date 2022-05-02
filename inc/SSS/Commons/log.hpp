@@ -10,19 +10,6 @@
 
 SSS_BEGIN;
 
-/** States the configuration (Release / Debug).
- *  \c true = Debug, \c false = Release.
- */
-extern constexpr bool DEBUGMODE
-/** \cond SKIP*/
-#ifdef NDEBUG
-  = false
-#else
-  = true
-#endif // NDEBUG
-/** \endcond*/
-;
-
 /** Writes the given string to \c std::cout
  *  @param[in] str The string to write to \c std::cout
  */
@@ -67,6 +54,74 @@ std::string getErrorString(int errnum);
  *  \c std::runtime_error constructor
  */
 NO_RETURN void throw_exc(std::string const& str);
+
+/** Base class to be inherited in log structures.
+ *  @sa \c using LOG_STRUCT_BASICS()
+ */
+template<typename T>
+class LogBase {
+protected:
+    // Hide constructor & destructor
+    LogBase() = default;
+    ~LogBase() = default;
+    // Shared declarations between children, but not the same data
+    bool _silence = false;
+    bool _louden = false;
+public:
+    // Singleton method
+    static T& get() {
+        static T instance;
+        return instance;
+    };
+    // Set
+    static void silence(bool state) { get()._silence = state; };
+    static void louden(bool state) { get()._louden = state; };
+    // Get
+    static bool isSilenced() { return get()._silence; };
+    static bool isLoudened() { return get()._louden; };
+
+    static bool query(bool flag) { return !isSilenced() && (isLoudened() || flag); };
+};
+
+#define LOG_STRUCT_BASICS(Namespace, Struct)\
+    ::SSS::LogBase<Struct>::LogBase;\
+    friend ::SSS::LogBase<Struct>;\
+private:\
+    Struct() = default;\
+    ~Struct() = default;\
+public:\
+    static bool isSilenced() { return Namespace::isSilenced() || get()._silence; };\
+    static bool isLoudened() { return Namespace::isLoudened() || get()._louden; };\
+    static bool query(bool flag) { return !isSilenced() && (isLoudened() || flag); };
+
+#define LOG_NAMESPACE_BASICS(Namespace)\
+INTERNAL_BEGIN;\
+struct Base : public ::SSS::LogBase<Base> {\
+    using LOG_STRUCT_BASICS(Namespace, Base);\
+};\
+INTERNAL_END;\
+inline void silence(bool state) { _internal::Base::silence(state); };\
+inline void louden(bool state) { _internal::Base::louden(state); };\
+inline bool isSilenced() { return Namespace::isSilenced()\
+    || _internal::Base::isSilenced(); };\
+inline bool isLoudened() { return Namespace::isLoudened()\
+    || _internal::Base::isLoudened(); };
+
+/** */
+namespace Log {
+    INTERNAL_BEGIN;
+    struct Base : public LogBase<Base> {
+        friend LogBase<Base>;
+    private:
+        Base() = default;
+        ~Base() = default;
+    };
+    INTERNAL_END;
+    inline void louden(bool state) { _internal::Base::louden(state); };
+    inline void silence(bool state) { _internal::Base::silence(state); };
+    inline bool isLoudened() { return _internal::Base::isLoudened(); };
+    inline bool isSilenced() { return _internal::Base::isSilenced(); };
+}
 
 SSS_END;
 

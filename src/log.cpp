@@ -10,7 +10,7 @@ static void _log(std::ostream& stream, std::string const& str) noexcept try
 
     if (!str.empty()) {
         stream
-            << timeUTF() << "|  "   // Print UTF time
+            << timeUTF() << "| "    // Print UTF time
             << str                  // Print message
             << std::endl;           // Print line break
     }

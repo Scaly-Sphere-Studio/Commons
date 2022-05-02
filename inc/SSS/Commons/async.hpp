@@ -16,6 +16,14 @@ catch (std::exception const& e) { \
 
 SSS_BEGIN;
 
+namespace Log {
+    struct Async : public LogBase<Async> {
+        using LOG_STRUCT_BASICS(Log, Async);
+        bool life_state = false;
+        bool run_state = false;
+    };
+}
+
 /** Enhanced \c \b std::async class.
  *  This class aspires to render async usage easier, mainly by
  *  getting more control over the function's state with
@@ -26,20 +34,12 @@ SSS_BEGIN;
 template<class... _Args>
 class AsyncBase {
 public:
-    /** \cond REWORK*/
-    struct LOG {
-        static bool constructor;
-        static bool destructor;
-        static bool run_state;
-    };
-    /** \endcond*/
-
     /** Empty constructor.
      *  Lets you call run() whenever you want.
      */
     AsyncBase() noexcept
     {
-        if (LOG::constructor) {
+        if (Log::Async::query(Log::Async::get().life_state)) {
             LOG_CONSTRUCTOR;
         }
     };
@@ -81,7 +81,7 @@ public:
 
         // Log cancelation start
         bool const was_running = _running_state == _RunningState::running;
-        if (LOG::run_state && was_running) {
+        if (Log::Async::query(Log::Async::get().run_state) && was_running) {
             LOG_OBJ_MSG("Canceling function ...");
         }
 
@@ -92,7 +92,7 @@ public:
         _running_state = _RunningState::handled;
 
         // Log cancelation end
-        if (LOG::run_state && was_running) {
+        if (Log::Async::query(Log::Async::get().run_state) && was_running) {
             LOG_OBJ_MSG("Function was successfully canceled.");
         }
     }
@@ -129,7 +129,7 @@ public:
         if (_future.valid()) {
             _future.wait();
         }
-        if (LOG::run_state) {
+        if (Log::Async::query(Log::Async::get().run_state)) {
             LOG_OBJ_MSG("Function has been handled.");
         }
     }
@@ -173,14 +173,14 @@ private:
     // Calls _asyncFunction and sets _running_state accordingly
     void _intermediateFunction(_Args... args) try
     {
-        if (LOG::run_state) {
+        if (Log::Async::query(Log::Async::get().run_state)) {
             LOG_OBJ_MSG("Function started running.");
         }
 
         if (_is_canceled) return;
         _asyncFunction(args...);
 
-        if (LOG::run_state && !_is_canceled) {
+        if (Log::Async::query(Log::Async::get().run_state) && !_is_canceled) {
             LOG_OBJ_MSG("Function ended, now pending.");
         }
         _running_state = _RunningState::pending;
@@ -188,23 +188,13 @@ private:
     CATCH_ASYNCBASE_ERROR;
 };
 
-/** \cond REWORK*/
-// Init static members
-template<class... _Args>
-bool AsyncBase<_Args...>::LOG::constructor{ false };
-template<class... _Args>
-bool AsyncBase<_Args...>::LOG::destructor{ false };
-template<class... _Args>
-bool AsyncBase<_Args...>::LOG::run_state{ false };
-/** \endcond*/
-
 // Implement virtual destructor
 template<class... _Args>
 AsyncBase<_Args...>::~AsyncBase()
 {
     cancel();
 
-    if (LOG::destructor) {
+    if (Log::Async::query(Log::Async::get().life_state)) {
         LOG_DESTRUCTOR;
     }
 }
