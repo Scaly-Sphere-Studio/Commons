@@ -36,6 +36,14 @@ bool pathIsAccessible(std::string const& path) noexcept;
 bool pathIsDir(std::string const& path) noexcept;
 /** Returns true if the given path leads to an accessible regular file.*/
 bool pathIsFile(std::string const& path) noexcept;
+/** Returns the first accessible option, or the unchanged path:
+ *  - Absolute path to regular file
+ *  - Relative path to regular file
+ *  - Absolute path to directory
+ *  - Relative path to directory
+ *  Relative paths are built such as `SSS::PWD + path`.
+ */
+std::string pathWhich(std::string const& path);
 
 /** Copies the contents of an existing file in a string.
  *  @throws std::runtime_error If the file couldn't be read.

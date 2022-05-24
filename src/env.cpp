@@ -61,6 +61,31 @@ bool pathIsFile(std::string const& path) noexcept
     return stat(path.c_str(), &s) == 0 && (s.st_mode & S_IFREG) != 0;
 }
 
+std::string pathWhich(std::string const& path)
+{
+    std::string const& abs = path;      // Absolute path
+    std::string const rel = PWD + path; // Relative path
+
+    // Look for absolute path to regular file
+    if (SSS::pathIsFile(abs)) {
+        return abs;
+    }
+    // Look for relative path to regular file
+    else if (SSS::pathIsFile(rel)) {
+        return rel;
+    }
+    // Look for absolute path to directory
+    if (SSS::pathIsDir(abs)) {
+        return abs;
+    }
+    // Look for relative path to directory
+    else if (SSS::pathIsDir(rel)) {
+        return rel;
+    }
+    // Nothing found, return unchanged path
+    return path;
+}
+
 std::string readFile(std::string const& filepath) try
 {
     std::string ret;

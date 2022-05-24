@@ -11,7 +11,7 @@
 #define CATCH_ASYNCBASE_ERROR \
 catch (std::exception const& e) { \
     _running_state = _RunningState::handled; \
-    LOG_OBJ_METHOD_CTX_ERR("Function threw", e.what()); \
+    LOG_CTX_ERR(CONTEXT_MSG(THIS_NAME, "Exception was caught"), e.what()); \
 };
 
 SSS_BEGIN;
@@ -69,8 +69,8 @@ public:
     void run(_Args... args) noexcept try
     {
         cancel();
-        _future = std::async(std::launch::async, &AsyncBase::_intermediateFunction, this, args...);
         _running_state = _RunningState::running;
+        _future = std::async(std::launch::async, &AsyncBase::_intermediateFunction, this, args...);
     }
     CATCH_ASYNCBASE_ERROR;
 
@@ -180,7 +180,7 @@ private:
     virtual void _asyncFunction(_Args... args) = 0;
 
     // Calls _asyncFunction and sets _running_state accordingly
-    void _intermediateFunction(_Args... args) try
+    void _intermediateFunction(_Args... args) noexcept try
     {
         if (Log::Async::query(Log::Async::get().run_state)) {
             LOG_OBJ_MSG("Function started running.");

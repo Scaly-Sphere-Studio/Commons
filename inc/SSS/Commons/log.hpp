@@ -214,8 +214,8 @@ inline bool isLoudened() { return _internal::Base::isLoudened(); };
 #define LOG_ERR(X)    SSS::log_err( X );
 
 #define LOG_CTX_MSG(X, Y)   LOG_MSG ( CONTEXT_MSG(X, Y) );
-#define LOG_CTX_WRN(X, Y)   LOG_ERR ( CONTEXT_MSG(X, Y) );
-#define LOG_CTX_ERR(X, Y)   LOG_WRN ( CONTEXT_MSG(X, Y) );
+#define LOG_CTX_WRN(X, Y)   LOG_WRN ( CONTEXT_MSG(X, Y) );
+#define LOG_CTX_ERR(X, Y)   LOG_ERR ( CONTEXT_MSG(X, Y) );
 
 #define LOG_FUNC_MSG(X)         LOG_MSG     ( FUNC_MSG(X) )
 #define LOG_FUNC_WRN(X)         LOG_WRN     ( FUNC_MSG(X) )
