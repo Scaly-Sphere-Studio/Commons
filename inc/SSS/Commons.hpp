@@ -7,6 +7,7 @@
 #include "Commons/pointers.hpp"
 #include "Commons/async.hpp"
 #include "Commons/time.hpp"
+#include "Commons/Lua.hpp"
 
 /** @file
  *  Header of the

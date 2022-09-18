@@ -2,6 +2,20 @@
 
 SSS_BEGIN;
 
+std::string RGB24::to_string() const
+{
+    char buff[64];
+    sprintf_s(buff, "0x%06X (RGB: %d, %d, %d)", rgb, r, g, b);
+    return buff;
+}
+
+std::string RGBA32::to_string() const
+{
+    char buff[64];
+    sprintf_s(buff, "0x%08X (RGBA: %d, %d, %d, %d)", rgba, r, g, b, a);
+    return buff;
+}
+
 // Returns a rainbow color based on the passed value.
 RGB24 rainbow(uint32_t value, uint32_t max_value) noexcept
 {
@@ -32,21 +46,21 @@ RGBA32& operator*=(RGBA32& dst, RGBA32 const& src) noexcept
     if (dst.rgba == 0) {
         return dst = src;
     }
-    float const a((float)src.bytes.a / 255.f),
+    float const a((float)src.a / 255.f),
                 a2(1.f - a);
-    dst.bytes.r = static_cast<uint8_t>(
-        (static_cast<float>(src.bytes.r) * a) +
-        (static_cast<float>(dst.bytes.r) * a2)
+    dst.r = static_cast<uint8_t>(
+        (static_cast<float>(src.r) * a) +
+        (static_cast<float>(dst.r) * a2)
     );
-    dst.bytes.g = static_cast<uint8_t>(
-        (static_cast<float>(src.bytes.g) * a) +
-        (static_cast<float>(dst.bytes.g) * a2)
+    dst.g = static_cast<uint8_t>(
+        (static_cast<float>(src.g) * a) +
+        (static_cast<float>(dst.g) * a2)
     );
-    dst.bytes.b = static_cast<uint8_t>(
-        (static_cast<float>(src.bytes.b) * a) +
-        (static_cast<float>(dst.bytes.b) * a2)
+    dst.b = static_cast<uint8_t>(
+        (static_cast<float>(src.b) * a) +
+        (static_cast<float>(dst.b) * a2)
     );
-    dst.bytes.a = src.bytes.a > dst.bytes.a ? src.bytes.a : dst.bytes.a;
+    dst.a = src.a > dst.a ? src.a : dst.a;
     return dst;
 }
 

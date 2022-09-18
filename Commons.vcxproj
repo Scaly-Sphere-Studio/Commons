@@ -35,6 +35,7 @@
     <ClInclude Include="inc\SSS\Commons\async.hpp" />
     <ClInclude Include="inc\SSS\Commons\time.hpp" />
     <ClInclude Include="inc\SSS\Commons\_includes.hpp" />
+    <ClInclude Include="inc\SSS\Commons\Lua.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\color.cpp" />
