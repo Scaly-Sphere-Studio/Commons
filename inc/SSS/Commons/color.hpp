@@ -30,6 +30,7 @@ struct RGB24 {
     RGB24(uint8_t red, uint8_t green, uint8_t blue) noexcept : r(red), g(green), b(blue) {};
 
     std::string to_string() const;
+    operator std::string() const;
 };
 
 /** \c 32 bits (Red, Green, Blue, Alpha) color union.
@@ -62,6 +63,7 @@ struct RGBA32 {
         : r(red), g(green), b(blue), a(alpha) {};
 
     std::string to_string() const;
+    operator std::string() const;
 };
 
 /** Returns a "rainbow" color based on the ratio of passed values.*/

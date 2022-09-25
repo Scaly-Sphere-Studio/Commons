@@ -9,11 +9,21 @@ std::string RGB24::to_string() const
     return buff;
 }
 
+RGB24::operator std::string() const
+{
+    return to_string();
+}
+
 std::string RGBA32::to_string() const
 {
     char buff[64];
     sprintf_s(buff, "0x%08X (RGBA: %d, %d, %d, %d)", rgba, r, g, b, a);
     return buff;
+}
+
+RGBA32::operator std::string() const
+{
+    return to_string();
 }
 
 // Returns a rainbow color based on the passed value.
