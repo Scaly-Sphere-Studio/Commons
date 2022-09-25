@@ -14,11 +14,11 @@ SSS_BEGIN;
  */
 struct RGB24 {
     union {
-        uint32_t rgb;   /**< \c \b 0xFFFFFF -- Whole color*/
+        uint32_t rgb : 24;  /**< \c \b 0xFFFFFF -- Whole color*/
         struct {
-            uint8_t r;  /**< \c \b 0x0000FF -- Red part of the color.*/
-            uint8_t g;  /**< \c \b 0x00FF00 -- Green part of the color.*/
-            uint8_t b;  /**< \c \b 0xFF0000 -- Blue part of the color.*/
+            uint8_t r;      /**< \c \b 0x0000FF -- Red part of the color.*/
+            uint8_t g;      /**< \c \b 0x00FF00 -- Green part of the color.*/
+            uint8_t b;      /**< \c \b 0xFF0000 -- Blue part of the color.*/
         };
     };
 
