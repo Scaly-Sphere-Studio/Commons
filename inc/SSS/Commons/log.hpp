@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SSS_COMMONS_LOG_HPP
+#define SSS_COMMONS_LOG_HPP
 
 #include "_includes.hpp"
 #include "time.hpp"
@@ -275,3 +276,5 @@ catch (std::exception const& e) {\
 catch (std::exception const& e) {\
     LOG_OBJ_METHOD_ERR(e.what());\
 }
+
+#endif // SSS_COMMONS_LOG_HPP

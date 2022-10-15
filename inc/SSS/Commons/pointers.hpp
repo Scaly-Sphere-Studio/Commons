@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SSS_COMMONS_POINTERS_HPP
+#define SSS_COMMONS_POINTERS_HPP
 
 #include "_includes.hpp"
 
@@ -53,3 +54,5 @@ void cleanWeakPtrVector(std::vector<std::weak_ptr<T>>& vector) {
 };
 
 SSS_END;
+
+#endif // SSS_COMMONS_POINTERS_HPP

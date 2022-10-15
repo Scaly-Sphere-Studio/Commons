@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SSS_COMMONS_TIME_HPP
+#define SSS_COMMONS_TIME_HPP
 
 #include "_includes.hpp"
 
@@ -94,3 +95,5 @@ private:
 };
 
 SSS_END;
+
+#endif // SSS_COMMONS_TIME_HPP

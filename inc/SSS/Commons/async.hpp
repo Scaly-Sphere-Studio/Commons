@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SSS_COMMONS_ASYNC_HPP
+#define SSS_COMMONS_ASYNC_HPP
 
 #include "_includes.hpp"
 #include "log.hpp"
@@ -209,3 +210,5 @@ AsyncBase<_Args...>::~AsyncBase()
 }
 
 SSS_END;
+
+#endif // SSS_COMMONS_ASYNC_HPP

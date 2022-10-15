@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SSS_COMMONS_INCLUDES_HPP
+#define SSS_COMMONS_INCLUDES_HPP
 
 /** @file
  *  Base header including resources and defining macros used by other headers.
@@ -17,10 +18,10 @@
 #include <atomic>
 
 // CLib
-#include <stdlib.h>
-#include <stdint.h>
-#include <stdio.h>
-#include <stdarg.h>
+#include <cstdlib>
+#include <cstdint>
+#include <cstdio>
+#include <cstdarg>
 #include <sys/stat.h>
 
 /** Declares the SSS namespace.
@@ -49,3 +50,5 @@
  *  @sa SSS::throw_exc()
  */
 #define NO_RETURN __declspec(noreturn)
+
+#endif // SSS_COMMONS_INCLUDES_HPP

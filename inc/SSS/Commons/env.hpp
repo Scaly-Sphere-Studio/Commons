@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SSS_COMMONS_ENV_HPP
+#define SSS_COMMONS_ENV_HPP
 
 #include "_includes.hpp"
 #include "log.hpp"
@@ -51,3 +52,5 @@ std::string pathWhich(std::string const& path);
 std::string readFile(std::string const& filepath);
 
 SSS_END;
+
+#endif // SSS_COMMONS_ENV_HPP

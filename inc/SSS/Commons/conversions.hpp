@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SSS_COMMONS_CONVERSIONS_HPP
+#define SSS_COMMONS_CONVERSIONS_HPP
 
 #include "_includes.hpp"
 
@@ -43,3 +44,5 @@ std::u32string strToStr32(std::string const& str);
 std::string str32ToStr(std::u32string const& str);
 
 SSS_END;
+
+#endif // SSS_COMMONS_CONVERSIONS_HPP

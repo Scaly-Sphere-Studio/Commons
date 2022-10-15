@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SSS_COMMONS_COLORS_HPP
+#define SSS_COMMONS_COLORS_HPP
 
 #include "_includes.hpp"
 
@@ -73,3 +74,5 @@ RGB24 rainbow(uint32_t value, uint32_t max_value) noexcept;
 RGBA32& operator*=(RGBA32& dst, RGBA32 const& src) noexcept;
 
 SSS_END;
+
+#endif // SSS_COMMONS_LOG_HPP

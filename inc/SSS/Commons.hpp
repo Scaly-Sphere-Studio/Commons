@@ -1,5 +1,7 @@
-#pragma once
+#ifndef SSS_COMMONS_HPP
+#define SSS_COMMONS_HPP
 
+#include "Commons/Lua.hpp"
 #include "Commons/color.hpp"
 #include "Commons/conversions.hpp"
 #include "Commons/env.hpp"
@@ -7,7 +9,6 @@
 #include "Commons/pointers.hpp"
 #include "Commons/async.hpp"
 #include "Commons/time.hpp"
-#include "Commons/Lua.hpp"
 
 /** @file
  *  Header of the
@@ -27,3 +28,5 @@
  *  Base namespace for all of \b %SSS libraries.
  *  \b SSS/Commons features are, for the most part, nested directly into it.
  */
+
+#endif // SSS_COMMONS_HPP

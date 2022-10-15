@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SSS_COMMONS_LUA_HPP
+#define SSS_COMMONS_LUA_HPP
 
 #ifdef SSS_LUA
 #include <sol/sol.hpp>
@@ -64,4 +65,6 @@ inline void lua_setup(sol::state& lua) try
 CATCH_AND_LOG_FUNC_EXC;
 
 SSS_END;
-#endif
+#endif // SSS_LUA
+
+#endif // SSS_COMMONS_LUA_HPP
