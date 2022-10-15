@@ -13,19 +13,19 @@ inline void lua_setup(sol::state& lua) try
     // Log
     {
         lua["log_msg"] = sol::overload(
-            [](std::string arg) { log_msg(arg); },
-            [](int64_t arg)     { log_msg(arg); },
-            [](double arg)      { log_msg(arg); }
+            sol::resolve<void(std::string const&)>(log_msg),
+            sol::resolve<void(int const&)>(log_msg),
+            sol::resolve<void(float const&)>(log_msg)
         );
         lua["log_wrn"] = sol::overload(
-            [](std::string arg) { log_wrn(arg); },
-            [](int64_t arg)     { log_wrn(arg); },
-            [](double arg)      { log_wrn(arg); }
+            sol::resolve<void(std::string const&)>(log_wrn),
+            sol::resolve<void(int const&)>(log_wrn),
+            sol::resolve<void(float const&)>(log_wrn)
         );
         lua["log_err"] = sol::overload(
-            [](std::string arg) { log_err(arg); },
-            [](int64_t arg)     { log_err(arg); },
-            [](double arg)      { log_err(arg); }
+            sol::resolve<void(std::string const&)>(log_err),
+            sol::resolve<void(int const&)>(log_err),
+            sol::resolve<void(float const&)>(log_err)
         );
     }
     // Color
@@ -37,6 +37,7 @@ inline void lua_setup(sol::state& lua) try
                 RGB24(uint32_t),
                 RGB24(uint8_t, uint8_t, uint8_t)
             >(),
+            // Bitfield forces this kind of sol::property
             "rgb", sol::property(
                 [](RGB24& self) { return self.rgb; },
                 [](RGB24& self, uint32_t color) { self.rgb = color; }),
@@ -52,9 +53,7 @@ inline void lua_setup(sol::state& lua) try
                 RGBA32(uint32_t),
                 RGBA32(uint8_t, uint8_t, uint8_t, uint8_t)
             >(),
-            "rgba", sol::property(
-                [](RGBA32& self) { return self.rgba; },
-                [](RGBA32& self, uint32_t color) { self.rgba = color; }),
+            "rgba", &RGBA32::rgba,
             "r", &RGBA32::r,
             "g", &RGBA32::g,
             "b", &RGBA32::b,
