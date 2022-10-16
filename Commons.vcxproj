@@ -129,6 +129,8 @@
       <AdditionalIncludeDirectories>.\inc</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ProgramDataBaseFileName>$(Outdir)$(TargetName).pdb</ProgramDataBaseFileName>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -148,6 +150,8 @@
       <AdditionalIncludeDirectories>.\inc</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ProgramDataBaseFileName>$(Outdir)$(TargetName).pdb</ProgramDataBaseFileName>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -169,6 +173,8 @@
       <AdditionalIncludeDirectories>.\inc</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ProgramDataBaseFileName>$(Outdir)$(TargetName).pdb</ProgramDataBaseFileName>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -192,6 +198,8 @@
       <AdditionalIncludeDirectories>.\inc</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ProgramDataBaseFileName>$(Outdir)$(TargetName).pdb</ProgramDataBaseFileName>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
