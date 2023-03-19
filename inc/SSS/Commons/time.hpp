@@ -17,6 +17,27 @@ SSS_BEGIN;
  */
 void sleepUntil(std::chrono::steady_clock::time_point time);
 
+/** Returns duration in a formatted string.
+ *  @return Time formated as such : <tt>hh:mm:ss.ms UTF</tt>
+ */
+template<class _Rep, class _Period>
+std::string convertTime(std::chrono::duration<_Rep, _Period> const& duration)
+{
+    using namespace std::chrono;
+
+    // Split time into hours, minutes, seconds and milliseconds
+    int const ms(duration_cast<milliseconds>(duration).count() % 1000);
+    int const s(duration_cast<seconds>(duration).count() % 60);
+    int const m(duration_cast<minutes>(duration).count() % 60);
+    int const h(duration_cast<hours>(duration).count() % 24);
+
+    // Format the string via printf
+    char buff[64];
+    sprintf_s(buff, "%02d:%02d:%02d.%03d", h, m, s, ms);
+
+    return buff;
+};
+
 /** Returns current UTF time in a formatted string.
  *  @return Time formated as such : <tt>hh:mm:ss.ms UTF</tt>
  */

@@ -19,22 +19,7 @@ void sleepUntil(std::chrono::steady_clock::time_point time)
 // Returns a formatted string displaying the current UTF time
 std::string timeUTF()
 {
-    using namespace std::chrono;
-
-    // Retrieve current time
-    system_clock::duration const now = system_clock::now().time_since_epoch();
-
-    // Split time into hours, minutes, seconds and milliseconds
-    int const ms(duration_cast<milliseconds>(now).count() % 1000);
-    int const s(duration_cast<seconds>(now).count() % 60);
-    int const m(duration_cast<minutes>(now).count() % 60);
-    int const h(duration_cast<hours>(now).count() % 24);
-
-    // Format the string via printf
-    char buff[64];
-    sprintf_s(buff, "%02d:%02d:%02d.%03d", h, m, s, ms);
-
-    return buff;
+    return convertTime(std::chrono::system_clock::now().time_since_epoch());
 }
 
 long long Stopwatch::getMS() const

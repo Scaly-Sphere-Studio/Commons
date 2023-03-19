@@ -26,6 +26,7 @@
     <None Include="vcpkg_scripts\Remove.ps1" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="inc\SSS\Commons\Base.hpp" />
     <ClInclude Include="inc\SSS\Commons\conversions.hpp" />
     <ClInclude Include="inc\SSS\Commons\env.hpp" />
     <ClInclude Include="inc\SSS\Commons.hpp" />

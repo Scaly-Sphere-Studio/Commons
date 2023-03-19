@@ -55,6 +55,9 @@
     <ClInclude Include="inc\SSS\Commons\Lua.hpp">
       <Filter>inc</Filter>
     </ClInclude>
+    <ClInclude Include="inc\SSS\Commons\Base.hpp">
+      <Filter>inc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\color.cpp">

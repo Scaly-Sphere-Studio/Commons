@@ -9,6 +9,7 @@
 #include "Commons/pointers.hpp"
 #include "Commons/async.hpp"
 #include "Commons/time.hpp"
+#include "Commons/Base.hpp"
 
 /** @file
  *  Header of the
