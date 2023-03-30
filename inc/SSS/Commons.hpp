@@ -1,7 +1,9 @@
 #ifndef SSS_COMMONS_HPP
 #define SSS_COMMONS_HPP
 
+#ifdef SSS_LUA
 #include "Commons/Lua.hpp"
+#endif // SSS_LUA
 #include "Commons/color.hpp"
 #include "Commons/conversions.hpp"
 #include "Commons/env.hpp"

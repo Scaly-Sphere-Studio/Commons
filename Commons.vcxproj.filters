@@ -75,5 +75,8 @@
     <ClCompile Include="src\conversions.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Lua.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
