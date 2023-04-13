@@ -5,32 +5,34 @@
 
 SSS_BEGIN;
 
-void sleepUntil(std::chrono::steady_clock::time_point time)
+using namespace std::chrono;
+
+void sleepUntil(steady_clock::time_point time)
 {
-    static constexpr std::chrono::milliseconds limit(3);
-    if (time - std::chrono::steady_clock::now() > limit) {
+    static constexpr milliseconds limit(3);
+    if (time - steady_clock::now() > limit) {
         timeBeginPeriod(1);
         std::this_thread::sleep_until(time - limit);
         timeEndPeriod(1);
     }
-    while (std::chrono::steady_clock::now() < time); // CPU heavy
+    while (steady_clock::now() < time); // CPU heavy
 }
 
 // Returns a formatted string displaying the current UTF time
 std::string timeUTF()
 {
-    return convertTime(std::chrono::system_clock::now().time_since_epoch());
+    return convertTime(system_clock::now().time_since_epoch());
 }
 
 long long Stopwatch::getMS() const
 {
-    std::chrono::duration<double, std::milli> diff(clock::now() - _start);
+    duration<double, std::milli> diff(clock::now() - _start);
     return static_cast<long long>(diff.count());
 }
 
 double Stopwatch::getPreciseMS() const
 {
-    std::chrono::duration<double, std::milli> diff(clock::now() - _start);
+    duration<double, std::milli> diff(clock::now() - _start);
     return diff.count();
 }
 

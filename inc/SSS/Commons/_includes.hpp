@@ -24,6 +24,12 @@
 #include <cstdarg>
 #include <sys/stat.h>
 
+#ifdef SSS_COMMONS_EXPORTS
+#define SSS_COMMONS_API __declspec(dllexport)
+#else
+#define SSS_COMMONS_API __declspec(dllimport)
+#endif
+
 /** Declares the SSS namespace.
  *  Further code will be nested in the SSS namespace.\n
  *  Should be used in pair with with #SSS_END.

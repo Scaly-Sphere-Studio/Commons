@@ -43,7 +43,7 @@ public:
  *  @param[in,out] vector Reference to the \c std::vector to be cleaned.
  */
 template <class T>
-void cleanWeakPtrVector(std::vector<std::weak_ptr<T>>& vector) {
+inline void cleanWeakPtrVector(std::vector<std::weak_ptr<T>>& vector) {
     vector.erase(
         std::remove_if(
             vector.begin(),

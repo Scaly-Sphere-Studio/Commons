@@ -18,7 +18,7 @@ SSS_BEGIN;
  *  message if an exception was caught <em>(which should not happen)</em>.
  */
 template <typename T>
-std::string toString(T const& arg) noexcept try
+inline std::string toString(T const& arg) noexcept try
 {
     std::ostringstream strstream;
     strstream << std::boolalpha << arg;
@@ -28,12 +28,15 @@ catch (...) {
     return "[SSS::toString() error]";
 };
 
+template<>
+inline std::string toString(std::string const& arg) noexcept { return arg; };
+
 /** Converts \c std::string to \c std::u32string.
  *  @param[in] str The \c std::string to convert.
  *  @return The converted \c std::u32string.
  *  @sa str32ToStr
  */
-std::u32string strToStr32(std::string const& str);
+SSS_COMMONS_API std::u32string strToStr32(std::string const& str);
 /** Converts \c std::u32string to \c std::string.
  *  As \c std::string supports UTF-8, the resulting
  *  string suffers no loss of data.
@@ -41,7 +44,7 @@ std::u32string strToStr32(std::string const& str);
  *  @return The converted \c std::string.
  *  @sa strToStr32
  */
-std::string str32ToStr(std::u32string const& str);
+SSS_COMMONS_API std::string str32ToStr(std::u32string const& str);
 
 SSS_END;
 

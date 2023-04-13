@@ -14,7 +14,7 @@ SSS_BEGIN;
 /** Writes the given string to \c std::cout
  *  @param[in] str The string to write to \c std::cout
  */
-void log_msg(std::string const& str) noexcept;
+SSS_COMMONS_API void log_msg(std::string const& str) noexcept;
 /** Converts the given argument of type \c T via \c SSS::toString
  *  before writing it to \c std::cout.
  *  @param[in] arg The argument of type \c T to convert and write to \c std::cout.
@@ -25,7 +25,7 @@ inline void log_msg(T const& arg) noexcept { log_msg(toString(arg)); }
 /** Writes the given string to \c std::cerr with a warning notice.
  *  @param[in] str The string to write to \c std::cerr
  */
-void log_wrn(std::string const& str) noexcept;
+SSS_COMMONS_API void log_wrn(std::string const& str) noexcept;
 /** Converts the given argument of type \c T via \c SSS::toString
  *  before writing it to \c std::cerr with a warning notice.
  *  @param[in] arg The argument of type \c T to convert and write to \c std::cerr.
@@ -36,7 +36,7 @@ inline void log_wrn(T const& arg) noexcept { log_wrn(toString(arg)); }
 /** Writes the given string to \c std::cerr with an error notice.
  *  @param[in] str The string to write to \c std::cerr.
  */
-void log_err(std::string const& str) noexcept;
+SSS_COMMONS_API void log_err(std::string const& str) noexcept;
 /** Converts the given argument of type \c T via \c SSS::toString
  *  before writing it to \c std::cerr with an error notice.
  *  @param[in] arg The argument of type \c T to convert and write to \c std::cerr.
@@ -48,13 +48,13 @@ inline void log_err(T const& arg) noexcept { log_err(toString(arg)); }
  * @param[in] errnum The error number to generate the error message from.
  * @return The error message generated from the error number.
  */
-std::string getErrorString(int errnum);
+SSS_COMMONS_API std::string getErrorString(int errnum);
 
 /** Throws a \c std::runtime_error exception with given message.
  *  @param[in] str The error message to be given to the
  *  \c std::runtime_error constructor
  */
-NO_RETURN void throw_exc(std::string const& str);
+SSS_COMMONS_API NO_RETURN void throw_exc(std::string const& str);
 
 /** Singleton template class to be inherited by log structures.
  *  %Log structures are intended to be nested in the Log (or
@@ -129,7 +129,7 @@ public:
  */
 namespace Log {
     INTERNAL_BEGIN;
-    struct Base : public LogBase<Base> {
+    struct SSS_COMMONS_API Base : public LogBase<Base> {
         friend LogBase<Base>;
     private:
         Base() = default;
@@ -137,13 +137,13 @@ namespace Log {
     };
     INTERNAL_END;
     /** Handle to the internal instance's LogBase::louden() function.*/
-    inline void louden(bool state) { _internal::Base::louden(state); };
+    SSS_COMMONS_API inline void louden(bool state) { _internal::Base::louden(state); };
     /** Handle to the internal instance's LogBase::silence() function.*/
-    inline void silence(bool state) { _internal::Base::silence(state); };
+    SSS_COMMONS_API inline void silence(bool state) { _internal::Base::silence(state); };
     /** Handle to the internal instance's LogBase::isLoudened() function.*/
-    inline bool isLoudened() { return _internal::Base::isLoudened(); };
+    SSS_COMMONS_API inline bool isLoudened() { return _internal::Base::isLoudened(); };
     /** Handle to the internal instance's LogBase::isSilenced() function.*/
-    inline bool isSilenced() { return _internal::Base::isSilenced(); };
+    SSS_COMMONS_API inline bool isSilenced() { return _internal::Base::isSilenced(); };
 }
 
 SSS_END;

@@ -7,7 +7,7 @@
 
 SSS_BEGIN;
 
-void lua_setup(sol::state& lua);
+SSS_COMMONS_API void lua_setup(sol::state& lua);
 
 SSS_END;
 

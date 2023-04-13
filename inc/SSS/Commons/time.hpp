@@ -15,13 +15,13 @@ SSS_BEGIN;
  *  Hence, this function is CPU heavy if used repeatedly
  *  every \c 3ms or less.
  */
-void sleepUntil(std::chrono::steady_clock::time_point time);
+SSS_COMMONS_API void sleepUntil(std::chrono::steady_clock::time_point time);
 
 /** Returns duration in a formatted string.
  *  @return Time formated as such : <tt>hh:mm:ss.ms UTF</tt>
  */
 template<class _Rep, class _Period>
-std::string convertTime(std::chrono::duration<_Rep, _Period> const& duration)
+inline std::string convertTime(std::chrono::duration<_Rep, _Period> const& duration)
 {
     using namespace std::chrono;
 
@@ -41,13 +41,18 @@ std::string convertTime(std::chrono::duration<_Rep, _Period> const& duration)
 /** Returns current UTF time in a formatted string.
  *  @return Time formated as such : <tt>hh:mm:ss.ms UTF</tt>
  */
-std::string timeUTF();
+SSS_COMMONS_API std::string timeUTF();
+
+// Ignore warning about STL exports as they're private members
+#pragma warning(push, 2)
+#pragma warning(disable: 4251)
+#pragma warning(disable: 4275)
 
 /** %Stopwatch used to benchmark features time.
  *  Timer starts at creation, is queried with getMS(),
  *  and starts over with reset().
  */
-class Stopwatch {
+class SSS_COMMONS_API Stopwatch {
 private:
     using clock = std::chrono::steady_clock;
     clock::time_point _start{ clock::now() };
@@ -72,7 +77,7 @@ public:
 };
 
 /** Counts frames and times longest one each second.*/
-class FrameTimer {
+class SSS_COMMONS_API FrameTimer {
 public:
     /** Adds one frame to the counter, returns \c true every second.
      *  Computes FPS and "longest frame" every second.
@@ -114,6 +119,8 @@ private:
 
     Stopwatch _frame_watch;
 };
+
+#pragma warning(pop)
 
 SSS_END;
 

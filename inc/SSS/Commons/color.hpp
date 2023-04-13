@@ -13,7 +13,7 @@ SSS_BEGIN;
  *  This format is mostly used for color parameters.
  *  @sa RGBA32
  */
-struct RGB24 {
+struct SSS_COMMONS_API RGB24 {
     union {
         uint32_t rgb : 24;  /**< \c \b 0xFFFFFF -- Whole color*/
         struct {
@@ -38,7 +38,7 @@ struct RGB24 {
  *  This format is mostly used for pixel buffers.
  *  @sa RGB24
  */
-struct RGBA32 {
+struct SSS_COMMONS_API RGBA32 {
     union {
         uint32_t rgba;  /**< \c \b 0xFFFFFFFF -- Whole color.*/
         struct {
@@ -68,10 +68,10 @@ struct RGBA32 {
 };
 
 /** Returns a "rainbow" color based on the ratio of passed values.*/
-RGB24 rainbow(uint32_t value, uint32_t max_value) noexcept;
+SSS_COMMONS_API RGB24 rainbow(uint32_t value, uint32_t max_value) noexcept;
 
 /** Blends colors together based on the source's alpha.*/
-RGBA32& operator*=(RGBA32& dst, RGBA32 const& src) noexcept;
+SSS_COMMONS_API RGBA32& operator*=(RGBA32& dst, RGBA32 const& src) noexcept;
 
 SSS_END;
 

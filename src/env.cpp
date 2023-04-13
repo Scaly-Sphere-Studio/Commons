@@ -24,7 +24,7 @@ static std::string _getPWD()
     return pwd;
 }
 
-std::string const SSS::PWD{ _getPWD() };
+SSS_COMMONS_API std::string const SSS::PWD{ _getPWD() };
 
 SSS_BEGIN;
 
