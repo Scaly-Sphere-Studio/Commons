@@ -1,5 +1,5 @@
-#include "SSS/Commons/time.hpp"
-#include "SSS/Commons/log.hpp"
+#include "Commons/time.hpp"
+#include "Commons/log.hpp"
 #include <Windows.h>
 #include <timeapi.h>
 

@@ -1,4 +1,4 @@
-#include "SSS/Commons/color.hpp"
+#include "Commons/color.hpp"
 
 SSS_BEGIN;
 

@@ -1,4 +1,6 @@
-#include "SSS/Commons/Lua.hpp"
+#include "Commons/Lua.hpp"
+#include "Commons/log.hpp"
+#include "Commons/color.hpp"
 
 SSS_BEGIN;
 

@@ -26,17 +26,17 @@
     <None Include="vcpkg_scripts\Remove.ps1" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="inc\SSS\Commons\Base.hpp" />
-    <ClInclude Include="inc\SSS\Commons\conversions.hpp" />
-    <ClInclude Include="inc\SSS\Commons\env.hpp" />
-    <ClInclude Include="inc\SSS\Commons.hpp" />
-    <ClInclude Include="inc\SSS\Commons\color.hpp" />
-    <ClInclude Include="inc\SSS\Commons\pointers.hpp" />
-    <ClInclude Include="inc\SSS\Commons\log.hpp" />
-    <ClInclude Include="inc\SSS\Commons\async.hpp" />
-    <ClInclude Include="inc\SSS\Commons\time.hpp" />
-    <ClInclude Include="inc\SSS\Commons\_includes.hpp" />
-    <ClInclude Include="inc\SSS\Commons\Lua.hpp">
+    <ClInclude Include="inc\Commons\Base.hpp" />
+    <ClInclude Include="inc\Commons\conversions.hpp" />
+    <ClInclude Include="inc\Commons\env.hpp" />
+    <ClInclude Include="inc\Commons.hpp" />
+    <ClInclude Include="inc\Commons\color.hpp" />
+    <ClInclude Include="inc\Commons\pointers.hpp" />
+    <ClInclude Include="inc\Commons\log.hpp" />
+    <ClInclude Include="inc\Commons\async.hpp" />
+    <ClInclude Include="inc\Commons\time.hpp" />
+    <ClInclude Include="inc\Commons\_includes.hpp" />
+    <ClInclude Include="inc\Commons\Lua.hpp">
       <ExcludedFromBuild Condition="'$(SSS_LUA)' == ''">true</ExcludedFromBuild>
     </ClInclude>
   </ItemGroup>

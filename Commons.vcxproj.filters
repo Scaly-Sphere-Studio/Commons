@@ -25,37 +25,37 @@
     <None Include="DownloadVcpkgScripts.ps1" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="inc\SSS\Commons\_includes.hpp">
+    <ClInclude Include="inc\Commons\_includes.hpp">
       <Filter>inc</Filter>
     </ClInclude>
-    <ClInclude Include="inc\SSS\Commons\color.hpp">
+    <ClInclude Include="inc\Commons\color.hpp">
       <Filter>inc</Filter>
     </ClInclude>
-    <ClInclude Include="inc\SSS\Commons\log.hpp">
+    <ClInclude Include="inc\Commons\log.hpp">
       <Filter>inc</Filter>
     </ClInclude>
-    <ClInclude Include="inc\SSS\Commons\time.hpp">
+    <ClInclude Include="inc\Commons\time.hpp">
       <Filter>inc</Filter>
     </ClInclude>
-    <ClInclude Include="inc\SSS\Commons.hpp">
+    <ClInclude Include="inc\Commons.hpp">
       <Filter>inc</Filter>
     </ClInclude>
-    <ClInclude Include="inc\SSS\Commons\pointers.hpp">
+    <ClInclude Include="inc\Commons\pointers.hpp">
       <Filter>inc</Filter>
     </ClInclude>
-    <ClInclude Include="inc\SSS\Commons\env.hpp">
+    <ClInclude Include="inc\Commons\env.hpp">
       <Filter>inc</Filter>
     </ClInclude>
-    <ClInclude Include="inc\SSS\Commons\async.hpp">
+    <ClInclude Include="inc\Commons\async.hpp">
       <Filter>inc</Filter>
     </ClInclude>
-    <ClInclude Include="inc\SSS\Commons\conversions.hpp">
+    <ClInclude Include="inc\Commons\conversions.hpp">
       <Filter>inc</Filter>
     </ClInclude>
-    <ClInclude Include="inc\SSS\Commons\Lua.hpp">
+    <ClInclude Include="inc\Commons\Lua.hpp">
       <Filter>inc</Filter>
     </ClInclude>
-    <ClInclude Include="inc\SSS\Commons\Base.hpp">
+    <ClInclude Include="inc\Commons\Base.hpp">
       <Filter>inc</Filter>
     </ClInclude>
   </ItemGroup>
