@@ -20,8 +20,8 @@ public:
     inline Base& operator=(Base&& src) noexcept{ name = std::move(src.name); return *this; };
 
     inline auto getCreationTime() const noexcept { return creation_time; };
-    inline void setName(std::string const str) noexcept { name = str; };
-    inline auto getName() const noexcept { return name; };
+    inline void setName(std::string const& str) noexcept { name = str; };
+    inline std::string const& getName() const noexcept { return name; };
 
 private:
     std::chrono::steady_clock::time_point const creation_time { std::chrono::steady_clock::now() };
