@@ -1,7 +1,3 @@
 Source: sss-commons
 Description: Common functions, macros, etc...
 Build-Depends:
-
-Feature: lua
-Description: Lib features integrated in lua.
-Build-Depends: sol2
