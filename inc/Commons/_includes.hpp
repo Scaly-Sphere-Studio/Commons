@@ -25,10 +25,14 @@
 #include <sys/stat.h>
 
 #ifdef SSS_COMMONS_EXPORTS
-#define SSS_COMMONS_API __declspec(dllexport)
+  #define SSS_COMMONS_API __declspec(dllexport)
 #else
-#define SSS_COMMONS_API __declspec(dllimport)
-#endif
+  #ifdef SSS_COMMONS_DEMO
+    #define SSS_COMMONS_API
+  #else
+    #define SSS_COMMONS_API __declspec(dllimport)
+  #endif // SSS_COMMONS_DEMO
+#endif // SSS_COMMONS_EXPORTS
 
 /** Declares the SSS namespace.
  *  Further code will be nested in the SSS namespace.\n
