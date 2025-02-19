@@ -2,6 +2,7 @@
 #define SSS_COMMONS_POINTERS_HPP
 
 #include "_includes.hpp"
+#include "Base.hpp"
 
 /** @file
  *  Defines smart pointers related classes and functions.
@@ -52,6 +53,57 @@ inline void cleanWeakPtrVector(std::vector<std::weak_ptr<T>>& vector) {
         vector.end()
     );
 };
+
+template<class T>
+class SharedClass : public Base, public std::enable_shared_from_this<T> {
+public:
+    using Shared = std::shared_ptr<T>;
+    using Weak = std::weak_ptr<T>;
+
+    static Shared create()
+    {
+        return Shared(new T());
+    }
+};
+
+template<class T>
+class InstancedClass : public SharedClass<T> {
+private:
+    using WeakVector = std::vector<SharedClass<T>::Weak>;
+    static WeakVector _instances;
+public:
+    using Vector = std::vector<SharedClass<T>::Shared>;
+
+    ~InstancedClass() {
+        cleanWeakPtrVector(_instances);
+    };
+
+    static SharedClass<T>::Shared create() {
+        auto ret = SharedClass<T>::create();
+        _instances.emplace_back(ret);
+        return ret;
+    }
+
+    static Vector getInstances() {
+        Vector ret;
+        ret.reserve(_instances.size());
+        for (auto const& ptr : _instances) {
+            ret.emplace_back(ptr.lock());
+        }
+        return ret;
+    }
+
+    static SharedClass<T>::Shared get(T const* ptr) {
+        for (auto const& weak : _instances) {
+            if (auto shared = weak.lock(); shared.get() == ptr)
+                return shared;
+        }
+        return nullptr;
+    }
+};
+
+template<class T>
+InstancedClass<T>::WeakVector InstancedClass<T>::_instances;
 
 SSS_END;
 
