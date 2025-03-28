@@ -35,18 +35,23 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Commons\Base.hpp" />
+    <ClInclude Include="inc\Commons\Command.hpp" />
     <ClInclude Include="inc\Commons\conversions.hpp" />
     <ClInclude Include="inc\Commons\env.hpp" />
     <ClInclude Include="inc\Commons.hpp" />
     <ClInclude Include="inc\Commons\color.hpp" />
     <ClInclude Include="inc\Commons\pointers.hpp" />
     <ClInclude Include="inc\Commons\log.hpp" />
-    <ClInclude Include="inc\Commons\async.hpp" />
+    <ClInclude Include="inc\Commons\Async.hpp" />
     <ClInclude Include="inc\Commons\time.hpp" />
     <ClInclude Include="inc\Commons\_includes.hpp" />
     <ClInclude Include="inc\Commons\Lua.hpp" />
+    <ClInclude Include="inc\Commons\Observer.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Async.cpp" />
+    <ClCompile Include="src\Command.cpp" />
+    <ClCompile Include="src\Observer.cpp" />
     <ClCompile Include="src\color.cpp" />
     <ClCompile Include="src\env.cpp" />
     <ClCompile Include="src\log.cpp" />

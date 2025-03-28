@@ -46,7 +46,7 @@
     <ClInclude Include="inc\Commons\env.hpp">
       <Filter>inc</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Commons\async.hpp">
+    <ClInclude Include="inc\Commons\Async.hpp">
       <Filter>inc</Filter>
     </ClInclude>
     <ClInclude Include="inc\Commons\conversions.hpp">
@@ -56,6 +56,12 @@
       <Filter>inc</Filter>
     </ClInclude>
     <ClInclude Include="inc\Commons\Base.hpp">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Commons\Observer.hpp">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Commons\Command.hpp">
       <Filter>inc</Filter>
     </ClInclude>
   </ItemGroup>
@@ -76,6 +82,15 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\DemoMain.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Observer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Command.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Async.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

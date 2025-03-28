@@ -6,9 +6,11 @@
 #include "Commons/env.hpp"
 #include "Commons/log.hpp"
 #include "Commons/pointers.hpp"
-#include "Commons/async.hpp"
 #include "Commons/time.hpp"
 #include "Commons/Base.hpp"
+#include "Commons/Async.hpp"
+#include "Commons/Command.hpp"
+#include "Commons/Observer.hpp"
 #ifdef SSS_LUA
 #include "Commons/Lua.hpp"
 #endif // SSS_LUA

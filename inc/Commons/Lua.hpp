@@ -4,8 +4,8 @@
 #define SOL_ALL_SAFETIES_ON 1
 #define SOL_STRINGS_ARE_NUMBERS 1
 #include <sol/sol.hpp>
-#include "SSS/Commons/log.hpp"
-#include "SSS/Commons/color.hpp"
+#include "log.hpp"
+#include "color.hpp"
 
 SSS_BEGIN;
 

@@ -8,6 +8,7 @@
 // STL
 #include <string>
 #include <vector>
+#include <set>
 #include <stdexcept>
 #include <iostream>
 #include <sstream>
