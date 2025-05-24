@@ -17,6 +17,7 @@
 #include <future>
 #include <mutex>
 #include <atomic>
+#include <string>
 
 // CLib
 #include <cstdlib>
@@ -24,6 +25,8 @@
 #include <cstdio>
 #include <cstdarg>
 #include <sys/stat.h>
+
+#include "glm/glm.hpp"
 
 #ifdef SSS_COMMONS_EXPORTS
   #define SSS_COMMONS_API __declspec(dllexport)
