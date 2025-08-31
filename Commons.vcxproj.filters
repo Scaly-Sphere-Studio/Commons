@@ -64,6 +64,9 @@
     <ClInclude Include="inc\Commons\Command.hpp">
       <Filter>inc</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Commons\eventList.hpp">
+      <Filter>inc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\color.cpp">
