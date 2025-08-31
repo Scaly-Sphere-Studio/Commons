@@ -41,6 +41,8 @@ struct SSS_COMMONS_API RGB24 {
 
     std::string to_string() const;
     operator std::string() const;
+    operator glm::vec3() const;
+
 };
 
 /** \c 32 bits (Red, Green, Blue, Alpha) color union.
@@ -80,6 +82,7 @@ struct SSS_COMMONS_API RGBA32 {
 
     std::string to_string() const;
     operator std::string() const;
+    operator glm::vec4() const;
 };
 
 
@@ -117,6 +120,8 @@ public:
 
     std::string to_string() const;
     operator std::string() const;
+    operator glm::vec4() const;
+
 
     glm::vec4 _col;
 };
