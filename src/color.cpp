@@ -36,6 +36,11 @@ RGB24::operator std::string() const
     return to_string();
 }
 
+RGB24::operator glm::vec3() const
+{
+    return glm::vec3(r, g, b)/255.f;
+}
+
 
 RGBA32::RGBA32(const RGBA_f& c)
 {
@@ -71,6 +76,11 @@ std::string RGBA32::to_string() const
 RGBA32::operator std::string() const
 {
     return to_string();
+}
+
+RGBA32::operator glm::vec4() const
+{
+    return glm::vec4(r, g, b, a) / 255.f;
 }
 
 // Returns a rainbow color based on the passed value.
@@ -134,6 +144,11 @@ std::string RGBA_f::to_string() const
 RGBA_f::operator std::string() const
 {
     return to_string();
+}
+
+RGBA_f::operator glm::vec4() const
+{
+    return _col;
 }
 
 RGBA_f::RGBA_f(const std::string& hex) 
