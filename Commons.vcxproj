@@ -40,6 +40,7 @@
     <ClInclude Include="inc\Commons\env.hpp" />
     <ClInclude Include="inc\Commons.hpp" />
     <ClInclude Include="inc\Commons\color.hpp" />
+    <ClInclude Include="inc\Commons\eventList.hpp" />
     <ClInclude Include="inc\Commons\pointers.hpp" />
     <ClInclude Include="inc\Commons\log.hpp" />
     <ClInclude Include="inc\Commons\Async.hpp" />
