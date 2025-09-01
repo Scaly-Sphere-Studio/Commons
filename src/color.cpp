@@ -169,9 +169,6 @@ RGBA_f::RGBA_f(const RGBA32& col)
     _col.g = col.g / 255.0f;
     _col.b = col.b / 255.0f;
     _col.a = col.a / 255.0f;
-
-    const RGBA_f col;
-
 }
 
 std::string RGBA_f::to_Hex() const
