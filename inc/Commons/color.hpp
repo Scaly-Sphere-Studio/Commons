@@ -42,7 +42,6 @@ struct SSS_COMMONS_API RGB24 {
     std::string to_string() const;
     operator std::string() const;
     operator glm::vec3() const;
-
 };
 
 /** \c 32 bits (Red, Green, Blue, Alpha) color union.
@@ -107,10 +106,10 @@ public:
     /** Constructor, reinterpret values from RGB32.*/
     RGBA_f(const RGBA32& col);
     
-
-    std::string to_Hex();
+    /** Convert RGBA_f to Hex with alpha value*/
+    std::string to_Hex() const;
     /** Convert RGBA_f to HSL with alpha value*/
-    glm::vec4 to_HSL();
+    glm::vec4 to_HSL() const;
     /** Return the vec4 color*/
     glm::vec4 to_RGBA() const { return _col; } ;
     /** Construct an RGBA_f class from HSLA color space*/
@@ -121,7 +120,6 @@ public:
     std::string to_string() const;
     operator std::string() const;
     operator glm::vec4() const;
-
 
     glm::vec4 _col;
 };

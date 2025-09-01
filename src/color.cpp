@@ -169,23 +169,27 @@ RGBA_f::RGBA_f(const RGBA32& col)
     _col.g = col.g / 255.0f;
     _col.b = col.b / 255.0f;
     _col.a = col.a / 255.0f;
+
+    const RGBA_f col;
+
 }
 
-std::string RGBA_f::to_Hex()
+std::string RGBA_f::to_Hex() const
 {
-    int r, g, b;
+    int r, g, b, a;
 
     r = static_cast<int>(std::floor(_col.r * 255.0f));
     g = static_cast<int>(std::floor(_col.g * 255.0f));
     b = static_cast<int>(std::floor(_col.b * 255.0f));
+    a = static_cast<int>(std::floor(_col.a * 255.0f));
+    char hexColor[10];
 
-    char hexColor[8];
-    std::snprintf(hexColor, sizeof hexColor, "#%02x%02x%02x", r, g, b);
+    std::snprintf(hexColor, sizeof hexColor, "#%02x%02x%02x%02x", r, g, b, a);
 
     return SSS::toString(hexColor);
 }
 
-glm::vec4 RGBA_f::to_HSL()
+glm::vec4 RGBA_f::to_HSL() const
 {
     const float cmax = std::max({ _col.r, _col.b, _col.g });
     const float cmin = std::min({ _col.r, _col.b, _col.g });
@@ -268,7 +272,7 @@ RGBA_f RGBA_f::from_Hex(std::string hex)
     }
 
     //Check if the hex correspond to a color
-    if (hex.size() != 6) {
+    if (!(hex.size() == 6 || hex.size() == 8)) {
         SSS::log_err("Hex value is invalid");
         return glm::vec4{ 1.0f };
     }
@@ -278,8 +282,12 @@ RGBA_f RGBA_f::from_Hex(std::string hex)
     float r = static_cast<float>(std::stoi(colors[0], NULL, 16)) / 255.0f;
     float g = static_cast<float>(std::stoi(colors[1], NULL, 16)) / 255.0f;
     float b = static_cast<float>(std::stoi(colors[2], NULL, 16)) / 255.0f;
+    float a = 1.0f;
 
-    return glm::vec4(r, g, b, 1.0);
+    if(hex.size() == 8)
+        float a = static_cast<float>(std::stoi(colors[3], NULL, 16)) / 255.0f;
+
+    return glm::vec4(r, g, b, a);
 }
 
 SSS_END;
