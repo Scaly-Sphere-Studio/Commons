@@ -20,6 +20,7 @@ enum EventList
 	Leave,
 	Clicked,
 	Held,
+	Translated,
 	LastEvent
 };
 

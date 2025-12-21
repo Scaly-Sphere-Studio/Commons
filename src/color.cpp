@@ -181,8 +181,9 @@ std::string RGBA_f::to_Hex() const
     a = static_cast<int>(std::floor(_col.a * 255.0f));
     char hexColor[10];
 
-    std::snprintf(hexColor, sizeof hexColor, "#%02x%02x%02x%02x", r, g, b, a);
-
+    if (a == 255){ std::snprintf(hexColor, sizeof hexColor, "#%02x%02x%02x", r, g, b); }
+    else{ std::snprintf(hexColor, sizeof hexColor, "#%02x%02x%02x%02x", r, g, b, a); }
+       
     return SSS::toString(hexColor);
 }
 
@@ -269,7 +270,7 @@ RGBA_f RGBA_f::from_Hex(std::string hex)
     }
 
     //Check if the hex correspond to a color
-    if (!(hex.size() == 6 || hex.size() == 8)) {
+    if (hex.size() != 6 && hex.size() != 8) {
         SSS::log_err("Hex value is invalid");
         return glm::vec4{ 1.0f };
     }
