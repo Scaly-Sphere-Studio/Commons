@@ -21,7 +21,6 @@ jobs:
 
     env:
         VCPKG_ROOT: ${{github.workspace}}/vcpkg
-        PATH: "$env:VCPKG_ROOT;$env:PATH"
 
     steps:
     - uses: actions/checkout@v4
