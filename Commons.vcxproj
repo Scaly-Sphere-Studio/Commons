@@ -52,6 +52,7 @@
   <ItemGroup>
     <ClCompile Include="src\Async.cpp" />
     <ClCompile Include="src\Command.cpp" />
+    <ClCompile Include="src\eventList.cpp" />
     <ClCompile Include="src\Observer.cpp" />
     <ClCompile Include="src\color.cpp" />
     <ClCompile Include="src\env.cpp" />
