@@ -11,6 +11,7 @@
 #include "Commons/Async.hpp"
 #include "Commons/Command.hpp"
 #include "Commons/Observer.hpp"
+#include "Commons/eventList.hpp"
 #ifdef SSS_LUA
 #include "Commons/Lua.hpp"
 #endif // SSS_LUA

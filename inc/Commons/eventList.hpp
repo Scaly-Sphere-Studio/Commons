@@ -5,6 +5,8 @@
 #include "_includes.hpp"
 #include "log.hpp"
 
+#pragma warning(push, 2)
+#pragma warning(disable: 4251)
 /** @file
  *  Defines time-related functions and classes.
  */
