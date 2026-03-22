@@ -102,4 +102,20 @@ std::string readFile(std::string const& filepath) try
 }
 CATCH_AND_RETHROW_FUNC_EXC;
 
+std::string readFile(std::filesystem::path const& filepath) try
+{
+    std::string ret;
+    std::ifstream stream(filepath, std::ios::in);
+    // Throw if file could not be open
+    if (!stream.is_open()) {
+        throw_exc("Could not open file \'" + filepath.string() + "\' : " + getErrorString(errno));
+    }
+    std::stringstream sstr;
+    sstr << stream.rdbuf();
+    ret = sstr.str();
+    stream.close();
+    return ret;
+}
+CATCH_AND_RETHROW_FUNC_EXC;
+
 SSS_END;

@@ -50,6 +50,7 @@ SSS_COMMONS_API std::string pathWhich(std::string const& path);
  *  @throws std::runtime_error If the file couldn't be read.
  */
 SSS_COMMONS_API std::string readFile(std::string const& filepath);
+SSS_COMMONS_API std::string readFile(std::filesystem::path const& filepath);
 
 SSS_END;
 

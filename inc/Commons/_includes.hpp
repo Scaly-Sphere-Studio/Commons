@@ -18,6 +18,7 @@
 #include <mutex>
 #include <atomic>
 #include <string>
+#include <filesystem>
 
 // CLib
 #include <cstdlib>
