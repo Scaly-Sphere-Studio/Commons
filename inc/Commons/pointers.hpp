@@ -11,16 +11,16 @@
 SSS_BEGIN;
 
 /** Implementation of \c \b std::unique_ptr for C style pointers.
- * 
+ *
  *  This template class allows for C style pointers to be handled safely
  *  inside a \c std::unique_ptr.
- * 
+ *
  *  @param[in] _Ty The type to which the pointer points to, eg: \c int
  *  for \c int* pointers.
  *  @param[in] _Dx The type of the related clean-up function (destructor),
  *  eg: <tt> void(*)(void*)</tt> for C's \c free.
  *  @param[in] func The clean-up function, eg: \c free.
- * 
+ *
  *  @usage
  *  Let's say you want to hold an \c int pointer created by a third party library, and
  *  freed by \c free. The corresponding instancing type would be:
@@ -69,16 +69,16 @@ public:
 template<class T>
 class InstancedClass : public SharedClass<T> {
 private:
-    using WeakVector = std::vector<SharedClass<T>::Weak>;
+    using WeakVector = std::vector<typename SharedClass<T>::Weak>;
     static WeakVector _instances;
 public:
-    using Vector = std::vector<SharedClass<T>::Shared>;
+    using Vector = std::vector<typename SharedClass<T>::Shared>;
 
     ~InstancedClass() {
         cleanWeakPtrVector(_instances);
     };
 
-    static SharedClass<T>::Shared create() {
+    static typename SharedClass<T>::Shared create() {
         auto ret = SharedClass<T>::create();
         _instances.emplace_back(ret);
         return ret;
@@ -93,7 +93,7 @@ public:
         return ret;
     }
 
-    static SharedClass<T>::Shared get(T const* ptr) {
+    static typename SharedClass<T>::Shared get(T const* ptr) {
         for (auto const& weak : _instances) {
             if (auto shared = weak.lock(); shared.get() == ptr)
                 return shared;

@@ -10,19 +10,6 @@
 
 SSS_BEGIN;
 
-/** States the configuration (Release / Debug).
- *  \c true = Debug, \c false = Release.
- */
-extern constexpr bool DEBUGMODE
-/** \cond SKIP*/
-#ifdef NDEBUG
-= false
-#else
-= true
-#endif // NDEBUG
-/** \endcond*/
-;
-
 /** Path to the folder holding the running .exe*/
 SSS_COMMONS_API extern const std::string PWD;
 
