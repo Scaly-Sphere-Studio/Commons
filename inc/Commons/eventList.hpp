@@ -4,6 +4,7 @@
 
 #include "_includes.hpp"
 #include "log.hpp"
+#include "Observer.hpp"
 
 #pragma warning(push, 2)
 #pragma warning(disable: 4251)

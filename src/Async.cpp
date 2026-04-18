@@ -76,10 +76,13 @@ bool AsyncBase::_beingCanceled() const noexcept
 
 void AsyncBase::_poll() noexcept
 {
-    std::unique_lock const lock(_mutex);
-    for (auto&& ref : _pending)
+    std::set<Ref> to_handle;
+    {
+        std::unique_lock const lock(_mutex);
+        std::swap(to_handle, _pending);
+    }
+    for (auto&& ref : to_handle)
         ref.get()._handle();
-    _pending.clear();
 }
 
 void AsyncBase::_postRun() noexcept
