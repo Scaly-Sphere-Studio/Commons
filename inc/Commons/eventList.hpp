@@ -15,7 +15,8 @@
 // Register the event to the global Event List
 #define REGISTER_EVENT(Str) SSS::EventManager::registerEvent(Str)
 // Emit and notify the event to all the concerned observers
-#define EMIT_EVENT(Str)     _notifyObservers(SSS::EventManager::eventID(Str))
+// Optional second argument limits propagation to N observers (charges)
+#define EMIT_EVENT(Str, ...)  _notifyObservers(SSS::EventManager::eventID(Str) __VA_OPT__(,) __VA_ARGS__)
 // Get the ID of the Event from its name
 #define EVENT_ID(Str)       SSS::EventManager::eventID(Str)
 

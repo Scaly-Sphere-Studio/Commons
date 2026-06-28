@@ -9,6 +9,12 @@ SSS_BEGIN;
 #pragma warning(disable: 4251)
 #pragma warning(disable: 4275)
 
+struct SSS_COMMONS_API Event {
+    int id;
+    mutable int charges;   // -1 = unlimited; 0 = stop; N > 0 = N more propagations
+    void consume() const noexcept { if (charges > 0) --charges; }
+};
+
 class SSS_COMMONS_API Observer;
 
 class SSS_COMMONS_API Subject
@@ -26,7 +32,7 @@ public:
     }
 
 protected:
-    void _notifyObservers(int event_id = 0) const;
+    void _notifyObservers(int event_id = 0, int charges = -1) const;
 
 private:
     std::list<std::reference_wrapper<Observer>> _observers;
@@ -60,7 +66,7 @@ protected:
 private:
     std::list<std::reference_wrapper<Subject>> _subjects;
 
-    virtual void _subjectUpdate(Subject const& subject, int event_id) = 0;
+    virtual void _subjectUpdate(Subject const& subject, Event const& event) = 0;
 };
 
 #pragma warning(pop)

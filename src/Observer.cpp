@@ -23,10 +23,13 @@ void Subject::_detachObserver(Observer const& observer)
     });
 }
 
-void Subject::_notifyObservers(int event_id) const
+void Subject::_notifyObservers(int event_id, int charges) const
 {
+    Event event{ event_id, charges };
     for (auto const& ref : _observers) {
-        ref.get()._subjectUpdate(*this, event_id);
+        ref.get()._subjectUpdate(*this, event);
+        if (event.charges == 0)
+            break;
     }
 }
 
