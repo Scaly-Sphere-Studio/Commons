@@ -110,10 +110,14 @@ public:
     std::string to_Hex() const;
     /** Convert RGBA_f to HSL with alpha value*/
     glm::vec4 to_HSL() const;
+    /** Convert RGBA_f to Oklab color space. Returns (L, a, b, alpha), L in [0,1], a/b roughly [-0.5,0.5].*/
+    glm::vec4 to_Oklab() const;
     /** Return the vec4 color*/
     glm::vec4 to_RGBA() const { return _col; } ;
     /** Construct an RGBA_f class from HSLA color space*/
     static RGBA_f from_HSL(const glm::vec4& hsl);
+    /** Construct an RGBA_f from Oklab (L, a, b, alpha).*/
+    static RGBA_f from_Oklab(const glm::vec4& lab);
     /** Construct an RGBA_f class from from Hexadecimal color code, can be specified with or without '#' key*/
     static RGBA_f from_Hex(std::string hex);
 
@@ -131,6 +135,10 @@ SSS_COMMONS_API RGB24 rainbow(uint32_t value, uint32_t max_value) noexcept;
 
 /** Blends colors together based on the source's alpha.*/
 SSS_COMMONS_API RGBA32& operator*=(RGBA32& dst, RGBA32 const& src) noexcept;
+
+/** Mixes two colors in Oklab space for perceptually uniform interpolation.
+ *  t=0 returns a, t=1 returns b. t is clamped to [0, 1].*/
+SSS_COMMONS_API RGBA_f mix(const RGBA_f& a, const RGBA_f& b, float t) noexcept;
 
 
 

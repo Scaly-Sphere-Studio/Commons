@@ -288,4 +288,54 @@ RGBA_f RGBA_f::from_Hex(std::string hex)
     return glm::vec4(r, g, b, a);
 }
 
+static float srgb_to_linear(float c) noexcept {
+    return c <= 0.04045f ? c / 12.92f : std::pow((c + 0.055f) / 1.055f, 2.4f);
+}
+
+static float linear_to_srgb(float c) noexcept {
+    return c <= 0.0031308f ? 12.92f * c : 1.055f * std::pow(c, 1.0f / 2.4f) - 0.055f;
+}
+
+glm::vec4 RGBA_f::to_Oklab() const
+{
+    float r = srgb_to_linear(_col.r);
+    float g = srgb_to_linear(_col.g);
+    float b = srgb_to_linear(_col.b);
+
+    float l = std::cbrt(0.4122214708f * r + 0.5363325363f * g + 0.0514459929f * b);
+    float m = std::cbrt(0.2119034982f * r + 0.6806995451f * g + 0.1073969566f * b);
+    float s = std::cbrt(0.0883024619f * r + 0.2817188376f * g + 0.6299787005f * b);
+
+    return {
+        0.2104542553f * l + 0.7936177850f * m - 0.0040720468f * s,
+        1.9779984951f * l - 2.4285922050f * m + 0.4505937099f * s,
+        0.0259040371f * l + 0.7827717662f * m - 0.8086757660f * s,
+        _col.a
+    };
+}
+
+RGBA_f RGBA_f::from_Oklab(const glm::vec4& lab)
+{
+    float l = lab.x + 0.3963377774f * lab.y + 0.2158037573f * lab.z;
+    float m = lab.x - 0.1055613458f * lab.y - 0.0638541728f * lab.z;
+    float s = lab.x - 0.0894841775f * lab.y - 1.2914855480f * lab.z;
+
+    l = l * l * l;
+    m = m * m * m;
+    s = s * s * s;
+
+    return glm::vec4{
+        linear_to_srgb(std::clamp(+4.0767416621f * l - 3.3077115913f * m + 0.2309699292f * s, 0.f, 1.f)),
+        linear_to_srgb(std::clamp(-1.2684380046f * l + 2.6097574011f * m - 0.3413193965f * s, 0.f, 1.f)),
+        linear_to_srgb(std::clamp(-0.0041960863f * l - 0.7034186147f * m + 1.7076147010f * s, 0.f, 1.f)),
+        lab.w
+    };
+}
+
+RGBA_f mix(const RGBA_f& a, const RGBA_f& b, float t) noexcept
+{
+    t = std::clamp(t, 0.f, 1.f);
+    return RGBA_f::from_Oklab(glm::mix(a.to_Oklab(), b.to_Oklab(), t));
+}
+
 SSS_END;
